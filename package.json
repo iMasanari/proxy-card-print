@@ -1,0 +1,29 @@
+{
+  "name": "proxy-card",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "dev": "parcel src/index.html",
+    "prebuild": "npm run clean",
+    "build": "parcel build src/index.html --experimental-scope-hoisting",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "iMasanari",
+  "license": "MIT",
+  "dependencies": {
+    "@react-pdf/renderer": "^1.6.8",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-modal": "^3.11.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-modal": "^3.10.5",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.8.3"
+  }
+}

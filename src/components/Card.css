@@ -1,0 +1,28 @@
+.Card {
+  display: flex;
+  align-items: flex-end;
+}
+
+.Card-thumb {
+  position: relative;
+  width: 59px;
+  height: 86px;
+  background: #ddd no-repeat 0 0;
+  background-size: contain;
+}
+
+/* .Card-file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+ */
+
+.Card-count {
+  width: 4em;
+  font-size: 1em;
+  text-align: right;
+}
