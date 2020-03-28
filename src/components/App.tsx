@@ -2,6 +2,7 @@ import React, { Suspense, useReducer, useState } from 'react'
 import Cards from './Cards'
 import Header from './Header'
 import Settings, { Asset, assets } from './Settings'
+import Usage from './Usage'
 
 require('./App.css')
 
@@ -73,14 +74,16 @@ export default () => {
             removeCard={(index) => dispatch({ type: 'remove', index })}
           />
         </div>
-        <Suspense fallback={null}>
-          <Preview
-            className="App-Preview"
-            size={size}
-            orientation={orientation}
-            list={list}
-          />
-        </Suspense>
+        {!cards.length ? <Usage /> : (
+          <Suspense fallback={null}>
+            <Preview
+              className="App-Preview"
+              size={size}
+              orientation={orientation}
+              list={list}
+            />
+          </Suspense>
+        )}
       </div>
     </div>
   )
