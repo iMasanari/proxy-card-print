@@ -1,0 +1,12 @@
+.AddCard-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.AddCard-file {
+  display: none;
+}

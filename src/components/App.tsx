@@ -1,25 +1,25 @@
 import React, { Suspense, useReducer, useState } from 'react'
+import AddCard from './AddCard'
 import Cards from './Cards'
 
 const Preview = React.lazy(() => import('./Preview'))
 
 type Action =
-  | { type: 'add' }
-  | { type: 'updateSrc', index: number, file: File | undefined }
+  | { type: 'add', srcList: string[] }
   | { type: 'updateCount', index: number, count: number | null }
   | { type: 'remove', index: number }
 
 export interface CardType {
   id: string
-  src: string | null
+  src: string
   count: number | null
 }
 
-const createCard = (): CardType =>
-  ({ id: Math.random().toString(32).slice(2), src: null, count: 1 })
+const createCard = (src: string): CardType =>
+  ({ id: Math.random().toString(32).slice(2), src, count: 1 })
 
-const revokeCardSrc = (card: CardType) => {
-  if (card && card.src) {
+const revokeCardSrc = (card: CardType | undefined) => {
+  if (card) {
     URL.revokeObjectURL(card.src)
   }
 }
@@ -27,16 +27,7 @@ const revokeCardSrc = (card: CardType) => {
 const fileReducer = (state: CardType[], action: Action) => {
   switch (action.type) {
     case 'add': {
-      return [...state, createCard()]
-    }
-    case 'updateSrc': {
-      revokeCardSrc(state[action.index])
-
-      const src = action.file ? URL.createObjectURL(action.file) : null
-
-      return state.map((v, i) =>
-        i === action.index ? { ...v, src } : v
-      )
+      return [...state, ...action.srcList.map(createCard)]
     }
     case 'updateCount': {
       return state.map((v, i) =>
@@ -51,7 +42,7 @@ const fileReducer = (state: CardType[], action: Action) => {
   }
 }
 
-const initState: CardType[] = [createCard()]
+const initState: CardType[] = []
 
 const assets = {
   A4: { size: 'A4', orientation: 'portrait' },
@@ -74,11 +65,10 @@ export default () => {
     <div className="App">
       <Cards
         cards={cards}
-        updateCardFile={(index, file) => dispatch({ type: 'updateSrc', index, file })}
         updateCardCount={(index, count) => dispatch({ type: 'updateCount', index, count })}
         removeCard={(index) => dispatch({ type: 'remove', index })}
       />
-      <button onClick={() => dispatch({ type: 'add' })}>追加</button>
+      <AddCard add={(srcList) => dispatch({ type: 'add', srcList })} />
       <div>
         {'サイズ: '}
         <select value={asset} onChange={e => updateAsset(e.currentTarget.value as Asset)}>
