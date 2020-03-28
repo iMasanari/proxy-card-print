@@ -11,9 +11,3 @@
   background: #ddd no-repeat center;
   background-size: contain;
 }
-
-.Card-count {
-  width: 4em;
-  font-size: 1em;
-  text-align: right;
-}

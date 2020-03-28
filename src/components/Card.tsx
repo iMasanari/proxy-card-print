@@ -1,27 +1,26 @@
 import React from 'react'
 import { CardType } from './App'
+import NumberFild from './NumberFild'
 
 require('./Card.css')
 
 interface Props {
   card: CardType
+  defaultCount: number | null
   setCount: (count: number | null) => void
   remove: () => void
 }
 
-const toNumberOrNull = (str: string) =>
-  str !== '' && !isNaN(str as any) ? +str : null
-
-export default ({ card, setCount, remove }: Props) =>
+export default ({ card, defaultCount, setCount, remove }: Props) =>
   <div className="Card">
     <div className="Card-thumb" style={{ backgroundImage: card.src ? `url(${card.src})` : undefined }}></div>
     <div>
-      <input
+      <NumberFild
         type="number"
-        className="Card-count"
         min="0"
-        value={card.count ?? ''}
-        onChange={e => setCount(toNumberOrNull(e.currentTarget.value))}
+        placeholder={defaultCount as any ?? ''}
+        value={card.count}
+        setValue={setCount}
       />
       {'枚'}
     </div>

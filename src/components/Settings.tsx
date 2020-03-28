@@ -1,4 +1,5 @@
 import React from 'react'
+import NumberFild from '~/components/NumberFild'
 
 require('./Settings.css')
 
@@ -18,13 +19,15 @@ export const cardSizes = {
 export type CardSize = keyof typeof cardSizes
 
 interface Props {
-  cardSize: CardSize
-  setCardSize: (cardSize: CardSize) => void
   asset: Asset
   setAsset: (asset: Asset) => void
+  cardSize: CardSize
+  setCardSize: (cardSize: CardSize) => void
+  defaultCount: number | null
+  setDefaultCount: (defaultCount: number | null) => void
 }
 
-export default ({ cardSize, setCardSize, asset, setAsset }: Props) =>
+export default ({ cardSize, setCardSize, asset, setAsset, defaultCount, setDefaultCount }: Props) =>
   <div className="Setting">
     <div>
       {'用紙サイズ: '}
@@ -49,5 +52,14 @@ export default ({ cardSize, setCardSize, asset, setAsset }: Props) =>
           <option key={v} value={v}>{v}</option>
         )}
       </select>
+    </div>
+    <div>
+      {'カード印刷数: '}
+      <NumberFild
+        type="number"
+        value={defaultCount}
+        setValue={setDefaultCount}
+      />
+      {'枚ずつ'}
     </div>
   </div>

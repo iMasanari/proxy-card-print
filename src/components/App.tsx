@@ -20,7 +20,7 @@ export interface CardType {
 }
 
 const createCard = (src: string): CardType =>
-  ({ id: Math.random().toString(32).slice(2), src, count: 1 })
+  ({ id: Math.random().toString(32).slice(2), src, count: null })
 
 const revokeCardSrc = (card: CardType | undefined) => {
   if (card) {
@@ -52,9 +52,10 @@ export default () => {
   const [cards, dispatch] = useReducer(fileReducer, initState)
   const [cardSize, setCardSize] = useState<CardSize>('59mm x 86mm')
   const [asset, setAsset] = useState<Asset>('A4')
+  const [defaultCount, setDefaultCount] = useState<number | null>(1)
 
   const list = cards.reduce((acc, v) => (
-    v.src ? [...acc, ...Array(v.count || 0).fill(v.src)] : acc
+    v.src ? [...acc, ...Array(v.count ?? defaultCount ?? 0).fill(v.src)] : acc
   ), [] as string[])
 
   const { size, orientation } = assets[asset]
@@ -65,13 +66,16 @@ export default () => {
       <div className="App-contents">
         <div className="App-conditions">
           <Settings
-            cardSize={cardSize}
-            setCardSize={setCardSize}
             asset={asset}
             setAsset={setAsset}
+            cardSize={cardSize}
+            setCardSize={setCardSize}
+            defaultCount={defaultCount}
+            setDefaultCount={setDefaultCount}
           />
           <Cards
             cards={cards}
+            defaultCount={defaultCount}
             addCards={(srcList) => dispatch({ type: 'add', srcList })}
             updateCardCount={(index, count) => dispatch({ type: 'updateCount', index, count })}
             removeCard={(index) => dispatch({ type: 'remove', index })}
