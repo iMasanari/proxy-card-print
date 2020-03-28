@@ -1,4 +1,4 @@
-import React, { Suspense, useReducer } from 'react'
+import React, { Suspense, useReducer, useState } from 'react'
 import Cards from './Cards'
 
 const Preview = React.lazy(() => import('./Preview'))
@@ -53,12 +53,22 @@ const fileReducer = (state: CardType[], action: Action) => {
 
 const initState: CardType[] = [createCard()]
 
+const assets = {
+  A4: { size: 'A4', orientation: 'portrait' },
+  A3: { size: 'A3', orientation: 'landscape' },
+} as const
+
+type Asset = keyof typeof assets
+
 export default () => {
   const [cards, dispatch] = useReducer(fileReducer, initState)
+  const [asset, updateAsset] = useState('A4' as Asset)
 
   const list = cards.reduce((acc, v) => (
     v.src ? [...acc, ...Array(v.count || 0).fill(v.src)] : acc
   ), [] as string[])
+
+  const { size, orientation } = assets[asset]
 
   return (
     <div className="App">
@@ -70,8 +80,16 @@ export default () => {
       />
       <button onClick={() => dispatch({ type: 'add' })}>追加</button>
       <div>
+        {'サイズ: '}
+        <select value={asset} onChange={e => updateAsset(e.currentTarget.value as Asset)}>
+          {Object.keys(assets).map(v =>
+            <option key={v} value={v}>{v}</option>
+          )}
+        </select>
+      </div>
+      <div>
         <Suspense fallback={<button>準備中</button>}>
-          <Preview list={list} />
+          <Preview size={size} orientation={orientation} list={list} />
         </Suspense>
       </div>
     </div>

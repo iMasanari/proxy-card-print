@@ -6,12 +6,14 @@ import PDF from '~/pdf/PDF'
 require('./Preview.css')
 
 interface Props {
+  size: string
+  orientation: 'portrait' | 'landscape'
   list: string[]
 }
 
-export default ({ list }: Props) => {
+export default ({ size, orientation, list }: Props) => {
   const [isOpen, toggleOpen] = useReducer(state => !state, false)
-  const pdf = <PDF list={list} />
+  const pdf = <PDF size={size} orientation={orientation} list={list} />
 
   return (
     <>

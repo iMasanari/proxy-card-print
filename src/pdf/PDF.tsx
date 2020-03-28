@@ -11,20 +11,16 @@ const styles = StyleSheet.create({
 })
 
 interface Props {
+  size: string
+  orientation: 'portrait' | 'landscape'
   list: string[]
 }
 
-// Create Document Component
-export default (props: Props) => {
-  const pages = props.list
-
-  return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        {pages.map((image, index) =>
-          <Card key={index} image={image} />
-        )}
-      </Page>
-    </Document>
-  )
-}
+export default ({ size, orientation, list }: Props) =>
+  <Document>
+    <Page size={size} orientation={orientation} style={styles.page}>
+      {list.map((image, index) =>
+        <Card key={index} image={image} />
+      )}
+    </Page>
+  </Document>
