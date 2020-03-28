@@ -8,12 +8,13 @@ interface Props {
   size: string
   orientation: 'portrait' | 'landscape'
   list: string[]
+  cardSize: [number, number]
   className?: string
 }
 
-export default ({ size, orientation, list, className }: Props) => {
+export default ({ size, orientation, list, cardSize, className }: Props) => {
   const previewRef = useRef<HTMLDivElement>(null)
-  const pdf = <PDF size={size} orientation={orientation} list={list} />
+  const pdf = <PDF size={size} orientation={orientation} list={list} cardSize={cardSize} />
 
   const print = () => {
     const target = previewRef.current?.querySelector('iframe')?.contentWindow

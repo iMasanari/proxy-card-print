@@ -1,7 +1,7 @@
 import React, { Suspense, useReducer, useState } from 'react'
 import Cards from './Cards'
 import Header from './Header'
-import Settings, { Asset, assets } from './Settings'
+import Settings, { Asset, assets, CardSize, cardSizes } from './Settings'
 import Usage from './Usage'
 
 require('./App.css')
@@ -50,7 +50,8 @@ const initState: CardType[] = []
 
 export default () => {
   const [cards, dispatch] = useReducer(fileReducer, initState)
-  const [asset, setAsset] = useState('A4' as Asset)
+  const [cardSize, setCardSize] = useState<CardSize>('59mm x 86mm')
+  const [asset, setAsset] = useState<Asset>('A4')
 
   const list = cards.reduce((acc, v) => (
     v.src ? [...acc, ...Array(v.count || 0).fill(v.src)] : acc
@@ -64,6 +65,8 @@ export default () => {
       <div className="App-contents">
         <div className="App-conditions">
           <Settings
+            cardSize={cardSize}
+            setCardSize={setCardSize}
             asset={asset}
             setAsset={setAsset}
           />
@@ -81,6 +84,7 @@ export default () => {
               size={size}
               orientation={orientation}
               list={list}
+              cardSize={cardSizes[cardSize]}
             />
           </Suspense>
         )}

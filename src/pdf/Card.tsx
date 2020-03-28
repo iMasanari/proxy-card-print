@@ -1,27 +1,19 @@
 import { Image, StyleSheet, View } from '@react-pdf/renderer'
 import React from 'react'
 
-const width = 59
-const height = 86
-const margin = 3
+const margin = 2
 const wrap = 0
 const wrapColor = '#555'
 
 const styles = StyleSheet.create({
   card: {
     position: 'relative',
-    width: `${width + margin * 2}mm`,
-    height: `${height + margin * 2}mm`,
   },
   imageWraper: {
     position: 'absolute',
     top: `${margin - wrap}mm`,
     left: `${margin - wrap}mm`,
     border: `${wrap}mm solid ${wrapColor}`,
-  },
-  image: {
-    width: `${width}mm`,
-    height: `${height}mm`,
   },
   trim: {
     position: 'absolute',
@@ -56,17 +48,17 @@ const styles = StyleSheet.create({
 
 interface Props {
   image: string
+  cardSize: [number, number]
 }
 
-// Create Document Component
-export default (props: Props) => (
-  <View style={styles.card} wrap={false}>
+export default ({ image, cardSize: [width, height] }: Props) => (
+  <View style={[styles.card, { width: `${width + margin * 2}mm`, height: `${height + margin * 2}mm` }]} wrap={false}>
     <View style={[styles.trim, styles.topleft]} />
     <View style={[styles.trim, styles.topright]} />
     <View style={[styles.trim, styles.bottomleft]} />
     <View style={[styles.trim, styles.bottomright]} />
     <View style={styles.imageWraper}>
-      <Image src={props.image} style={styles.image} />
+      <Image src={image} style={{ width: `${width}mm`, height: `${height}mm` }} />
     </View>
   </View>
 )
