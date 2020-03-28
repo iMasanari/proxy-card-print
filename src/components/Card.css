@@ -1,13 +1,14 @@
 .Card {
   display: flex;
   align-items: flex-end;
+  padding: 0 0.5rem;
 }
 
 .Card-thumb {
   position: relative;
   width: 59px;
   height: 86px;
-  background: #ddd no-repeat 0 0;
+  background: #ddd no-repeat center;
   background-size: contain;
 }
 

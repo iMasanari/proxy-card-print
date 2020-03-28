@@ -1,0 +1,21 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.App-contents {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.App-conditions {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-Preview {
+  flex: 1;
+}

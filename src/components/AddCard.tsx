@@ -27,8 +27,8 @@ export default ({ add }: Props) => {
   }
 
   return (
-    <label className="AddCard">
-      <span className="AddCard-button" role="button" tabIndex={0} onKeyDown={onButtonKeyDown}>カード追加</span>
+    <label className="AddCard" role="button" tabIndex={0} onKeyDown={onButtonKeyDown}>
+      {'カード追加'}
       <input
         type="file"
         className="AddCard-file"
