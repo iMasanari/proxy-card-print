@@ -18,8 +18,9 @@ export default ({ add }: Props) => {
   }
 
   const onFileChanhge = ({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(currentTarget.files!)
-    const srcList = files.map(file => URL.createObjectURL(file))
+    const srcList = Array.from(currentTarget.files!)
+      .filter(file => file.type.startsWith('image/'))
+      .map(URL.createObjectURL)
 
     add(srcList)
 

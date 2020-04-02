@@ -25,3 +25,24 @@
   background-color: #fff;
   text-align: center;
 }
+
+.Cards-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 4px dashed #666;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #666;
+  pointer-events: none;
+}
+
+.Cards-overlay-draging {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
