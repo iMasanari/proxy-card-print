@@ -1,5 +1,5 @@
 {
-  "name": "proxy-card",
+  "name": "proxy-card-print",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "clean": "rm -rf dist",
     "dev": "parcel src/index.html",
     "prebuild": "npm run clean",
-    "build": "parcel build src/index.html --experimental-scope-hoisting",
+    "build": "parcel build src/index.html --public-url .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
