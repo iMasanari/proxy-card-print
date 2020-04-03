@@ -1,21 +1,32 @@
-.App {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+body {
+  margin: 0;
+  font-family: sans-serif;
 }
 
-.App-contents {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
+@media (min-width: 600px) {
+  body {
+    overflow: hidden;
+  }
 
-.App-conditions {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-}
+  .App {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
 
-.App-Preview {
-  flex: 1;
+  .App-contents {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .App-conditions {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .App-Preview {
+    flex: 1;
+  }
 }

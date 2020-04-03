@@ -1,11 +1,6 @@
-.Preview {
-  display: flex;
-  flex-direction: column;
-}
-
 .Preview-pdf {
-  flex: 1;
-  border: 0 none;
+  width: 100%;
+  border: 1px solid #ddd;
 }
 
 .Preview-footer {
@@ -22,4 +17,15 @@
   text-decoration: none;
   color: #000;
   cursor: pointer;
+}
+
+@media (min-width: 600px) {
+  .Preview {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Preview-pdf {
+    flex: 1;
+  }
 }

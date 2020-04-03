@@ -1,7 +1,12 @@
 .Cards {
-  flex: 1;
-  overflow: auto;
   position: relative;
+}
+
+@media (min-width: 600px) {
+  .Cards {
+    flex: 1;
+    overflow: auto;
+  }
 }
 
 .Cards-list {
