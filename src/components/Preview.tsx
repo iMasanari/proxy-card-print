@@ -1,6 +1,5 @@
-import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
-import React, { useRef } from 'react'
-import PDF from '~/pdf/PDF'
+import React, { useEffect, useReducer, useRef } from 'react'
+import { createPdf } from '~/servise/pdf'
 
 require('./Preview.css')
 
@@ -12,17 +11,31 @@ interface Props {
   className?: string
 }
 
-export default ({ size, orientation, list, cardSize, className }: Props) => {
-  const previewRef = useRef<HTMLDivElement>(null)
-  const pdf = <PDF size={size} orientation={orientation} list={list} cardSize={cardSize} />
+const pdfReducer = (prev: string | null, pdf: string | null) => {
+  if (prev) {
+    URL.revokeObjectURL(prev)
+  }
+
+  return pdf
+}
+
+export default ({ list, cardSize, size, orientation, className }: Props) => {
+  const iFrameRef = useRef<HTMLIFrameElement>(null)
+  const [pdf, updatePdf] = useReducer(pdfReducer, null)
+
+  useEffect(() => {
+    updatePdf(null)
+    createPdf({ list, cardSize, size, orientation })
+      .then(updatePdf)
+  }, [list, cardSize, size, orientation])
 
   const print = () => {
-    const target = previewRef.current?.querySelector('iframe')?.contentWindow
+    const contentWindow = iFrameRef.current?.contentWindow
 
-    if (!target) return
+    if (!contentWindow) return
 
     try {
-      target.print()
+      contentWindow.print()
     } catch {
       // Firefoxでエラーになる（cross-origin関連）
       alert('印刷画面を開くことができませんでした。\nプレビュー内に印刷ボタンがある場合は、そこから印刷できます。または、ダウンロードして印刷してください。')
@@ -30,17 +43,19 @@ export default ({ size, orientation, list, cardSize, className }: Props) => {
   }
 
   return (
-    <div className={['Preview', className].join(' ')} ref={previewRef}>
-      <PDFViewer className="Preview-pdf">
-        {pdf}
-      </PDFViewer>
+    <div className={['Preview', className].join(' ')}>
+      <iframe className="Preview-pdf" src={pdf || undefined} ref={iFrameRef} />
       <div className="Preview-footer">
         <span className="Preview-button" role="button" onClick={print}>
           {'印刷'}
         </span>
-        <PDFDownloadLink document={pdf} className="Preview-button">
+        <a
+          className="Preview-button"
+          href={pdf || undefined}
+          download={`プロキシカード印刷-${pdf?.slice(-8)}`}
+        >
           {'ダウンロード'}
-        </PDFDownloadLink>
+        </a>
       </div>
     </div>
   )

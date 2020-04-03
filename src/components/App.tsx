@@ -1,12 +1,11 @@
-import React, { Suspense, useMemo, useReducer, useState } from 'react'
+import React, { useMemo, useReducer, useState } from 'react'
 import Cards from './Cards'
 import Header from './Header'
+import Preview from './Preview'
 import Settings, { Asset, assets, CardSize, cardSizes } from './Settings'
 import Usage from './Usage'
 
 require('./App.css')
-
-const Preview = React.lazy(() => import('./Preview'))
 
 type Action =
   | { type: 'add', srcList: string[] }
@@ -86,15 +85,13 @@ export default () => {
           />
         </div>
         {!cards.length ? <Usage /> : (
-          <Suspense fallback={null}>
-            <Preview
-              className="App-Preview"
-              size={size}
-              orientation={orientation}
-              list={list}
-              cardSize={cardSizes[cardSize]}
-            />
-          </Suspense>
+          <Preview
+            className="App-Preview"
+            size={size}
+            orientation={orientation}
+            list={list}
+            cardSize={cardSizes[cardSize]}
+          />
         )}
       </div>
     </div>
