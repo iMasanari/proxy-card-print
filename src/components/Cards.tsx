@@ -34,7 +34,7 @@ export default ({ cards, defaultCount, addCards, updateCardCount, removeCard }: 
 
     const srcList = Array.from(e.dataTransfer!.files)
       .filter(file => file.type.startsWith('image/'))
-      .map(URL.createObjectURL)
+      .map(file => URL.createObjectURL(file))
 
     addCards(srcList)
     setDraging(false)
