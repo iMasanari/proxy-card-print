@@ -1,4 +1,4 @@
-import React, { Suspense, useReducer, useState } from 'react'
+import React, { Suspense, useMemo, useReducer, useState } from 'react'
 import Cards from './Cards'
 import Header from './Header'
 import Settings, { Asset, assets, CardSize, cardSizes } from './Settings'
@@ -54,9 +54,13 @@ export default () => {
   const [asset, setAsset] = useState<Asset>('A4')
   const [defaultCount, setDefaultCount] = useState<number | null>(1)
 
-  const list = cards.reduce((acc, v) => (
-    v.src ? [...acc, ...Array(v.count ?? defaultCount ?? 0).fill(v.src)] : acc
-  ), [] as string[])
+  const list = useMemo(() => (
+    cards.reduce((acc, v) => {
+      const count = v.count ?? defaultCount ?? 0
+
+      return count > 0 ? [...acc, ...Array(count).fill(v.src)] : acc
+    }, [] as string[])
+  ), [cards, defaultCount])
 
   const { size, orientation } = assets[asset]
 

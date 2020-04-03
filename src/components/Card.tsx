@@ -18,7 +18,7 @@ export default ({ card, defaultCount, setCount, remove }: Props) =>
       <NumberFild
         type="number"
         min="0"
-        placeholder={defaultCount as any ?? ''}
+        placeholder={defaultCount || 0 as any}
         value={card.count}
         setValue={setCount}
       />

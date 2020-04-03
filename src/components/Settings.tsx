@@ -57,6 +57,7 @@ export default ({ cardSize, setCardSize, asset, setAsset, defaultCount, setDefau
       {'カード印刷数: '}
       <NumberFild
         type="number"
+        min="0"
         value={defaultCount}
         setValue={setDefaultCount}
       />
