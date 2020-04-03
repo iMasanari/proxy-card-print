@@ -8,3 +8,18 @@
 ## 印刷の注意点
 
 - フチなし印刷、または拡大/縮小無し(倍率100%)で印刷してください
+
+## その他
+
+- ダウンロードボタンでPDFがダウンロード可能
+  - 家にプリンタがなくても、[かんたん netprint][netprint] 等を利用して印刷ができます
+- カードサイズについて (参考: [トレカ（TCG）のサイズの種類についてまとめたった][card-size])
+  - 59mm×86mm: 遊戯王、ヴァンガード、バトルスピリッツ、ミラクルバトルカードダス
+  - 63mm×88mm: MTG、デュエルマスターズ、ヴァイスシュヴァルツ、ChaosTCG、Z/X（ゼクス）、バディファイト、ポケモンカードゲーム、三国志大戦TCG
+- カット順は、以下を参考にするとよいかも
+  - [トンボの付いた印刷物を、手作業でカットする方法][card-cut]
+- スマートフォンでの印刷は未検証
+
+[netprint]: https://www.printing.ne.jp/support/lite/index.html
+[card-size]: http://www.mojahedin-enghelab.com/トレカ（tcg）のサイズの種類についてまとめたっ/
+[card-cut]: https://threehappydesign.com/tonbo/#i-4
