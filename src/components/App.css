@@ -11,7 +11,14 @@ body {
   .App {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    /* height: 100vh; */
+  }
+
+  html,
+  body,
+  #root,
+  .App {
+    height: 100%;
   }
 
   .App-contents {
