@@ -1,5 +1,5 @@
 import React from 'react'
-import NumberFild from '~/components/NumberFild'
+import NumberFild from '~/components/atoms/NumberFild'
 
 require('./Settings.css')
 

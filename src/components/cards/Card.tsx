@@ -1,8 +1,13 @@
 import React from 'react'
-import { CardType } from './App'
-import NumberFild from './NumberFild'
+import NumberFild from '../atoms/NumberFild'
 
 require('./Card.css')
+
+export interface CardType {
+  id: string
+  src: string
+  count: number | null
+}
 
 interface Props {
   card: CardType
