@@ -42,6 +42,14 @@ export default ({ list, cardSize, size, orientation, className }: Props) => {
     }
   }
 
+  const download = (e: React.MouseEvent) => {
+    // スマホの場合、新規タブで開く
+    if (pdf && /iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
+      e.preventDefault()
+      open(pdf!)
+    }
+  }
+
   return (
     <div className={['Preview', className].join(' ')}>
       <iframe className="Preview-pdf" src={pdf || undefined} ref={iFrameRef} />
@@ -53,6 +61,7 @@ export default ({ list, cardSize, size, orientation, className }: Props) => {
           className="Preview-button"
           href={pdf || undefined}
           download={`プロキシカード印刷-${pdf?.slice(-8)}`}
+          onClick={download}
         >
           {'ダウンロード'}
         </a>
