@@ -1,5 +1,5 @@
 import blobStream from 'blob-stream'
-import PDFDocument from 'pdfkit'
+import PDFDocument from './lib/pdfkit'
 import { chunk, readFile, toPoint } from './utils'
 
 export interface Condition {
