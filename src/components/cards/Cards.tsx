@@ -24,8 +24,16 @@ export default ({ cards, defaultCount, addCards, updateCardCount, removeCard }: 
       setDraging(e.type === 'dragover')
     }
 
-    document.body.addEventListener('dragover', bodyListener)
-    document.body.addEventListener('dragleave', bodyListener)
+    const body = document.body
+
+    body.addEventListener('dragover', bodyListener)
+    body.addEventListener('dragleave', bodyListener)
+
+    // destructor
+    return () => {
+      body.removeEventListener('dragover', bodyListener)
+      body.removeEventListener('dragleave', bodyListener)
+    }
   }, [])
 
   const onDrop = (e: React.DragEvent) => {
