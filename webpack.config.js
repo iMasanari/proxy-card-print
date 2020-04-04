@@ -2,37 +2,36 @@
 
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
 
 /** @type import('webpack').Configuration */
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    filename: 'scripts/[name].[hash:7].js',
+    filename: '[name].[hash:7].js',
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'styles/bundle.[hash:7].css',
-    }),
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        minifyJS: true,
-        minifyCSS: true,
-      },
     }),
+    new HTMLInlineCSSWebpackPlugin(),
+    new PrerenderSPAPlugin({
+      staticDir: path.join(__dirname, 'dist'),
+      routes: ['/'],
+    })
   ],
   module: {
     rules: [
-      { test: /\.worker\.ts$/, loader: 'worker-loader', options: { name: 'scripts/worker.[hash:7].js' } },
+      { test: /\.worker\.ts$/, loader: 'worker-loader', options: { name: 'worker.[hash:7].js' } },
       { test: /\.tsx?$/, use: [{ loader: 'ts-loader', options: { transpileOnly: true } }] },
       { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
       { test: /\.md$/, use: ['html-loader', 'markdown-loader'] },
