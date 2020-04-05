@@ -31,9 +31,10 @@ module.exports = {
   ],
   module: {
     rules: [
-      { test: /\.worker\.ts$/, loader: 'worker-loader', options: { name: 'worker.[hash:7].js' } },
+      { test: /\.worker\.ts$/, use: [{ loader: 'worker-loader', options: { name: 'worker.[hash:7].js' } }] },
       { test: /\.tsx?$/, use: [{ loader: 'ts-loader', options: { transpileOnly: true } }] },
       { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+      { test: /\.(png|jpe?g|gif)$/, use: [{ loader: 'file-loader', options: { name: '[name].[contenthash:7].[ext]' } }] },
       { test: /\.md$/, use: ['html-loader', 'markdown-loader'] },
       { test: /\.afm$/, use: 'raw-loader' },
       { test: /node_modules\/(fontkit|linebreak)/, use: 'null-loader' },
