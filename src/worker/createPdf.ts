@@ -1,6 +1,5 @@
-import blobStream from 'blob-stream'
 import PDFDocument from './lib/pdfkit'
-import { chunk, readFile, toPoint } from './utils'
+import { chunk, readFile, toBlobURL, toPoint } from './utils'
 
 export interface Condition {
   size: string
@@ -9,11 +8,9 @@ export interface Condition {
   cardSize: [number, number]
 }
 
-export default ({ list, cardSize, size, orientation }: Condition) => new Promise<string>(async resolve => {
+export default async ({ list, cardSize, size, orientation }: Condition) => {
   const [cardWidth, cardHeight] = cardSize.map(toPoint)
   const doc = new PDFDocument({ size, layout: orientation })
-
-  const stream = doc.pipe(blobStream())
 
   const rowCount = Math.floor((doc.page.height - toPoint(20)) / cardHeight)
   const colCount = Math.floor((doc.page.width - toPoint(20)) / cardWidth)
@@ -56,7 +53,5 @@ export default ({ list, cardSize, size, orientation }: Condition) => new Promise
 
   doc.end()
 
-  stream.on('finish', () => {
-    resolve(stream.toBlobURL('application/pdf'))
-  })
-})
+  return toBlobURL(doc)
+}
