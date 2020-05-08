@@ -11,12 +11,19 @@ require('./App.css')
 type Action =
   | { type: 'add', srcList: string[] }
   | { type: 'updateCount', index: number, count: number | null }
+  | { type: 'updateSrc', index: number, src: string }
   | { type: 'remove', index: number }
 
 const createCard = (src: string): CardType =>
-  ({ id: Math.random().toString(32).slice(2), src, count: null })
+  ({ id: Math.random().toString(32).slice(2), src, orgSrc: src, count: null })
 
 const revokeCardSrc = (card: CardType | undefined) => {
+  if (card && card.src !== card.orgSrc) {
+    URL.revokeObjectURL(card.src)
+  }
+}
+
+const revokeCardOrgSrc = (card: CardType | undefined) => {
   if (card) {
     URL.revokeObjectURL(card.src)
   }
@@ -32,8 +39,16 @@ const cardsReducer = (state: CardType[], action: Action) => {
         i === action.index ? { ...v, count: action.count } : v
       )
     }
+    case 'updateSrc': {
+      revokeCardSrc(state[action.index])
+
+      return state.map((card, i) =>
+        i === action.index ? { ...card, src: action.src } : card
+      )
+    }
     case 'remove': {
       revokeCardSrc(state[action.index])
+      revokeCardOrgSrc(state[action.index])
 
       return state.filter((_, i) => i !== action.index)
     }
@@ -76,6 +91,7 @@ export default () => {
             defaultCount={defaultCount}
             addCards={(srcList) => dispatch({ type: 'add', srcList })}
             updateCardCount={(index, count) => dispatch({ type: 'updateCount', index, count })}
+            updateCardSrc={(index, src) => dispatch({ type: 'updateSrc', index, src })}
             removeCard={(index) => dispatch({ type: 'remove', index })}
           />
         </div>

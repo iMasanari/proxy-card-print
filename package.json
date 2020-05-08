@@ -18,13 +18,17 @@
     "pdfkit": "^0.11.0",
     "promise-worker": "^2.0.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-image-crop": "^8.6.2",
+    "react-modal": "^3.11.2"
   },
   "devDependencies": {
     "@types/blob-stream": "^0.1.29",
     "@types/pdfkit": "^0.10.5",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
+    "@types/react-image-crop": "^8.1.2",
+    "@types/react-modal": "^3.10.5",
     "css-loader": "^3.4.2",
     "file-loader": "^6.0.0",
     "html-inline-css-webpack-plugin": "^1.8.0",

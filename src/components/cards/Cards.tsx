@@ -9,6 +9,7 @@ interface Props {
   defaultCount: number | null
   addCards: (srcList: string[]) => void
   updateCardCount: (index: number, count: number | null) => void
+  updateCardSrc: (index: number, src: string) => void
   removeCard: (index: number) => void
 }
 
@@ -16,7 +17,7 @@ const preventDefault = (e: Pick<Event, 'preventDefault'>) => {
   e.preventDefault()
 }
 
-export default ({ cards, defaultCount, addCards, updateCardCount, removeCard }: Props) => {
+export default ({ cards, defaultCount, addCards, updateCardCount, updateCardSrc, removeCard }: Props) => {
   const [isDraging, setDraging] = useState(false)
 
   useEffect(() => {
@@ -57,6 +58,7 @@ export default ({ cards, defaultCount, addCards, updateCardCount, removeCard }: 
                 card={card}
                 defaultCount={defaultCount}
                 setCount={updateCardCount.bind(null, index)}
+                setSrc={updateCardSrc.bind(null, index)}
                 remove={removeCard.bind(null, index)}
               />
             </li>

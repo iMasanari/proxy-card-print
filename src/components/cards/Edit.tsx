@@ -1,0 +1,65 @@
+import React, { useEffect, useRef, useState } from 'react'
+import ReactCrop, { Crop } from 'react-image-crop'
+import getCroppedImage from '~/utils/getCroppedImage'
+import { CardType } from './Card'
+
+require('react-image-crop/dist/ReactCrop.css')
+require('./Edit.css')
+
+interface Props {
+  card: CardType
+  onRequestClose: () => void
+  update: (src: string) => void
+  crop: Crop
+  setCrop: (crop: Crop) => void
+}
+
+export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCrop }: Props) => {
+  const [crop, setCrop] = useState(orgCrop)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const imageEl = useRef<HTMLImageElement>()
+  const [imageMaxHeight, setImageMaxHeight] = useState<number>()
+
+  useEffect(() => {
+    const listener = () => {
+      if (wrapperRef.current) {
+        const { height } = wrapperRef.current.getBoundingClientRect()
+        setImageMaxHeight(height)
+      }
+    }
+
+    listener()
+    window.addEventListener('resize', listener)
+
+    return () => window.removeEventListener('resize', listener)
+  }, [])
+
+  const executeCrop = async () => {
+    onRequestClose()
+    setOrgCrop(crop)
+    update(crop.width ? await getCroppedImage(imageEl.current!, crop as Required<Crop>) : card.orgSrc)
+  }
+
+  return (
+    <>
+      <div className="EditModal-ReactCropWrapper" ref={wrapperRef}>
+        <ReactCrop
+          className="EditModal-ReactCrop"
+          src={card.orgSrc}
+          crop={crop}
+          onChange={crop => setCrop(crop)}
+          imageStyle={{ maxHeight: imageMaxHeight }}
+          onImageLoaded={el => imageEl.current = el}
+        />
+      </div>
+      <div className="EditModal-footer">
+        <span className="Preview-button" role="button" onClick={executeCrop}>
+          {'切り取り'}
+        </span>
+        <span className="Preview-button" role="button" onClick={onRequestClose}>
+          {'キャンセル'}
+        </span>
+      </div>
+    </>
+  )
+}
