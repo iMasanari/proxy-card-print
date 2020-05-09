@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { Crop } from 'react-image-crop'
 import getCroppedImage from '~/utils/getCroppedImage'
+import Button from '../atoms/Button'
 import { CardType } from './Card'
 
 require('react-image-crop/dist/ReactCrop.css')
@@ -53,12 +54,12 @@ export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCr
         />
       </div>
       <div className="EditModal-footer">
-        <span className="Preview-button" role="button" onClick={executeCrop}>
+        <Button onClick={executeCrop}>
           {'切り取り'}
-        </span>
-        <span className="Preview-button" role="button" onClick={onRequestClose}>
+        </Button>
+        <Button onClick={onRequestClose}>
           {'キャンセル'}
-        </span>
+        </Button>
       </div>
     </>
   )

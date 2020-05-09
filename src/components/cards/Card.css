@@ -6,8 +6,17 @@
 
 .Card-thumb {
   position: relative;
-  width: 59px;
-  height: 86px;
+  width: 30px;
+  height: 43px;
   background: #ddd no-repeat center;
   background-size: contain;
+  cursor: pointer;
+}
+
+.Card-count {
+  margin: 0 0.5rem;
+}
+
+.Card-button {
+  padding: 0.25rem 1rem;
 }

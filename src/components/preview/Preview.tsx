@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useRef } from 'react'
 import { createPdf } from '~/servise/pdf'
+import Button from '../atoms/Button'
 
 require('./Preview.css')
 
@@ -42,29 +43,32 @@ export default ({ list, cardSize, size, orientation, className }: Props) => {
     }
   }
 
-  const download = (e: React.MouseEvent) => {
+  const download = () => {
+    if (!pdf) return
+
     // スマホの場合、新規タブで開く
-    if (pdf && /iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
-      e.preventDefault()
-      open(pdf!)
+    if (/iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
+      open(pdf)
+      return
     }
+
+    const link = document.createElement('a')
+
+    link.href = pdf
+    link.download = `プロキシカード印刷-${pdf.slice(-8)}`
+    link.click()
   }
 
   return (
     <div className={['Preview', className].join(' ')}>
       <iframe className="Preview-pdf" src={pdf || undefined} ref={iFrameRef} />
       <div className="Preview-footer">
-        <span className="Preview-button" role="button" onClick={print}>
+        <Button onClick={print}>
           {'印刷'}
-        </span>
-        <a
-          className="Preview-button"
-          href={pdf || undefined}
-          download={`プロキシカード印刷-${pdf?.slice(-8)}`}
-          onClick={download}
-        >
+        </Button>
+        <Button onClick={download}>
           {'ダウンロード'}
-        </a>
+        </Button>
       </div>
     </div>
   )

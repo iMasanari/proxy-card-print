@@ -1,0 +1,15 @@
+.Button {
+  padding: 0.5rem 1rem;
+  margin: 1px;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 1em;
+  text-align: center;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.Button:active {
+  color: #fff;
+  background-color: #bbb;
+}

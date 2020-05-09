@@ -1,6 +1,8 @@
 import React, { useReducer, useState } from 'react'
+import { FaEdit, FaTrash } from 'react-icons/fa'
 import { Crop } from 'react-image-crop'
 import Modal from 'react-modal'
+import Button from '../atoms/Button'
 import NumberFild from '../atoms/NumberFild'
 import Edit from './Edit'
 
@@ -35,7 +37,7 @@ export default ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
         style={{ backgroundImage: card.src ? `url(${card.src})` : undefined }}
         onClick={toggleOpen}
       />
-      <div>
+      <div className="Card-count">
         <NumberFild
           type="number"
           min="0"
@@ -46,8 +48,12 @@ export default ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
         {'枚'}
       </div>
       <div>
-        <button onClick={toggleOpen}>編集</button>
-        <button onClick={remove}>削除</button>
+        <Button className="Card-button" onClick={toggleOpen}>
+          <FaEdit />
+        </Button>
+        <Button className="Card-button" onClick={remove}>
+          <FaTrash />
+        </Button>
       </div>
       <Modal
         isOpen={isOpen}

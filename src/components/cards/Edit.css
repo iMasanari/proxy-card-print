@@ -27,6 +27,7 @@
 }
 
 .EditModal-footer {
+  margin: 0.5rem 0;
   background-color: #fff;
   text-align: center;
 }

@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 require('./NumberFild.css')
@@ -6,7 +5,7 @@ require('./NumberFild.css')
 const toNumberOrNull = (str: string) =>
   str !== '' && !isNaN(str as any) ? +str : null
 
-interface Props extends Omit<React.HTMLProps<HTMLInputElement>, 'value'> {
+interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value'> {
   value: number | null
   setValue: (value: number | null) => void
 }
