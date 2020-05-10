@@ -2,7 +2,9 @@ import React from 'react'
 
 require('./Usage.css')
 
-const md = require('~/documents/usage.md') as string
+const Usage = require('~/documents/Usage.mdx').default
 
 export default () =>
-  <div className="Usage" dangerouslySetInnerHTML={{ __html: md }} />
+  <div className="Usage">
+    <Usage />
+  </div>
