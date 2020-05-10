@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useRef } from 'react'
 import { createPdf } from '~/servise/pdf'
+import classList from '~/utils/classList'
 import Button from '../atoms/Button'
 
 require('./Preview.css')
@@ -60,7 +61,7 @@ export default ({ list, cardSize, size, orientation, className }: Props) => {
   }
 
   return (
-    <div className={['Preview', className].join(' ')}>
+    <div className={classList('Preview', className)}>
       <iframe className="Preview-pdf" src={pdf || undefined} ref={iFrameRef} />
       <div className="Preview-footer">
         <Button onClick={print}>

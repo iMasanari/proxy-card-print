@@ -8,12 +8,16 @@ export interface Condition {
   cardSize: [number, number]
 }
 
-export default async ({ list, cardSize, size, orientation }: Condition) => {
+export type Result = string
+
+const margin = toPoint(10)
+
+export default async ({ list, cardSize, size, orientation }: Condition): Promise<Result> => {
   const [cardWidth, cardHeight] = cardSize.map(toPoint)
   const doc = new PDFDocument({ size, layout: orientation })
 
-  const rowCount = Math.floor((doc.page.height - toPoint(20)) / cardHeight)
-  const colCount = Math.floor((doc.page.width - toPoint(20)) / cardWidth)
+  const rowCount = Math.floor((doc.page.height - margin * 2) / cardHeight)
+  const colCount = Math.floor((doc.page.width - margin * 2) / cardWidth)
 
   const marginTop = (doc.page.height - cardHeight * rowCount) / 2
   const marginLeft = (doc.page.width - cardWidth * colCount) / 2
@@ -31,11 +35,11 @@ export default async ({ list, cardSize, size, orientation }: Condition) => {
     // 切り取り線
     for (let i = 0, len = page.length + 1; i < len; ++i) {
       const y = i * cardHeight + marginTop
-      doc.moveTo(toPoint(10), y).lineTo(doc.page.width - toPoint(10), y).stroke('#666')
+      doc.moveTo(margin, y).lineTo(doc.page.width - margin, y).stroke('#666')
     }
     for (let i = 0, len = page[0].length + 1; i < len; ++i) {
       const x = i * cardWidth + marginLeft
-      doc.moveTo(x, toPoint(10)).lineTo(x, doc.page.height - toPoint(10)).stroke('#666')
+      doc.moveTo(x, margin).lineTo(x, doc.page.height - margin).stroke('#666')
     }
 
     // カード表示

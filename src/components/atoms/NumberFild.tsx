@@ -1,4 +1,5 @@
 import React from 'react'
+import classList from '~/utils/classList'
 
 require('./NumberFild.css')
 
@@ -14,7 +15,7 @@ export default ({ value, setValue, className, ...rest }: Props) =>
   <input
     {...rest}
     type="number"
-    className={['NumberFild', className || ''].join(' ')}
+    className={classList('NumberFild', className)}
     value={value ?? ''}
     onChange={e => setValue(toNumberOrNull(e.currentTarget.value))}
   />

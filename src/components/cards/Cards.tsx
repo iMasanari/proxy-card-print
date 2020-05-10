@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import classList from '~/utils/classList'
 import AddCard from './AddCard'
 import Card, { CardType } from './Card'
 
@@ -69,7 +70,7 @@ export default ({ cards, defaultCount, addCards, updateCardCount, updateCardSrc,
         <AddCard add={addCards} />
       </div>
       <div
-        className={['Cards-overlay', isDraging ? 'Cards-overlay-draging' : ''].join(' ')}
+        className={classList('Cards-overlay', isDraging && 'Cards-overlay-draging')}
         onDragOver={preventDefault}
       >
         {'ここに画像をドロップ'}
