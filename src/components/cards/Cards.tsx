@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { CardType } from '~/modules/cards'
 import classList from '~/utils/classList'
 import AddCard from './AddCard'
-import Card, { CardType } from './Card'
+import Card from './Card'
 
 require('./Cards.css')
 
