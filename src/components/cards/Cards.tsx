@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CardType } from '~/modules/cards'
+import { add, CardType, remove, updateCount, updateSrc } from '~/modules/cards'
 import classList from '~/utils/classList'
 import AddCard from './AddCard'
 import Card from './Card'
@@ -8,18 +8,15 @@ require('./Cards.css')
 
 interface Props {
   cards: CardType[]
+  dispatch: React.Dispatch<any>
   defaultCount: number | null
-  addCards: (srcList: string[]) => void
-  updateCardCount: (index: number, count: number | null) => void
-  updateCardSrc: (index: number, src: string) => void
-  removeCard: (index: number) => void
 }
 
 const preventDefault = (e: Pick<Event, 'preventDefault'>) => {
   e.preventDefault()
 }
 
-export default ({ cards, defaultCount, addCards, updateCardCount, updateCardSrc, removeCard }: Props) => {
+export default ({ cards, dispatch, defaultCount }: Props) => {
   const [isDraging, setDraging] = useState(false)
 
   useEffect(() => {
@@ -38,6 +35,10 @@ export default ({ cards, defaultCount, addCards, updateCardCount, updateCardSrc,
       body.removeEventListener('dragleave', bodyListener)
     }
   }, [])
+
+  const addCards = (list: string[]) => {
+    dispatch(add(list))
+  }
 
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault()
@@ -59,9 +60,9 @@ export default ({ cards, defaultCount, addCards, updateCardCount, updateCardSrc,
               <Card
                 card={card}
                 defaultCount={defaultCount}
-                setCount={updateCardCount.bind(null, index)}
-                setSrc={updateCardSrc.bind(null, index)}
-                remove={removeCard.bind(null, index)}
+                setCount={count => dispatch(updateCount(index, count))}
+                setSrc={src => dispatch(updateSrc(index, src))}
+                remove={() => dispatch(remove(index))}
               />
             </li>
           )}

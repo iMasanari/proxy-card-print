@@ -41,11 +41,8 @@ export default () => {
           />
           <Cards
             cards={cards}
+            dispatch={dispatch}
             defaultCount={defaultCount}
-            addCards={(srcList) => dispatch({ type: 'add', srcList })}
-            updateCardCount={(index, count) => dispatch({ type: 'updateCount', index, count })}
-            updateCardSrc={(index, src) => dispatch({ type: 'updateSrc', index, src })}
-            removeCard={(index) => dispatch({ type: 'remove', index })}
           />
         </div>
         {!cards.length ? <Usage /> : (
