@@ -49,10 +49,10 @@ export default ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
       </div>
       <div>
         <Button className="Card-button" onClick={toggleOpen}>
-          <FaEdit />
+          <FaEdit className="svg-icon" />
         </Button>
         <Button className="Card-button" onClick={remove}>
-          <FaTrash />
+          <FaTrash className="svg-icon" />
         </Button>
       </div>
       <Modal

@@ -3,6 +3,10 @@ body {
   font-family: sans-serif;
 }
 
+.svg-icon {
+  vertical-align: text-top;
+}
+
 @media (min-width: 600px) {
   body {
     overflow: hidden;
