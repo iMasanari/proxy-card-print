@@ -1,3 +1,4 @@
+import { KEY_RETURN, KEY_SPACE } from 'keycode-js'
 import React, { useRef } from 'react'
 
 require('./AddCard.css')
@@ -10,8 +11,7 @@ export default ({ add }: Props) => {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const onButtonKeyDown = (e: React.KeyboardEvent) => {
-    // enter or space
-    if (e.keyCode === 13 || e.keyCode === 32) {
+    if (e.keyCode === KEY_RETURN || e.keyCode === KEY_SPACE) {
       e.preventDefault()
       fileRef.current?.click()
     }
