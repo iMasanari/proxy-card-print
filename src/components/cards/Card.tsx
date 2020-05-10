@@ -2,18 +2,12 @@ import React, { useReducer, useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { Crop } from 'react-image-crop'
 import Modal from 'react-modal'
+import { CardType } from '~/modules/cards'
 import Button from '../atoms/Button'
 import NumberFild from '../atoms/NumberFild'
 import Edit from './Edit'
 
 require('./Card.css')
-
-export interface CardType {
-  id: string
-  src: string
-  orgSrc: string
-  count: number | null
-}
 
 interface Props {
   card: CardType

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { Crop } from 'react-image-crop'
+import { CardType } from '~/modules/cards'
 import getCroppedImage from '~/utils/getCroppedImage'
 import Button from '../atoms/Button'
-import { CardType } from './Card'
 
 require('react-image-crop/dist/ReactCrop.css')
 require('./Edit.css')

@@ -1,5 +1,5 @@
 import React, { useMemo, useReducer, useState } from 'react'
-import { CardType } from './cards/Card'
+import cardsReducer, { CardType } from '../modules/cards'
 import Cards from './cards/Cards'
 import Header from './layouts/Header'
 import Preview from './preview/Preview'
@@ -8,57 +8,10 @@ import Settings, { Asset, assets, CardSize, cardSizes } from './settings/Setting
 
 require('./App.css')
 
-type Action =
-  | { type: 'add', srcList: string[] }
-  | { type: 'updateCount', index: number, count: number | null }
-  | { type: 'updateSrc', index: number, src: string }
-  | { type: 'remove', index: number }
-
-const createCard = (src: string): CardType =>
-  ({ id: Math.random().toString(32).slice(2), src, orgSrc: src, count: null })
-
-const revokeCardSrc = (card: CardType | undefined) => {
-  if (card && card.src !== card.orgSrc) {
-    URL.revokeObjectURL(card.src)
-  }
-}
-
-const revokeCardOrgSrc = (card: CardType | undefined) => {
-  if (card) {
-    URL.revokeObjectURL(card.src)
-  }
-}
-
-const cardsReducer = (state: CardType[], action: Action) => {
-  switch (action.type) {
-    case 'add': {
-      return [...state, ...action.srcList.map(createCard)]
-    }
-    case 'updateCount': {
-      return state.map((v, i) =>
-        i === action.index ? { ...v, count: action.count } : v
-      )
-    }
-    case 'updateSrc': {
-      revokeCardSrc(state[action.index])
-
-      return state.map((card, i) =>
-        i === action.index ? { ...card, src: action.src } : card
-      )
-    }
-    case 'remove': {
-      revokeCardSrc(state[action.index])
-      revokeCardOrgSrc(state[action.index])
-
-      return state.filter((_, i) => i !== action.index)
-    }
-  }
-}
-
-const initState: CardType[] = []
+const cardsInitState = [] as CardType[]
 
 export default () => {
-  const [cards, dispatch] = useReducer(cardsReducer, initState)
+  const [cards, dispatch] = useReducer(cardsReducer, cardsInitState)
   const [cardSize, setCardSize] = useState<CardSize>('59mm x 86mm')
   const [asset, setAsset] = useState<Asset>('A4')
   const [defaultCount, setDefaultCount] = useState<number | null>(1)
