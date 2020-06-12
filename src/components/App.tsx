@@ -1,20 +1,27 @@
-import React, { useMemo, useReducer, useState } from 'react'
-import cardsReducer, { CardType } from '../modules/cards'
+import React, { useMemo, useReducer } from 'react'
+import cardsReducer, { CardType } from '~/modules/cards'
+import settingsReducer, { Asset, assets } from '~/modules/settings'
 import Cards from './cards/Cards'
 import Header from './layouts/Header'
 import Preview from './preview/Preview'
 import Usage from './preview/Usage'
-import Settings, { Asset, assets, CardSize, cardSizes } from './settings/Settings'
+import Settings from './settings/Settings'
 
 require('./App.css')
 
 const cardsInitState = [] as CardType[]
 
+const settingsInitState = {
+  asset: 'A4' as Asset,
+  cardWidth: 59,
+  cardHeight: 86,
+  defaultCount: 1 as number | null,
+}
+
 export default () => {
-  const [cards, dispatch] = useReducer(cardsReducer, cardsInitState)
-  const [cardSize, setCardSize] = useState<CardSize>('59mm x 86mm')
-  const [asset, setAsset] = useState<Asset>('A4')
-  const [defaultCount, setDefaultCount] = useState<number | null>(1)
+  const [cards, cardsDispatch] = useReducer(cardsReducer, cardsInitState)
+  const [settings, settingsDispatch] = useReducer(settingsReducer, settingsInitState)
+  const { asset, cardWidth, cardHeight, defaultCount } = settings
 
   const list = useMemo(() => (
     cards.reduce((acc, v) => {
@@ -26,22 +33,23 @@ export default () => {
 
   const { size, orientation } = assets[asset]
 
+  const cardSize: [number, number] = [
+    Math.min(Math.max(1, cardWidth), 150),
+    Math.min(Math.max(1, cardHeight), 150),
+  ]
+
   return (
     <div className="App">
       <Header />
       <div className="App-contents">
         <div className="App-conditions">
           <Settings
-            asset={asset}
-            setAsset={setAsset}
-            cardSize={cardSize}
-            setCardSize={setCardSize}
-            defaultCount={defaultCount}
-            setDefaultCount={setDefaultCount}
+            settings={settings}
+            dispatch={settingsDispatch}
           />
           <Cards
             cards={cards}
-            dispatch={dispatch}
+            dispatch={cardsDispatch}
             defaultCount={defaultCount}
           />
         </div>
@@ -51,7 +59,7 @@ export default () => {
             size={size}
             orientation={orientation}
             list={list}
-            cardSize={cardSizes[cardSize]}
+            cardSize={cardSize}
           />
         )}
       </div>
