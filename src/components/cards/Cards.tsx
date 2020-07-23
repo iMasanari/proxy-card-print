@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { add, CardType, remove, updateCount, updateSrc } from '~/modules/cards'
+import { useRecoilValue } from 'recoil'
+import { cardsState, useCardsActions } from '~/modules/cards'
+import { defaultCountState } from '~/modules/settings'
 import classList from '~/utils/classList'
 import AddCard from './AddCard'
 import Card from './Card'
 
 require('./Cards.css')
 
-interface Props {
-  cards: CardType[]
-  dispatch: React.Dispatch<any>
-  defaultCount: number | null
-}
-
 const preventDefault = (e: Pick<Event, 'preventDefault'>) => {
   e.preventDefault()
 }
 
-export default ({ cards, dispatch, defaultCount }: Props) => {
+export default () => {
+  const cards = useRecoilValue(cardsState)
+  const defaultCount = useRecoilValue(defaultCountState)
+  const { add, updateCount, updateSrc, remove } = useCardsActions()
   const [isDraging, setDraging] = useState(false)
 
   useEffect(() => {
@@ -36,10 +35,6 @@ export default ({ cards, dispatch, defaultCount }: Props) => {
     }
   }, [])
 
-  const addCards = (list: string[]) => {
-    dispatch(add(list))
-  }
-
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault()
 
@@ -47,7 +42,7 @@ export default ({ cards, dispatch, defaultCount }: Props) => {
       .filter(file => file.type.startsWith('image/'))
       .map(file => URL.createObjectURL(file))
 
-    addCards(srcList)
+    add(srcList)
     setDraging(false)
   }
 
@@ -60,16 +55,16 @@ export default ({ cards, dispatch, defaultCount }: Props) => {
               <Card
                 card={card}
                 defaultCount={defaultCount}
-                setCount={count => dispatch(updateCount(index, count))}
-                setSrc={src => dispatch(updateSrc(index, src))}
-                remove={() => dispatch(remove(index))}
+                setCount={count => updateCount(index, count)}
+                setSrc={src => updateSrc(index, src)}
+                remove={() => remove(index)}
               />
             </li>
           )}
         </ul>
       )}
       <div className="Cards-footer">
-        <AddCard add={addCards} />
+        <AddCard add={add} />
       </div>
       <div
         className={classList('Cards-overlay', isDraging && 'Cards-overlay-draging')}

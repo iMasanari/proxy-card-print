@@ -1,4 +1,4 @@
-import ActionReducer from 'action-reducer'
+import { atom, selector } from 'recoil'
 
 export const assets = {
   A4: { size: 'A4', orientation: 'portrait' },
@@ -8,29 +8,27 @@ export const assets = {
 
 export type Asset = keyof typeof assets
 
-export interface SettingsType {
-  asset: Asset
-  cardWidth: number
-  cardHeight: number
-  defaultCount: number | null
-}
+export const assetState = atom<Asset>({
+  key: 'asset',
+  default: 'A4',
+})
 
-const { createAction, reducer } = ActionReducer<SettingsType>()
+export const assetValueSelector = selector({
+  key: 'assetValue',
+  get: ({ get }) => assets[get(assetState)],
+})
 
-export const setAsset = createAction('setAsset', (state, asset: Asset) =>
-  ({ ...state, asset })
-)
+export const cardWidthState = atom<number | null>({
+  key: 'cardWidth',
+  default: 59,
+})
 
-export const updateCardWidth = createAction('updateCardWidth', (state, cardWidth: number) =>
-  ({ ...state, cardWidth })
-)
+export const cardHeightState = atom<number | null>({
+  key: 'cardHeight',
+  default: 86,
+})
 
-export const updateCardHeight = createAction('updateCardHeight', (state, cardHeight: number) =>
-  ({ ...state, cardHeight })
-)
-
-export const setDefaultCount = createAction('setDefaultCount', (state, defaultCount: number | null) =>
-  ({ ...state, defaultCount })
-)
-
-export default reducer
+export const defaultCountState = atom<number | null>({
+  key: 'defaultCount',
+  default: 1,
+})

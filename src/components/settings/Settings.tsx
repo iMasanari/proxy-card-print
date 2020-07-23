@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { useRecoilState } from 'recoil'
 import NumberFild from '~/components/atoms/NumberFild'
-import { Asset, assets, setAsset, setDefaultCount, SettingsType, updateCardHeight, updateCardWidth } from '~/modules/settings'
+import { Asset, assets, assetState, cardHeightState, cardWidthState, defaultCountState } from '~/modules/settings'
 
 require('./Settings.css')
 
@@ -11,16 +12,13 @@ const cardSizes = {
 
 export type CardSize = keyof typeof cardSizes | 'custom'
 
-interface Props {
-  settings: SettingsType
-  dispatch: React.Dispatch<any>
-}
-
-export default ({ settings, dispatch }: Props) => {
+export default () => {
   const [cardSize, setCardSize] = useState<CardSize>('59mm x 86mm')
 
-  const setCardWidth = (width: number | null) => dispatch(updateCardWidth(width || 0))
-  const setCardHeight = (height: number | null) => dispatch(updateCardHeight(height || 0))
+  const [cardWidth, setCardWidth] = useRecoilState(cardWidthState)
+  const [cardHeight, setCardHeight] = useRecoilState(cardHeightState)
+  const [asset, setAsset] = useRecoilState(assetState)
+  const [defaultCount, setDefaultCount] = useRecoilState(defaultCountState)
 
   const updateCardSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.currentTarget.value as CardSize
@@ -41,8 +39,8 @@ export default ({ settings, dispatch }: Props) => {
         {'用紙サイズ: '}
         <select
           className="Setting-select"
-          value={settings.asset}
-          onChange={e => dispatch(setAsset(e.currentTarget.value as Asset))}
+          value={asset}
+          onChange={e => setAsset(e.currentTarget.value as Asset)}
         >
           {Object.keys(assets).map(v =>
             <option key={v} value={v}>{v}</option>
@@ -68,7 +66,7 @@ export default ({ settings, dispatch }: Props) => {
             type="number"
             min="1"
             max="150"
-            value={settings.cardWidth}
+            value={cardWidth}
             setValue={setCardWidth}
           />
           {'mm x '}
@@ -76,7 +74,7 @@ export default ({ settings, dispatch }: Props) => {
             type="number"
             min="1"
             max="150"
-            value={settings.cardHeight}
+            value={cardHeight}
             setValue={setCardHeight}
           />
           {'mm'}
@@ -87,8 +85,8 @@ export default ({ settings, dispatch }: Props) => {
         <NumberFild
           type="number"
           min="0"
-          value={settings.defaultCount}
-          setValue={defaultCount => dispatch(setDefaultCount(defaultCount))}
+          value={defaultCount}
+          setValue={defaultCount => setDefaultCount(defaultCount)}
         />
         {'枚ずつ'}
       </div>

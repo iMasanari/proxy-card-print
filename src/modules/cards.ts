@@ -1,4 +1,4 @@
-import ActionReducer from 'action-reducer'
+import { atom, useSetRecoilState } from 'recoil'
 
 export interface CardType {
   id: string
@@ -6,8 +6,6 @@ export interface CardType {
   orgSrc: string
   count: number | null
 }
-
-const { createAction, reducer } = ActionReducer<CardType[]>()
 
 const createCard = (src: string): CardType =>
   ({ id: Math.random().toString(32).slice(2), src, orgSrc: src, count: null })
@@ -24,25 +22,39 @@ const revokeCardOrgSrc = (card: CardType | undefined) => {
   }
 }
 
-export const add = createAction('add', (state, list: string[]) =>
-  [...state, ...list.map(createCard)]
-)
-
-export const updateCount = createAction('updateCount', (state, index: number, count: number | null) =>
-  state.map((v, i) => i === index ? { ...v, count } : v)
-)
-
-export const updateSrc = createAction('updateSrc', (state, index: number, src: string) => {
-  revokeCardSrc(state[index])
-
-  return state.map((card, i) => i === index ? { ...card, src } : card)
+export const cardsState = atom<CardType[]>({
+  key: 'cards',
+  default: [],
 })
 
-export const remove = createAction('remove', (state, index: number) => {
-  revokeCardSrc(state[index])
-  revokeCardOrgSrc(state[index])
+export const useCardsActions = () => {
+  const setter = useSetRecoilState(cardsState)
 
-  return state.filter((_, i) => i !== index)
-})
+  return {
+    add: (list: string[]) => {
+      setter((state) =>
+        [...state, ...list.map(createCard)]
+      )
+    },
+    updateCount: (index: number, count: number | null) => {
+      setter((state) =>
+        state.map((v, i) => i === index ? { ...v, count } : v)
+      )
+    },
+    updateSrc: (index: number, src: string) => {
+      setter((state) => {
+        revokeCardSrc(state[index])
 
-export default reducer
+        return state.map((card, i) => i === index ? { ...card, src } : card)
+      })
+    },
+    remove: (index: number) => {
+      setter((state) => {
+        revokeCardSrc(state[index])
+        revokeCardOrgSrc(state[index])
+
+        return state.filter((_, i) => i !== index)
+      })
+    },
+  }
+}
