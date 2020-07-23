@@ -42,7 +42,10 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new TerserPlugin(),
+      new TerserPlugin({
+        // エラーが発生するため無効に
+        extractComments: false,
+      }),
       new OptimizeCSSAssetsPlugin(),
     ],
   },
