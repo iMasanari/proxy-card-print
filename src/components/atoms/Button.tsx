@@ -1,7 +1,7 @@
 import React from 'react'
 import classList from '~/utils/classList'
 
-require('./Button.css')
+// require('./Button.css')
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement>
 

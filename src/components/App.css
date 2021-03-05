@@ -20,7 +20,7 @@ body {
 
   html,
   body,
-  #root,
+  #__next,
   .App {
     height: 100%;
   }

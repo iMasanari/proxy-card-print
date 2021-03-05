@@ -1,7 +1,7 @@
 import { KEY_RETURN, KEY_SPACE } from 'keycode-js'
 import React, { useRef } from 'react'
 
-require('./AddCard.css')
+// require('./AddCard.css')
 
 interface Props {
   add: (srcList: string[]) => void

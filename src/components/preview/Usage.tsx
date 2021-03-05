@@ -1,6 +1,6 @@
 import React from 'react'
 
-require('./Usage.css')
+// require('./Usage.css')
 
 const Usage = require('~/documents/Usage.mdx').default
 

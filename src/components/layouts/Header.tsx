@@ -1,6 +1,6 @@
 import React from 'react'
 
-require('./Header.css')
+// require('./Header.css')
 
 export default () =>
   <header className="Header">

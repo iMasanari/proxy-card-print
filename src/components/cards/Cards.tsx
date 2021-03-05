@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import AddCard from './AddCard'
+import Card from './Card'
 import { cardsState, useCardsActions } from '~/modules/cards'
 import { defaultCountState } from '~/modules/settings'
 import classList from '~/utils/classList'
-import AddCard from './AddCard'
-import Card from './Card'
 
-require('./Cards.css')
+// require('./Cards.css')
 
 const preventDefault = (e: Pick<Event, 'preventDefault'>) => {
   e.preventDefault()

@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil'
 import NumberFild from '~/components/atoms/NumberFild'
 import { Asset, assets, assetState, cardHeightState, cardWidthState, defaultCountState } from '~/modules/settings'
 
-require('./Settings.css')
+// require('./Settings.css')
 
 const cardSizes = {
   '59mm x 86mm': [59, 86] as [number, number],

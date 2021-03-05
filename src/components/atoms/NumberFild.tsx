@@ -1,7 +1,7 @@
 import React from 'react'
 import classList from '~/utils/classList'
 
-require('./NumberFild.css')
+// require('./NumberFild.css')
 
 const toNumberOrNull = (str: string) =>
   str !== '' && !isNaN(str as any) ? +str : null
