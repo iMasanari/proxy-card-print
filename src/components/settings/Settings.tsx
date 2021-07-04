@@ -1,9 +1,13 @@
+import { css, Theme } from '@emotion/react'
+import { FormControl, InputAdornment, InputLabel, Select } from '@material-ui/core'
 import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
-import NumberFild from '~/components/atoms/NumberFild'
+import NumberField, { toNumberOrNull } from '~/components/atoms/NumberField'
 import { Asset, assets, assetState, cardHeightState, cardWidthState, defaultCountState } from '~/modules/settings'
 
-// require('./Settings.css')
+const settingStyle = (theme: Theme) => css`
+  padding: ${theme.spacing(1)};
+`
 
 const cardSizes = {
   '59mm x 86mm': [59, 86] as [number, number],
@@ -20,8 +24,8 @@ export default () => {
   const [asset, setAsset] = useRecoilState(assetState)
   const [defaultCount, setDefaultCount] = useRecoilState(defaultCountState)
 
-  const updateCardSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.currentTarget.value as CardSize
+  const updateCardSize = (e: React.ChangeEvent<{ value: CardSize }>) => {
+    const value = e.currentTarget.value
 
     setCardSize(value)
 
@@ -34,62 +38,92 @@ export default () => {
   }
 
   return (
-    <div className="Setting">
-      <div>
-        {'用紙サイズ: '}
-        <select
-          className="Setting-select"
+    <div css={settingStyle}>
+      <FormControl variant="outlined" size="small" fullWidth sx={{ mt: 2 }}>
+        <InputLabel>用紙サイズ</InputLabel>
+        <Select
+          label="用紙サイズ"
           value={asset}
           onChange={e => setAsset(e.currentTarget.value as Asset)}
+          native
         >
           {Object.keys(assets).map(v =>
             <option key={v} value={v}>{v}</option>
           )}
-        </select>
-      </div>
-      <div>
-        {'カードサイズ: '}
-        <select
-          className="Setting-select"
+        </Select>
+      </FormControl>
+      <FormControl variant="outlined" size="small" fullWidth sx={{ mt: 2 }}>
+        <InputLabel>カードサイズ</InputLabel>
+        <Select
+          label="カードサイズ"
           value={cardSize}
           onChange={updateCardSize}
+          native
         >
           {Object.keys(cardSizes).map(v =>
             <option key={v} value={v}>{v}</option>
           )}
           <option value="custom">カスタム</option>
-        </select>
-      </div>
+        </Select>
+      </FormControl>
       {cardSize === 'custom' && (
         <div>
-          <NumberFild
-            type="number"
-            min="1"
-            max="150"
-            value={cardWidth}
-            setValue={setCardWidth}
+          <NumberField
+            label="幅"
+            min={0}
+            max={150}
+            value={cardWidth ?? ''}
+            onChange={e => setCardWidth(toNumberOrNull(e.currentTarget.value))}
+            size="small"
+            sx={{ mt: 2 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {'mm'}
+                </InputAdornment>
+              ),
+            }}
           />
-          {'mm x '}
-          <NumberFild
-            type="number"
-            min="1"
-            max="150"
-            value={cardHeight}
-            setValue={setCardHeight}
+          <NumberField
+            label="縦"
+            min={0}
+            max={150}
+            value={cardHeight ?? ''}
+            onChange={e => setCardHeight(toNumberOrNull(e.currentTarget.value))}
+            size="small"
+            sx={{ mt: 2, ml: 2 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {'mm'}
+                </InputAdornment>
+              ),
+            }}
           />
-          {'mm'}
         </div>
       )}
-      <div>
-        {'カード印刷数: '}
-        <NumberFild
-          type="number"
-          min="0"
-          value={defaultCount}
-          setValue={defaultCount => setDefaultCount(defaultCount)}
-        />
-        {'枚ずつ'}
-      </div>
+      <NumberField
+        label="カード印刷数"
+        min={0}
+        max={150}
+        value={defaultCount ?? ''}
+        onChange={e => setDefaultCount(toNumberOrNull(e.currentTarget.value))}
+        size="small"
+        sx={{ mt: 2 }}
+        fullWidth
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {'枚ずつ'}
+            </InputAdornment>
+          ),
+        }}
+        inputProps={{
+          min: 0,
+          inputMode: 'numeric',
+          pattern: '[0-9]*',
+        }}
+      />
     </div>
   )
 }

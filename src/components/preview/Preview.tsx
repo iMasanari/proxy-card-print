@@ -1,12 +1,31 @@
+import { css, Theme } from '@emotion/react'
+import { Button } from '@material-ui/core'
 import React, { useEffect, useMemo, useReducer, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import Button from '../atoms/Button'
 import { cardsState } from '~/modules/cards'
 import { assetValueSelector, cardHeightState, cardWidthState, defaultCountState } from '~/modules/settings'
 import { createPdf } from '~/servise/pdf'
-import classList from '~/utils/classList'
 
-// require('./Preview.css')
+const previewStyle = css`
+  @media (min-width: 600px) {
+    display: flex;
+    flex-direction: column;
+  }
+`
+
+const pdfStyle = css`
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #ddd;
+  @media (min-width: 600px) {
+    flex: 1;
+  }
+`
+
+const actionsStyle = (theme: Theme) => css`
+  margin: ${theme.spacing(1, 0)};
+  text-align: center;
+`
 
 interface Props {
   className?: string
@@ -78,13 +97,13 @@ export default ({ className }: Props) => {
   }
 
   return (
-    <div className={classList('Preview', className)}>
-      <iframe className="Preview-pdf" src={pdf || undefined} ref={iFrameRef} />
-      <div className="Preview-footer">
-        <Button onClick={print}>
+    <div css={previewStyle} className={className}>
+      <iframe css={pdfStyle} src={pdf || undefined} ref={iFrameRef} />
+      <div css={actionsStyle}>
+        <Button variant="contained" onClick={print}>
           {'印刷'}
         </Button>
-        <Button onClick={download}>
+        <Button onClick={download} sx={{ ml: 1 }}>
           {'ダウンロード'}
         </Button>
       </div>

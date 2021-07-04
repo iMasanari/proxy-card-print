@@ -3,6 +3,7 @@
     "target": "es2015",
     "module": "esnext",
     "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
     "strict": true,
     "moduleResolution": "node",
     "baseUrl": ".",
