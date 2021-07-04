@@ -15,7 +15,7 @@ type Props = TextFieldProps & {
   max?: number
 }
 
-export default ({ min, max, inputProps, ...props }: Props) => {
+const NumberField = ({ min, max, inputProps, ...props }: Props) => {
   const numberInputClassName = useClassName(numberInputStyle)
 
   return (
@@ -33,3 +33,5 @@ export default ({ min, max, inputProps, ...props }: Props) => {
     />
   )
 }
+
+export default NumberField

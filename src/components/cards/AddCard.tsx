@@ -12,7 +12,7 @@ interface Props {
   add: (srcList: string[]) => void
 }
 
-export default ({ add, fullWidth }: Props) => {
+const AddCard = ({ add, fullWidth }: Props) => {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const onButtonKeyDown = (e: React.KeyboardEvent) => {
@@ -47,3 +47,5 @@ export default ({ add, fullWidth }: Props) => {
     </Button>
   )
 }
+
+export default AddCard

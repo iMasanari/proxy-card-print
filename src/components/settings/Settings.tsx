@@ -16,7 +16,7 @@ const cardSizes = {
 
 export type CardSize = keyof typeof cardSizes | 'custom'
 
-export default () => {
+const Settings = () => {
   const [cardSize, setCardSize] = useState<CardSize>('59mm x 86mm')
 
   const [cardWidth, setCardWidth] = useRecoilState(cardWidthState)
@@ -127,3 +127,5 @@ export default () => {
     </div>
   )
 }
+
+export default Settings

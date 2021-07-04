@@ -44,7 +44,7 @@ const cardActions = css`
   display: flex;
 `
 
-export default ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
+const Card = ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
   const [isOpen, toggleOpen] = useReducer(toggleReducer, false)
   const [crop, setCrop] = useState(initCrop)
 
@@ -96,3 +96,5 @@ export default ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
     </div>
   )
 }
+
+export default Card

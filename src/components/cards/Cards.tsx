@@ -56,7 +56,7 @@ const preventDefault = (e: Pick<Event, 'preventDefault'>) => {
   e.preventDefault()
 }
 
-export default () => {
+const Cards = () => {
   const cards = useRecoilValue(cardsState)
   const defaultCount = useRecoilValue(defaultCountState)
   const { add, updateCount, updateSrc, remove } = useCardsActions()
@@ -118,3 +118,5 @@ export default () => {
     </div>
   )
 }
+
+export default Cards

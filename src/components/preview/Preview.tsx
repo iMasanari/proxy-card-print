@@ -39,7 +39,7 @@ const pdfReducer = (prev: string | null, pdf: string | null) => {
   return pdf
 }
 
-export default ({ className }: Props) => {
+const Preview = ({ className }: Props) => {
   const cards = useRecoilValue(cardsState)
   const defaultCount = useRecoilValue(defaultCountState)
   const { size, orientation } = useRecoilValue(assetValueSelector)
@@ -110,3 +110,5 @@ export default ({ className }: Props) => {
     </div>
   )
 }
+
+export default Preview

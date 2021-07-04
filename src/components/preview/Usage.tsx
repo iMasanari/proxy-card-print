@@ -12,7 +12,9 @@ const usageStyle = css`
 
 const Usage = require('~/documents/Usage.mdx').default
 
-export default () =>
+const UsageComponent = () =>
   <div css={usageStyle}>
     <Usage />
   </div>
+
+export default UsageComponent

@@ -62,7 +62,7 @@ const previewStyle = (theme: Theme) => css`
   }
 `
 
-export default () => {
+const Index = () => {
   const cards = useRecoilValue(cardsState)
 
   return (
@@ -85,3 +85,5 @@ export default () => {
     </div>
   )
 }
+
+export default Index
