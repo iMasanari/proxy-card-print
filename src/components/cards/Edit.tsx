@@ -1,11 +1,26 @@
+import { css } from '@emotion/react'
+import { Button } from '@material-ui/core'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { Crop } from 'react-image-crop'
 import { CardType } from '~/modules/cards'
 import getCroppedImage from '~/utils/getCroppedImage'
-import Button from '../atoms/Button'
 
-require('react-image-crop/dist/ReactCrop.css')
-require('./Edit.css')
+const wrapperStyle = css`
+  flex: 1;
+  overflow: hidden;
+  text-align: center;
+`
+
+const reactCropStyle = css`
+  user-select: none;
+  -webkit-touch-callout: none;
+`
+
+const actionsStyle = css`
+  margin: 0.5rem 0;
+  background-color: #fff;
+  text-align: center;
+`
 
 interface Props {
   card: CardType
@@ -43,9 +58,9 @@ export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCr
 
   return (
     <>
-      <div className="EditModal-ReactCropWrapper" ref={wrapperRef}>
+      <div css={wrapperStyle} ref={wrapperRef}>
         <ReactCrop
-          className="EditModal-ReactCrop"
+          css={reactCropStyle}
           src={card.orgSrc}
           crop={crop}
           onChange={crop => setCrop(crop)}
@@ -53,12 +68,12 @@ export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCr
           onImageLoaded={el => imageEl.current = el}
         />
       </div>
-      <div className="EditModal-footer">
-        <Button onClick={executeCrop}>
-          {'切り取り'}
+      <div css={actionsStyle}>
+        <Button variant="contained" onClick={executeCrop}>
+          切り取り
         </Button>
-        <Button onClick={onRequestClose}>
-          {'キャンセル'}
+        <Button onClick={onRequestClose} sx={{ ml: 1 }}>
+          キャンセル
         </Button>
       </div>
     </>

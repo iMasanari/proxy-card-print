@@ -1,13 +1,13 @@
-import React, { useReducer, useState } from 'react'
-import { FaEdit, FaTrash } from 'react-icons/fa'
+import { css, Theme } from '@emotion/react'
+import { IconButton, InputAdornment, Dialog } from '@material-ui/core'
+import { Edit as EditIcon, RestoreFromTrash as TrashIcon } from '@material-ui/icons'
+import { useReducer, useState } from 'react'
 import { Crop } from 'react-image-crop'
 import Modal from 'react-modal'
-import { CardType } from '~/modules/cards'
-import Button from '../atoms/Button'
-import NumberFild from '../atoms/NumberFild'
+import NumberField, { toNumberOrNull } from '../atoms/NumberField'
 import Edit from './Edit'
-
-require('./Card.css')
+import { CardType } from '~/modules/cards'
+import { useClassName } from '~/utils/useClassName'
 
 interface Props {
   card: CardType
@@ -20,40 +20,70 @@ interface Props {
 const toggleReducer = (state: boolean) => !state
 const initCrop: Crop = { aspect: 59 / 86 }
 
-export default ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
+const cardStyle = (theme: Theme) => css`
+  display: flex;
+  align-items: flex-end;
+  padding: ${theme.spacing(0, 1)};
+`
+
+const thumbStyle = css`
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 43px;
+  background: #ddd no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+`
+
+const inputStyle = (theme: Theme) => css`
+  margin: ${theme.spacing(0, 1)};
+`
+
+const cardActions = css`
+  display: flex;
+`
+
+const Card = ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
   const [isOpen, toggleOpen] = useReducer(toggleReducer, false)
   const [crop, setCrop] = useState(initCrop)
 
   return (
-    <div className="Card">
+    <div css={cardStyle}>
       <div
-        className="Card-thumb"
+        css={thumbStyle}
         style={{ backgroundImage: card.src ? `url(${card.src})` : undefined }}
         onClick={toggleOpen}
       />
-      <div className="Card-count">
-        <NumberFild
-          type="number"
-          min="0"
-          placeholder={defaultCount || 0 as any}
-          value={card.count}
-          setValue={setCount}
+      <div css={inputStyle}>
+        <NumberField
+          min={0}
+          placeholder={`${defaultCount || 0}`}
+          value={card.count ?? ''}
+          onChange={e => setCount(toNumberOrNull(e.currentTarget.value))}
+          size="small"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                枚
+              </InputAdornment>
+            ),
+          }}
         />
-        {'枚'}
       </div>
-      <div>
-        <Button className="Card-button" onClick={toggleOpen}>
-          <FaEdit className="svg-icon" />
-        </Button>
-        <Button className="Card-button" onClick={remove}>
-          <FaTrash className="svg-icon" />
-        </Button>
+      <div css={cardActions}>
+        <IconButton onClick={toggleOpen}>
+          <EditIcon />
+        </IconButton>
+        <IconButton onClick={remove}>
+          <TrashIcon />
+        </IconButton>
       </div>
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={toggleOpen}
-        className="EditModal-modal"
-        overlayClassName="EditModal-overlay"
+      <Dialog
+        open={isOpen}
+        onClose={toggleOpen}
+        PaperProps={{ sx: { width: '100%', height: '100%' } }}
+        maxWidth={false}
       >
         <Edit
           card={card}
@@ -62,7 +92,9 @@ export default ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
           setCrop={setCrop}
           update={setSrc}
         />
-      </Modal>
+      </Dialog>
     </div>
   )
 }
+
+export default Card

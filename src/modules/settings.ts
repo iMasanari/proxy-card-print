@@ -1,8 +1,8 @@
 import { atom, selector } from 'recoil'
 
 export const assets = {
-  A4: { size: 'A4', orientation: 'portrait' },
-  'A4(横)': { size: 'A4', orientation: 'landscape' },
+  A4: { size: 'A4', orientation: 'landscape' },
+  'A4(縦)': { size: 'A4', orientation: 'portrait' },
   A3: { size: 'A3', orientation: 'landscape' },
 } as const
 

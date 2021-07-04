@@ -1,8 +1,13 @@
+import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import React from 'react'
 
-require('./Header.css')
+const Header = () =>
+  <AppBar position="static">
+    <Toolbar>
+      <Typography variant="h6">
+        プロキシカード印刷
+      </Typography>
+    </Toolbar>
+  </AppBar>
 
-export default () =>
-  <header className="Header">
-    <h1 className="Header-title">プロキシカード印刷</h1>
-  </header>
+export default Header

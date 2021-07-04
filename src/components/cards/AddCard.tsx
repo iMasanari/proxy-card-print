@@ -1,13 +1,18 @@
+import { css } from '@emotion/react'
+import { Button } from '@material-ui/core'
 import { KEY_RETURN, KEY_SPACE } from 'keycode-js'
 import React, { useRef } from 'react'
 
-require('./AddCard.css')
+const fileInputStyle = css`
+  display: none;
+`
 
 interface Props {
+  fullWidth?: boolean
   add: (srcList: string[]) => void
 }
 
-export default ({ add }: Props) => {
+const AddCard = ({ add, fullWidth }: Props) => {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const onButtonKeyDown = (e: React.KeyboardEvent) => {
@@ -28,17 +33,19 @@ export default ({ add }: Props) => {
   }
 
   return (
-    <label className="AddCard" role="button" tabIndex={0} onKeyDown={onButtonKeyDown}>
-      {'カード追加'}
+    <Button variant="outlined" fullWidth={fullWidth} component="label" onKeyDown={onButtonKeyDown}>
+      カード追加
       <input
         type="file"
-        className="AddCard-file"
+        css={fileInputStyle}
         accept="image/*"
         multiple
         ref={fileRef}
         tabIndex={-1}
         onChange={onFileChanhge}
       />
-    </label>
+    </Button>
   )
 }
+
+export default AddCard
