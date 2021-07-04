@@ -11,6 +11,11 @@ const wrapperStyle = css`
   text-align: center;
 `
 
+const reactCropStyle = css`
+  user-select: none;
+  -webkit-touch-callout: none;
+`
+
 const actionsStyle = css`
   margin: 0.5rem 0;
   background-color: #fff;
@@ -55,6 +60,7 @@ export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCr
     <>
       <div css={wrapperStyle} ref={wrapperRef}>
         <ReactCrop
+          css={reactCropStyle}
           src={card.orgSrc}
           crop={crop}
           onChange={crop => setCrop(crop)}
