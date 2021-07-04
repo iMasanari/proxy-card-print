@@ -3,7 +3,8 @@ const mdx = require('@next/mdx')
 const withMdx = mdx()
 
 module.exports = withMdx({
-  inlineImageLimit: false,
+  basePath: process.env.BASE_PATH,
+  trailingSlash: true,
   webpack(config) {
     config.module.rules.push(
       { test: /\.afm$/, use: 'raw-loader' },
