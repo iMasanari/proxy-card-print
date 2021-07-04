@@ -17,8 +17,8 @@ export default class MyDocument extends Document {
           <meta property="og:url" content="https://imasanari.github.io/proxy-card-print/" />
           <meta property="og:image" content={`https://imasanari.github.io/proxy-card-print${icon}`} />
           <meta name="twitter:card" content="summary" />
-          <link rel="icon" href={favicon} />
-          <link rel="apple-touch-icon" href={icon} />
+          <link rel="icon" href={favicon.src} />
+          <link rel="apple-touch-icon" href={icon.src} />
         </Head>
         <body>
           <Main />

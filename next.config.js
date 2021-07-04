@@ -1,19 +1,11 @@
 const mdx = require('@next/mdx')
-const withImages = require('next-images')
 
 const withMdx = mdx()
 
-module.exports = withMdx(withImages({
+module.exports = withMdx({
   inlineImageLimit: false,
-  webpack(config, {defaultLoaders}) {
+  webpack(config) {
     config.module.rules.push(
-      {
-        test: /\.worker\.ts$/,
-        use: [
-          { loader: 'worker-loader', options: { publicPath: '/_next/', filename: 'static/worker/worker.[hash].js' } },
-          defaultLoaders.babel,
-        ],
-      },
       { test: /\.afm$/, use: 'raw-loader' },
       { test: /node_modules\/(fontkit|linebreak)/, use: 'null-loader' },
     )
@@ -23,8 +15,13 @@ module.exports = withMdx(withImages({
       fs: 'pdfkit/js/virtual-fs.js',
     }
 
-    config.output.globalObject = 'self'
+    config.resolve.fallback= {
+      stream: require.resolve('stream-browserify'),
+      zlib: require.resolve('browserify-zlib'),
+      util: require.resolve('util/'),
+      assert: require.resolve('assert/'),
+    }
 
     return config
   },
-}))
+})

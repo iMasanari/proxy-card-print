@@ -1,4 +1,4 @@
-import { createMuiTheme, Theme as MuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createTheme, Theme as MuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { AppProps } from 'next/app'
 import React from 'react'
 import { RecoilRoot } from 'recoil'
@@ -10,7 +10,7 @@ declare module '@emotion/react' {
   }
 }
 
-const theme = createMuiTheme({})
+const theme = createTheme({})
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
