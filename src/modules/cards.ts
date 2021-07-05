@@ -7,8 +7,11 @@ export interface CardType {
   count: number | null
 }
 
-const createCard = (src: string): CardType =>
-  ({ id: Math.random().toString(32).slice(2), src, orgSrc: src, count: null })
+const createCard = (blob: Blob): CardType => {
+  const src = URL.createObjectURL(blob)
+
+  return { id: src, src, orgSrc: src, count: null }
+}
 
 const revokeCardSrc = (card: CardType | undefined) => {
   if (card && card.src !== card.orgSrc) {
@@ -31,7 +34,7 @@ export const useCardsActions = () => {
   const setter = useSetRecoilState(cardsState)
 
   return {
-    add: (list: string[]) => {
+    add: (list: Blob[]) => {
       setter((state) =>
         [...state, ...list.map(createCard)]
       )

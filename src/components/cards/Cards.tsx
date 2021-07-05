@@ -82,11 +82,10 @@ const Cards = () => {
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault()
 
-    const srcList = Array.from(e.dataTransfer!.files)
+    const fileList = Array.from(e.dataTransfer!.files)
       .filter(file => file.type.startsWith('image/'))
-      .map(file => URL.createObjectURL(file))
 
-    add(srcList)
+    add(fileList)
     setDraging(false)
   }
 
