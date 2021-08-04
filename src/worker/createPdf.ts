@@ -42,6 +42,16 @@ export default async ({ list, cardSize, size, orientation }: Condition): Promise
       doc.moveTo(x, margin).lineTo(x, doc.page.height - margin).stroke('#666')
     }
 
+    // 塗り足し
+    for (const [y, cols] of page.entries()) {
+      doc.rect(
+        marginLeft - 1,
+        y * cardHeight + marginTop - 1,
+        cols.length * cardWidth + 2,
+        cardHeight + 2,
+      ).fill('#fff')
+    }
+
     // カード表示
     for (const [y, cols] of page.entries()) {
       for (const [x, src] of cols.entries()) {
