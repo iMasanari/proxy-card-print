@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { TextField, TextFieldProps } from '@material-ui/core'
+import { TextField, TextFieldProps } from '@mui/material'
 import React from 'react'
 import { useClassName } from '~/utils/useClassName'
 

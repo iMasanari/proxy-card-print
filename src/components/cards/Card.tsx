@@ -1,13 +1,11 @@
 import { css, Theme } from '@emotion/react'
-import { IconButton, InputAdornment, Dialog } from '@material-ui/core'
-import { Edit as EditIcon, RestoreFromTrash as TrashIcon } from '@material-ui/icons'
+import { Edit as EditIcon, RestoreFromTrash as TrashIcon } from '@mui/icons-material'
+import { Dialog, IconButton, InputAdornment } from '@mui/material'
 import { useReducer, useState } from 'react'
 import { Crop } from 'react-image-crop'
-import Modal from 'react-modal'
 import NumberField, { toNumberOrNull } from '../atoms/NumberField'
 import Edit from './Edit'
 import { CardType } from '~/modules/cards'
-import { useClassName } from '~/utils/useClassName'
 
 interface Props {
   card: CardType
@@ -18,7 +16,7 @@ interface Props {
 }
 
 const toggleReducer = (state: boolean) => !state
-const initCrop: Crop = { aspect: 59 / 86 }
+const initCrop: Crop = { aspect: 59 / 86 } as Crop
 
 const cardStyle = (theme: Theme) => css`
   display: flex;

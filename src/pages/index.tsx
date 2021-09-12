@@ -1,6 +1,6 @@
 import { Global, Theme } from '@emotion/react'
 import { css } from '@emotion/react'
-import { CssBaseline } from '@material-ui/core'
+import { CssBaseline } from '@mui/material'
 import Head from 'next/head'
 import React from 'react'
 import { useRecoilValue } from 'recoil'

@@ -1,4 +1,4 @@
-import { createTheme, Theme as MuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createTheme, Theme as MuiTheme, ThemeProvider } from '@mui/material'
 import { AppProps } from 'next/app'
 import React from 'react'
 import { RecoilRoot } from 'recoil'

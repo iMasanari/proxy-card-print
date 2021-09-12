@@ -1,5 +1,5 @@
 import { css, Theme } from '@emotion/react'
-import { FormControl, InputAdornment, InputLabel, Select } from '@material-ui/core'
+import { FormControl, InputAdornment, InputLabel, Select, SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import NumberField, { toNumberOrNull } from '~/components/atoms/NumberField'
@@ -24,8 +24,8 @@ const Settings = () => {
   const [asset, setAsset] = useRecoilState(assetState)
   const [defaultCount, setDefaultCount] = useRecoilState(defaultCountState)
 
-  const updateCardSize = (e: React.ChangeEvent<{ value: CardSize }>) => {
-    const value = e.currentTarget.value
+  const updateCardSize = (e: SelectChangeEvent<CardSize>) => {
+    const value = e.target.value as CardSize
 
     setCardSize(value)
 
@@ -44,7 +44,7 @@ const Settings = () => {
         <Select
           label="用紙サイズ"
           value={asset}
-          onChange={e => setAsset(e.currentTarget.value as Asset)}
+          onChange={(e) => setAsset(e.target.value as Asset)}
           native
         >
           {Object.keys(assets).map(v =>

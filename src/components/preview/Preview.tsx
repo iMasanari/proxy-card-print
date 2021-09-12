@@ -1,5 +1,5 @@
 import { css, Theme } from '@emotion/react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import React, { useEffect, useMemo, useReducer, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { cardsState } from '~/modules/cards'

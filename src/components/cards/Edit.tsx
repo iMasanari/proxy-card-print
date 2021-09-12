@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { Crop } from 'react-image-crop'
 import { CardType } from '~/modules/cards'
@@ -65,7 +65,7 @@ export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCr
           crop={crop}
           onChange={crop => setCrop(crop)}
           imageStyle={{ maxHeight: imageMaxHeight }}
-          onImageLoaded={el => imageEl.current = el}
+          onImageLoaded={el => { imageEl.current = el }}
         />
       </div>
       <div css={actionsStyle}>

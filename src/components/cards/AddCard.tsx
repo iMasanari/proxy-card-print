@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { KEY_RETURN, KEY_SPACE } from 'keycode-js'
 import React, { useRef } from 'react'
 
