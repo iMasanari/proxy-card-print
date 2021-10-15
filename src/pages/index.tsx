@@ -1,15 +1,19 @@
 import { Global, Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import Cards from '../components/cards/Cards'
 import Header from '../components/layouts/Header'
-import Preview from '../components/preview/Preview'
 import Usage from '../components/preview/Usage'
 import Settings from '../components/settings/Settings'
 import { cardsState } from '~/modules/cards'
+
+const Preview = dynamic(import('../components/preview/Preview'), {
+  loading: () => <Usage />,
+})
 
 const globalStyle = css`
   body {

@@ -32,7 +32,8 @@ const emptyStyle = css`
 const footerStyle = (theme: Theme) => css`
   position: sticky;
   bottom: 0;
-  padding: ${theme.spacing(0, 1)};
+  padding: ${theme.spacing(1)};
+  background-color: #fff;
 `
 
 const overlayStyle = css`
