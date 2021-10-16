@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import AddCard from './AddCard'
 import Card from './Card'
+import DragOverlay from './DragOverlay'
 import { cardsState, useCardsActions } from '~/modules/cards'
 import { defaultCountState } from '~/modules/settings'
 
@@ -36,27 +37,6 @@ const footerStyle = (theme: Theme) => css`
   background-color: #fff;
 `
 
-const overlayStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 4px dashed #666;
-  border-radius: 20px;
-  font-size: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.7);
-  color: #666;
-  pointer-events: none;
-`
-
-const preventDefault = (e: Pick<Event, 'preventDefault'>) => {
-  e.preventDefault()
-}
-
 const Cards = () => {
   const cards = useRecoilValue(cardsState)
   const defaultCount = useRecoilValue(defaultCountState)
@@ -64,34 +44,45 @@ const Cards = () => {
   const [isDraging, setDraging] = useState(false)
 
   useEffect(() => {
-    const bodyListener = (e: Event) => {
-      setDraging(e.type === 'dragover')
+    const onDragOver = (e: DragEvent) => {
+      const data = e.dataTransfer
+
+      if (data && data.types.some(v => v === 'Files')) {
+        e.preventDefault()
+        setDraging(true)
+      }
+    }
+
+    const onDragLeave = () => {
+      setDraging(false)
+    }
+
+    const onDrop = (e: DragEvent) => {
+      e.preventDefault()
+
+      const fileList = Array.from(e.dataTransfer!.files)
+        .filter(file => file.type.startsWith('image/'))
+
+      add(fileList)
+      setDraging(false)
     }
 
     const body = document.body
 
-    body.addEventListener('dragover', bodyListener)
-    body.addEventListener('dragleave', bodyListener)
+    body.addEventListener('dragover', onDragOver)
+    body.addEventListener('dragleave', onDragLeave)
+    body.addEventListener('drop', onDrop)
 
     // destructor
     return () => {
-      body.removeEventListener('dragover', bodyListener)
-      body.removeEventListener('dragleave', bodyListener)
+      body.removeEventListener('dragover', onDragOver)
+      body.removeEventListener('dragleave', onDragLeave)
+      body.removeEventListener('drop', onDrop)
     }
-  }, [])
-
-  const onDrop = (e: React.DragEvent) => {
-    e.preventDefault()
-
-    const fileList = Array.from(e.dataTransfer!.files)
-      .filter(file => file.type.startsWith('image/'))
-
-    add(fileList)
-    setDraging(false)
-  }
+  }, [add])
 
   return (
-    <div css={cardsStyle} onDragOver={preventDefault} onDrop={onDrop}>
+    <div css={cardsStyle}>
       {!cards.length ? <p css={emptyStyle}>カード画像がありません</p> : (
         <ul css={listStyle}>
           {cards.map((card, index) =>
@@ -110,11 +101,7 @@ const Cards = () => {
       <div css={footerStyle}>
         <AddCard add={add} fullWidth />
       </div>
-      {isDraging && (
-        <div css={[overlayStyle]} onDragOver={preventDefault}>
-          ここに画像をドロップ
-        </div>
-      )}
+      {isDraging && <DragOverlay />}
     </div>
   )
 }
