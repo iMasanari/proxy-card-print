@@ -24,8 +24,6 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
       alert('印刷画面を開くことができませんでした。\nダウンロードして印刷してください。')
       return
     }
-
-    onClose()
   }
 
   const downloadPdf = () => {
@@ -38,7 +36,6 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
     }
 
     pdf.save(`プロキシカード印刷-${url.slice(-8)}.pdf`)
-    onClose()
   }
 
   return (
