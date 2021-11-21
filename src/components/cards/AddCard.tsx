@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { KEY_RETURN, KEY_SPACE } from 'keycode-js'
 import React, { useRef } from 'react'
 
@@ -9,7 +9,7 @@ const fileInputStyle = css`
 
 interface Props {
   fullWidth?: boolean
-  add: (srcList: string[]) => void
+  add: (fileList: Blob[]) => void
 }
 
 const AddCard = ({ add, fullWidth }: Props) => {
@@ -25,7 +25,6 @@ const AddCard = ({ add, fullWidth }: Props) => {
   const onFileChanhge = ({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
     const srcList = Array.from(currentTarget.files!)
       .filter(file => file.type.startsWith('image/'))
-      .map(file => URL.createObjectURL(file))
 
     add(srcList)
 

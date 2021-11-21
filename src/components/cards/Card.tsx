@@ -1,24 +1,22 @@
 import { css, Theme } from '@emotion/react'
-import { IconButton, InputAdornment, Dialog } from '@material-ui/core'
-import { Edit as EditIcon, RestoreFromTrash as TrashIcon } from '@material-ui/icons'
+import { Edit as EditIcon, RestoreFromTrash as TrashIcon } from '@mui/icons-material'
+import { Dialog, IconButton, InputAdornment } from '@mui/material'
 import { useReducer, useState } from 'react'
 import { Crop } from 'react-image-crop'
-import Modal from 'react-modal'
-import NumberField, { toNumberOrNull } from '../atoms/NumberField'
+import NumberField from '../atoms/NumberField'
 import Edit from './Edit'
-import { CardType } from '~/modules/cards'
-import { useClassName } from '~/utils/useClassName'
+import { SettingsCard } from '~/modules/cards'
 
 interface Props {
-  card: CardType
-  defaultCount: number | null
-  setCount: (count: number | null) => void
+  card: SettingsCard
+  cardInitCount: number
+  setCount: (count: string) => void
   setSrc: (src: string) => void
   remove: () => void
 }
 
 const toggleReducer = (state: boolean) => !state
-const initCrop: Crop = { aspect: 59 / 86 }
+const initCrop: Crop = { aspect: 59 / 86 } as Crop
 
 const cardStyle = (theme: Theme) => css`
   display: flex;
@@ -44,7 +42,7 @@ const cardActions = css`
   display: flex;
 `
 
-const Card = ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
+const Card = ({ card, cardInitCount, setCount, setSrc, remove }: Props) => {
   const [isOpen, toggleOpen] = useReducer(toggleReducer, false)
   const [crop, setCrop] = useState(initCrop)
 
@@ -58,9 +56,9 @@ const Card = ({ card, defaultCount, setCount, setSrc, remove }: Props) => {
       <div css={inputStyle}>
         <NumberField
           min={0}
-          placeholder={`${defaultCount || 0}`}
-          value={card.count ?? ''}
-          onChange={e => setCount(toNumberOrNull(e.currentTarget.value))}
+          placeholder={`${cardInitCount}`}
+          value={card.count}
+          onChange={e => setCount(e.currentTarget.value)}
           size="small"
           InputProps={{
             endAdornment: (

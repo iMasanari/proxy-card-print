@@ -1,112 +1,153 @@
 import { css, Theme } from '@emotion/react'
-import { Button } from '@material-ui/core'
-import React, { useEffect, useMemo, useReducer, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
-import { cardsState } from '~/modules/cards'
-import { assetValueSelector, cardHeightState, cardWidthState, defaultCountState } from '~/modules/settings'
-import { createPdf } from '~/servise/pdf'
+import { Button } from '@mui/material'
+import { jsPDF } from 'jspdf'
+import React, { useMemo, useRef, useState } from 'react'
+import 'svg2pdf.js'
+import ExportDialog from './ExportDialog'
+import Page from './Page'
+import { SettingsType } from '~/domains/settings'
 
 const previewStyle = css`
+  position: relative;
   @media (min-width: 600px) {
     display: flex;
     flex-direction: column;
   }
 `
 
-const pdfStyle = css`
+const containerStyle = css`
   box-sizing: border-box;
+  overflow: auto;
   width: 100%;
   border: 1px solid #ddd;
+  background-color: gray;
   @media (min-width: 600px) {
     flex: 1;
   }
 `
 
+const pageStyle = (theme: Theme) => css`
+  background-color: #fff;
+  margin: ${theme.spacing(1)};
+`
+
 const actionsStyle = (theme: Theme) => css`
-  margin: ${theme.spacing(1, 0)};
+  position: sticky;
+  bottom: 0;
+  padding: ${theme.spacing(1, 0)};
   text-align: center;
+  background-color: #fff;
 `
 
 interface Props {
   className?: string
+  settings: SettingsType
 }
 
-const pdfReducer = (prev: string | null, pdf: string | null) => {
-  if (prev) {
-    URL.revokeObjectURL(prev)
+const pageMargin = 7
+
+const chunks = <T,>(array: T[], chunk: number) => {
+  const len = Math.ceil(array.length / chunk)
+  const result: T[][] = Array(Math.ceil(array.length / chunk))
+
+  for (let i = 0; i < len; i++) {
+    result[i] = array.slice(i * chunk, (i + 1) * chunk)
   }
 
-  return pdf
+  return result
 }
 
-const Preview = ({ className }: Props) => {
-  const cards = useRecoilValue(cardsState)
-  const defaultCount = useRecoilValue(defaultCountState)
-  const { size, orientation } = useRecoilValue(assetValueSelector)
-  const cardWidth = useRecoilValue(cardWidthState)
-  const cardHeight = useRecoilValue(cardHeightState)
+const Preview = ({ className, settings }: Props) => {
+  const { pageWidth, pageHeight, cards, cardWidth, cardHeight } = settings
 
-  const iFrameRef = useRef<HTMLIFrameElement>(null)
-  const [pdf, updatePdf] = useReducer(pdfReducer, null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState(false)
+  const [pdf, setPdf] = useState<jsPDF | null>(null)
 
-  const list = useMemo(() => (
-    cards.reduce((acc, v) => {
-      const count = v.count ?? defaultCount ?? 0
+  const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
+  const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
 
-      return count > 0 ? [...acc, ...Array(count).fill(v.src)] : acc
-    }, [] as string[])
-  ), [cards, defaultCount])
+  const pages = useMemo(() => {
+    const list = cards.reduce((acc, v) => {
+      if (!v.count) return acc
 
-  const cardSize: [number, number] = useMemo(() => (
-    [Math.min(Math.max(1, cardWidth || 0), 150), Math.min(Math.max(1, cardHeight || 0), 150)]
-  ), [cardWidth, cardHeight])
+      return [
+        ...acc,
+        ...[...Array(v.count).keys()].map(i => ({
+          src: v.src,
+          id: `${i}-${v.id}`,
+        })),
+      ]
+    }, [] as { src: string, id: string }[])
 
-  useEffect(() => {
-    updatePdf(null)
-    createPdf({ list, cardSize, size, orientation })
-      .then(updatePdf)
-  }, [list, cardSize, size, orientation])
-
-  const print = () => {
-    const contentWindow = iFrameRef.current?.contentWindow
-
-    if (!contentWindow) return
-
-    try {
-      contentWindow.print()
-    } catch {
-      // Firefoxでエラーになる（cross-origin関連）
-      alert('印刷画面を開くことができませんでした。\nプレビュー内に印刷ボタンがある場合は、そこから印刷できます。または、ダウンロードして印刷してください。')
+    if (!list.length) {
+      return [[]]
     }
+
+    const rows = chunks(list, colCount)
+
+    return chunks(rows, rowCount)
+  }, [cards, colCount, rowCount])
+
+  const createPdf = async () => {
+    const container = containerRef.current
+
+    if (!container) return
+
+    const orientation = pageWidth < pageHeight ? 'p' : 'l'
+    const pdf = new jsPDF(orientation, 'mm', [pageWidth, pageHeight])
+
+    for (const [index, svg] of [...container.getElementsByTagName('svg')].entries()) {
+      // 改ページ
+      if (index) {
+        pdf.addPage()
+      }
+
+      await pdf.svg(svg)
+    }
+
+    return pdf
   }
 
-  const download = () => {
+  const openModal = async () => {
+    setPdf(null)
+
+    const pdf = await createPdf()
+
     if (!pdf) return
 
-    // スマホの場合、新規タブで開く
-    if (/iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
-      open(pdf)
-      return
-    }
-
-    const link = document.createElement('a')
-
-    link.href = pdf
-    link.download = `プロキシカード印刷-${pdf.slice(-8)}`
-    link.click()
+    setPdf(pdf)
+    setOpen(true)
   }
 
   return (
     <div css={previewStyle} className={className}>
-      <iframe css={pdfStyle} src={pdf || undefined} ref={iFrameRef} />
+      <div css={containerStyle} ref={containerRef}>
+        {pages.map((page, index) =>
+          <div key={index} css={pageStyle}>
+            <Page
+              page={page}
+              pageWidth={pageWidth}
+              pageHeight={pageHeight}
+              cardWidth={cardWidth}
+              cardHeight={cardHeight}
+              pageMargin={pageMargin}
+            />
+          </div>
+        )}
+      </div>
       <div css={actionsStyle}>
-        <Button variant="contained" onClick={print}>
-          {'印刷'}
-        </Button>
-        <Button onClick={download} sx={{ ml: 1 }}>
-          {'ダウンロード'}
+        <Button variant="contained" onClick={openModal}>
+          印刷 / ダウンロード
         </Button>
       </div>
+      {pdf && (
+        <ExportDialog
+          open={open}
+          onClose={() => setOpen(false)}
+          pdf={pdf}
+        />
+      )}
     </div>
   )
 }

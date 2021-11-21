@@ -1,60 +1,55 @@
-import { atom, useSetRecoilState } from 'recoil'
+import ActionReducer from 'action-reducer'
 
-export interface CardType {
+export interface SettingsCard {
   id: string
   src: string
   orgSrc: string
-  count: number | null
+  count: string
 }
 
-const createCard = (src: string): CardType =>
-  ({ id: Math.random().toString(32).slice(2), src, orgSrc: src, count: null })
+export type CardsState = SettingsCard[]
 
-const revokeCardSrc = (card: CardType | undefined) => {
+const { createAction, reducer: cardsReducer } = ActionReducer<CardsState>()
+
+const createCard = (blob: Blob): SettingsCard => {
+  const src = URL.createObjectURL(blob)
+
+  return { id: src, src, orgSrc: src, count: '' }
+}
+
+const revokeCardSrc = (card: SettingsCard | undefined) => {
   if (card && card.src !== card.orgSrc) {
     URL.revokeObjectURL(card.src)
   }
 }
 
-const revokeCardOrgSrc = (card: CardType | undefined) => {
+const revokeCardOrgSrc = (card: SettingsCard | undefined) => {
   if (card) {
     URL.revokeObjectURL(card.src)
   }
 }
 
-export const cardsState = atom<CardType[]>({
-  key: 'cards',
-  default: [],
+export const addCardsAction = createAction((state, list: Blob[]) =>
+  [...state, ...list.map(createCard)],
+)
+
+export const updateCardCountAction = createAction((state, index: number, count: string) =>
+  state.map((v, i) => i === index ? { ...v, count } : v),
+)
+
+export const updateCardSrcAction = createAction((state, index: number, src: string) => {
+  revokeCardSrc(state[index])
+
+  return state.map((card, i) => i === index ? { ...card, src } : card)
 })
 
-export const useCardsActions = () => {
-  const setter = useSetRecoilState(cardsState)
+export const removeCardAction = createAction((state, index: number) => {
+  const card = state[index]
 
-  return {
-    add: (list: string[]) => {
-      setter((state) =>
-        [...state, ...list.map(createCard)]
-      )
-    },
-    updateCount: (index: number, count: number | null) => {
-      setter((state) =>
-        state.map((v, i) => i === index ? { ...v, count } : v)
-      )
-    },
-    updateSrc: (index: number, src: string) => {
-      setter((state) => {
-        revokeCardSrc(state[index])
+  revokeCardSrc(card)
+  revokeCardOrgSrc(card)
 
-        return state.map((card, i) => i === index ? { ...card, src } : card)
-      })
-    },
-    remove: (index: number) => {
-      setter((state) => {
-        revokeCardSrc(state[index])
-        revokeCardOrgSrc(state[index])
+  return state.filter((_, i) => i !== index)
+})
 
-        return state.filter((_, i) => i !== index)
-      })
-    },
-  }
-}
+export default cardsReducer
