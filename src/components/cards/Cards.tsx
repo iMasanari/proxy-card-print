@@ -1,17 +1,16 @@
 import { css, Theme } from '@emotion/react'
-import React, { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import React, { Dispatch, useEffect, useState } from 'react'
 import AddCard from './AddCard'
 import Card from './Card'
 import DragOverlay from './DragOverlay'
-import { cardsState, useCardsActions } from '~/modules/cards'
-import { defaultCountState } from '~/modules/settings'
+import { useAction } from '~/hooks/state'
+import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardSrcAction } from '~/modules/cards'
 
 const cardsStyle = css`
   position: relative;
   @media (min-width: 600px) {
-      flex: 1;
-      overflow: auto;
+    flex: 1;
+    overflow: auto;
   }
 `
 
@@ -37,11 +36,19 @@ const footerStyle = (theme: Theme) => css`
   background-color: #fff;
 `
 
-const Cards = () => {
-  const cards = useRecoilValue(cardsState)
-  const defaultCount = useRecoilValue(defaultCountState)
-  const { add, updateCount, updateSrc, remove } = useCardsActions()
+interface Props {
+  cards: SettingsCard[]
+  cardInitCount: number
+  dispatch: Dispatch<any>
+}
+
+const Cards = ({ cards, cardInitCount, dispatch }: Props) => {
   const [isDraging, setDraging] = useState(false)
+
+  const addCards = useAction(addCardsAction, dispatch)
+  const updateCardCount = useAction(updateCardCountAction, dispatch)
+  const updateCardSrc = useAction(updateCardSrcAction, dispatch)
+  const removeCard = useAction(removeCardAction, dispatch)
 
   useEffect(() => {
     const onDragOver = (e: DragEvent) => {
@@ -63,7 +70,7 @@ const Cards = () => {
       const fileList = Array.from(e.dataTransfer!.files)
         .filter(file => file.type.startsWith('image/'))
 
-      add(fileList)
+      addCards(fileList)
       setDraging(false)
     }
 
@@ -79,7 +86,7 @@ const Cards = () => {
       body.removeEventListener('dragleave', onDragLeave)
       body.removeEventListener('drop', onDrop)
     }
-  }, [add])
+  }, [addCards])
 
   return (
     <div css={cardsStyle}>
@@ -89,17 +96,17 @@ const Cards = () => {
             <li key={card.id} css={itemStyle}>
               <Card
                 card={card}
-                defaultCount={defaultCount}
-                setCount={count => updateCount(index, count)}
-                setSrc={src => updateSrc(index, src)}
-                remove={() => remove(index)}
+                cardInitCount={cardInitCount}
+                setCount={count => updateCardCount(index, count)}
+                setSrc={src => updateCardSrc(index, src)}
+                remove={() => removeCard(index)}
               />
             </li>
           )}
         </ul>
       )}
       <div css={footerStyle}>
-        <AddCard add={add} fullWidth />
+        <AddCard add={addCards} fullWidth />
       </div>
       {isDraging && <DragOverlay />}
     </div>

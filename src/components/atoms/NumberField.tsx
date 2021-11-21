@@ -1,9 +1,6 @@
 import { TextField, TextFieldProps } from '@mui/material'
 import React from 'react'
 
-export const toNumberOrNull = (str: string) =>
-  str !== '' && !isNaN(str as any) ? +str : null
-
 type Props = TextFieldProps & {
   min?: number
   max?: number

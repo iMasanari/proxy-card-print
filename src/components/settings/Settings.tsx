@@ -1,41 +1,22 @@
 import { css, Theme } from '@emotion/react'
-import { FormControl, InputAdornment, InputLabel, Select, SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
-import { useRecoilState } from 'recoil'
-import NumberField, { toNumberOrNull } from '~/components/atoms/NumberField'
-import { Asset, assets, assetState, cardHeightState, cardWidthState, defaultCountState } from '~/modules/settings'
+import { FormControl, InputAdornment, InputLabel, Select } from '@mui/material'
+import React, { Dispatch } from 'react'
+import NumberField from '~/components/atoms/NumberField'
+import { cardSizes, pageSizes } from '~/domains/settings'
+import { useAction } from '~/hooks/state'
+import { SettingsState, updateSettingsAction } from '~/modules/settings'
 
 const settingStyle = (theme: Theme) => css`
   padding: ${theme.spacing(1)};
 `
 
-const cardSizes = {
-  '59mm x 86mm': [59, 86] as [number, number],
-  '63mm x 88mm': [63, 88] as [number, number],
+interface Props {
+  form: SettingsState
+  dispatch: Dispatch<any>
 }
 
-export type CardSize = keyof typeof cardSizes | 'custom'
-
-const Settings = () => {
-  const [cardSize, setCardSize] = useState<CardSize>('59mm x 86mm')
-
-  const [cardWidth, setCardWidth] = useRecoilState(cardWidthState)
-  const [cardHeight, setCardHeight] = useRecoilState(cardHeightState)
-  const [asset, setAsset] = useRecoilState(assetState)
-  const [defaultCount, setDefaultCount] = useRecoilState(defaultCountState)
-
-  const updateCardSize = (e: SelectChangeEvent<CardSize>) => {
-    const value = e.target.value as CardSize
-
-    setCardSize(value)
-
-    if (value !== 'custom') {
-      const [width, height] = cardSizes[value]
-
-      setCardWidth(width)
-      setCardHeight(height)
-    }
-  }
+const Settings = ({ form, dispatch }: Props) => {
+  const updateSettings = useAction(updateSettingsAction, dispatch)
 
   return (
     <div css={settingStyle}>
@@ -43,11 +24,11 @@ const Settings = () => {
         <InputLabel>用紙サイズ</InputLabel>
         <Select
           label="用紙サイズ"
-          value={asset}
-          onChange={(e) => setAsset(e.target.value as Asset)}
+          value={form.pageSize}
+          onChange={(e) => updateSettings('pageSize', e.target.value)}
           native
         >
-          {Object.keys(assets).map(v =>
+          {Object.keys(pageSizes).map(v =>
             <option key={v} value={v}>{v}</option>
           )}
         </Select>
@@ -56,8 +37,8 @@ const Settings = () => {
         <InputLabel>カードサイズ</InputLabel>
         <Select
           label="カードサイズ"
-          value={cardSize}
-          onChange={updateCardSize}
+          value={form.cardSize}
+          onChange={(e) => updateSettings('cardSize', e.target.value)}
           native
         >
           {Object.keys(cardSizes).map(v =>
@@ -66,14 +47,14 @@ const Settings = () => {
           <option value="custom">カスタム</option>
         </Select>
       </FormControl>
-      {cardSize === 'custom' && (
+      {form.cardSize === 'custom' && (
         <div>
           <NumberField
             label="幅"
             min={0}
             max={150}
-            value={cardWidth ?? ''}
-            onChange={e => setCardWidth(toNumberOrNull(e.currentTarget.value))}
+            value={form.cardWidth}
+            onChange={(e) => updateSettings('cardWidth', e.target.value)}
             size="small"
             sx={{ mt: 2 }}
             InputProps={{
@@ -88,8 +69,8 @@ const Settings = () => {
             label="縦"
             min={0}
             max={150}
-            value={cardHeight ?? ''}
-            onChange={e => setCardHeight(toNumberOrNull(e.currentTarget.value))}
+            value={form.cardHeight}
+            onChange={(e) => updateSettings('cardHeight', e.target.value)}
             size="small"
             sx={{ mt: 2, ml: 2 }}
             InputProps={{
@@ -106,8 +87,8 @@ const Settings = () => {
         label="カード印刷数"
         min={0}
         max={150}
-        value={defaultCount ?? ''}
-        onChange={e => setDefaultCount(toNumberOrNull(e.currentTarget.value))}
+        value={form.cardInitCount}
+        onChange={(e) => updateSettings('cardInitCount', e.target.value)}
         size="small"
         sx={{ mt: 2 }}
         fullWidth
@@ -117,11 +98,6 @@ const Settings = () => {
               {'枚ずつ'}
             </InputAdornment>
           ),
-        }}
-        inputProps={{
-          min: 0,
-          inputMode: 'numeric',
-          pattern: '[0-9]*',
         }}
       />
     </div>

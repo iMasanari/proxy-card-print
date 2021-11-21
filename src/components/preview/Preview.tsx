@@ -2,12 +2,10 @@ import { css, Theme } from '@emotion/react'
 import { Button } from '@mui/material'
 import { jsPDF } from 'jspdf'
 import React, { useMemo, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import 'svg2pdf.js'
 import ExportDialog from './ExportDialog'
 import Page from './Page'
-import { cardsState } from '~/modules/cards'
-import { assetValueSelector, cardHeightState, cardWidthState, defaultCountState } from '~/modules/settings'
+import { SettingsType } from '~/domains/settings'
 
 const previewStyle = css`
   position: relative;
@@ -43,9 +41,10 @@ const actionsStyle = (theme: Theme) => css`
 
 interface Props {
   className?: string
+  settings: SettingsType
 }
 
-const pageMargin = 10
+const pageMargin = 7
 
 const chunks = <T,>(array: T[], chunk: number) => {
   const len = Math.ceil(array.length / chunk)
@@ -58,34 +57,27 @@ const chunks = <T,>(array: T[], chunk: number) => {
   return result
 }
 
-const Preview = ({ className }: Props) => {
-  const cards = useRecoilValue(cardsState)
-  const defaultCount = useRecoilValue(defaultCountState)
-  const { size, orientation } = useRecoilValue(assetValueSelector)
-  const _cardWidth = useRecoilValue(cardWidthState)
-  const _cardHeight = useRecoilValue(cardHeightState)
+const Preview = ({ className, settings }: Props) => {
+  const { pageWidth, pageHeight, cards, cardWidth, cardHeight } = settings
+
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
   const [pdf, setPdf] = useState<jsPDF | null>(null)
-
-  const pageSize = size === 'A4' ? [210, 297] : [297, 420]
-  const [pageWidth, pageHeight] = orientation === 'portrait' ? pageSize : [pageSize[1], pageSize[0]]
-
-  const cardWidth = Math.min(Math.max(1, _cardWidth || 0), pageWidth)
-  const cardHeight = Math.min(Math.max(1, _cardHeight || 0), pageHeight)
 
   const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
   const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
 
   const pages = useMemo(() => {
     const list = cards.reduce((acc, v) => {
-      const count = v.count ?? defaultCount ?? 0
-      const list = [...Array(count).keys()].map(i => ({
-        src: v.src,
-        id: `${i}-${v.src}`,
-      }))
+      if (!v.count) return acc
 
-      return count > 0 ? [...acc, ...list] : acc
+      return [
+        ...acc,
+        ...[...Array(v.count).keys()].map(i => ({
+          src: v.src,
+          id: `${i}-${v.id}`,
+        })),
+      ]
     }, [] as { src: string, id: string }[])
 
     if (!list.length) {
@@ -95,13 +87,14 @@ const Preview = ({ className }: Props) => {
     const rows = chunks(list, colCount)
 
     return chunks(rows, rowCount)
-  }, [cards, defaultCount, colCount, rowCount])
+  }, [cards, colCount, rowCount])
 
   const createPdf = async () => {
     const container = containerRef.current
 
     if (!container) return
 
+    const orientation = pageWidth < pageHeight ? 'p' : 'l'
     const pdf = new jsPDF(orientation, 'mm', [pageWidth, pageHeight])
 
     for (const [index, svg] of [...container.getElementsByTagName('svg')].entries()) {

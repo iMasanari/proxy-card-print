@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import { Button } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { Crop } from 'react-image-crop'
-import { CardType } from '~/modules/cards'
+import { SettingsCard } from '~/modules/cards'
 import getCroppedImage from '~/utils/getCroppedImage'
 
 const wrapperStyle = css`
@@ -23,7 +23,7 @@ const actionsStyle = css`
 `
 
 interface Props {
-  card: CardType
+  card: SettingsCard
   onRequestClose: () => void
   update: (src: string) => void
   crop: Crop
