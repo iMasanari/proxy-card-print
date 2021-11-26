@@ -1,19 +1,15 @@
 import { css, Global, Theme } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import React, { useMemo, useReducer } from 'react'
 import Cards from '../components/cards/Cards'
 import Header from '../components/layouts/Header'
+import Preview from '../components/preview/Preview'
 import Usage from '../components/preview/Usage'
 import Settings from '../components/settings/Settings'
 import { PageSize, pageSizes } from '~/domains/settings'
 import cardsReducer, { CardsState } from '~/modules/cards'
 import settingsReducer from '~/modules/settings'
-
-const Preview = dynamic(import('../components/preview/Preview'), {
-  loading: () => <Usage />,
-})
 
 const globalStyle = css`
   body {
