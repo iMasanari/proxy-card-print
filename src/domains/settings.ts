@@ -20,7 +20,7 @@ export interface CardType {
   count: number
 }
 
-export interface SettingsType {
+export interface PreviewData {
   pageWidth: number
   pageHeight: number
   cardWidth: number

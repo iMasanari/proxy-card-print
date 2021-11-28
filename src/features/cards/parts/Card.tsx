@@ -3,9 +3,9 @@ import { Edit as EditIcon, RestoreFromTrash as TrashIcon } from '@mui/icons-mate
 import { Dialog, IconButton, InputAdornment } from '@mui/material'
 import { useReducer, useState } from 'react'
 import { Crop } from 'react-image-crop'
-import NumberField from '../atoms/NumberField'
+import { SettingsCard } from '../cardsReducer'
 import Edit from './Edit'
-import { SettingsCard } from '~/modules/cards'
+import NumberField from '~/common/atoms/NumberField'
 
 interface Props {
   card: SettingsCard

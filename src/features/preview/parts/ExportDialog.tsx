@@ -1,21 +1,15 @@
 import { css } from '@emotion/react'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
-import { jsPDF } from 'jspdf'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useRef } from 'react'
 
 interface Props {
   open: boolean
   onClose: () => void
-  pdf: jsPDF
+  pdf: string
 }
 
 const ExportDialog = ({ open, onClose, pdf }: Props) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const url = useMemo(() => URL.createObjectURL(pdf.output('blob')), [pdf])
-
-  useEffect(() => {
-    return () => URL.revokeObjectURL(url)
-  }, [url])
 
   const printPdf = () => {
     try {
@@ -31,11 +25,17 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
 
     // スマホの場合、新規タブで開く
     if (/iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
-      window.open(url)
+      window.open(pdf)
       return
     }
 
-    pdf.save(`プロキシカード印刷-${url.slice(-8)}.pdf`)
+    const a = document.createElement('a')
+
+    a.download = `プロキシカード印刷-${pdf.slice(-8)}.pdf`
+    a.href = pdf
+    a.rel = 'noopener'
+
+    a.click()
   }
 
   return (
@@ -77,7 +77,7 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
           ダウンロード
         </Button>
       </DialogActions>
-      <iframe ref={iframeRef} src={url} css={css`display: none;`} />
+      <iframe ref={iframeRef} src={pdf} css={css`display: none;`} />
     </Dialog>
   )
 }

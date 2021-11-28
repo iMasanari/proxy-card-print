@@ -1,10 +1,10 @@
 import { css, Theme } from '@emotion/react'
 import React, { Dispatch, useEffect, useState } from 'react'
-import AddCard from './AddCard'
-import Card from './Card'
-import DragOverlay from './DragOverlay'
-import { useAction } from '~/hooks/state'
-import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardSrcAction } from '~/modules/cards'
+import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardSrcAction } from './cardsReducer'
+import AddCard from './parts/AddCard'
+import Card from './parts/Card'
+import DragOverlay from './parts/DragOverlay'
+import { useAction } from '~/common/hooks/state'
 
 const cardsStyle = css`
   position: relative;

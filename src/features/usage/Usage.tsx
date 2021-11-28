@@ -10,11 +10,11 @@ const usageStyle = css`
   }
 `
 
-const Usage = require('~/documents/Usage.mdx').default
+const UsageDocument = require('./UsageDocument.mdx').default
 
-const UsageComponent = () =>
+const Usage = () =>
   <div css={usageStyle}>
-    <Usage />
+    <UsageDocument />
   </div>
 
-export default UsageComponent
+export default Usage

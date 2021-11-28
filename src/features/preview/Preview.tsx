@@ -1,11 +1,10 @@
 import { css, Theme } from '@emotion/react'
 import { Button } from '@mui/material'
-import { jsPDF } from 'jspdf'
 import React, { useMemo, useRef, useState } from 'react'
-import 'svg2pdf.js'
-import ExportDialog from './ExportDialog'
-import Page from './Page'
-import { SettingsType } from '~/domains/settings'
+import ExportDialog from './parts/ExportDialog'
+import Page from './parts/Page'
+import { createPdfFile } from './pdf'
+import { PreviewData } from '~/domains/settings'
 
 const previewStyle = css`
   position: relative;
@@ -41,7 +40,7 @@ const actionsStyle = (theme: Theme) => css`
 
 interface Props {
   className?: string
-  settings: SettingsType
+  data: PreviewData
 }
 
 const pageMargin = 7
@@ -57,12 +56,12 @@ const chunks = <T,>(array: T[], chunk: number) => {
   return result
 }
 
-const Preview = ({ className, settings }: Props) => {
+const Preview = ({ className, data: settings }: Props) => {
   const { pageWidth, pageHeight, cards, cardWidth, cardHeight } = settings
 
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
-  const [pdf, setPdf] = useState<jsPDF | null>(null)
+  const [pdf, setPdf] = useState<string | null>(null)
 
   const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
   const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
@@ -94,17 +93,11 @@ const Preview = ({ className, settings }: Props) => {
 
     if (!container) return
 
-    const orientation = pageWidth < pageHeight ? 'p' : 'l'
-    const pdf = new jsPDF(orientation, 'mm', [pageWidth, pageHeight])
-
-    for (const [index, svg] of [...container.getElementsByTagName('svg')].entries()) {
-      // 改ページ
-      if (index) {
-        pdf.addPage()
-      }
-
-      await pdf.svg(svg)
-    }
+    const pdf = await createPdfFile({
+      svg: Array.from(container.getElementsByTagName('svg'), svg => svg.outerHTML),
+      width: pageWidth,
+      height: pageHeight,
+    })
 
     return pdf
   }
@@ -116,7 +109,13 @@ const Preview = ({ className, settings }: Props) => {
 
     if (!pdf) return
 
-    setPdf(pdf)
+    setPdf(prev => {
+      // TODO: setter内の副作用処理をなくす
+      prev && URL.revokeObjectURL(prev)
+
+      return pdf
+    })
+
     setOpen(true)
   }
 
