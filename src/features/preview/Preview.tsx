@@ -1,10 +1,10 @@
 import { css, Theme } from '@emotion/react'
 import { Button } from '@mui/material'
 import React, { useMemo, useRef, useState } from 'react'
-import ExportDialog from './ExportDialog'
-import Page from './Page'
-import { SettingsType } from '~/domains/settings'
-import { createPdfFile } from '~/pdf'
+import ExportDialog from './parts/ExportDialog'
+import Page from './parts/Page'
+import { createPdfFile } from './pdf'
+import { PreviewData } from '~/domains/settings'
 
 const previewStyle = css`
   position: relative;
@@ -40,7 +40,7 @@ const actionsStyle = (theme: Theme) => css`
 
 interface Props {
   className?: string
-  settings: SettingsType
+  data: PreviewData
 }
 
 const pageMargin = 7
@@ -56,7 +56,7 @@ const chunks = <T,>(array: T[], chunk: number) => {
   return result
 }
 
-const Preview = ({ className, settings }: Props) => {
+const Preview = ({ className, data: settings }: Props) => {
   const { pageWidth, pageHeight, cards, cardWidth, cardHeight } = settings
 
   const containerRef = useRef<HTMLDivElement>(null)

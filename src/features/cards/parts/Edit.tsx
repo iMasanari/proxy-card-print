@@ -2,8 +2,8 @@ import { css } from '@emotion/react'
 import { Button } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { Crop } from 'react-image-crop'
-import { SettingsCard } from '~/modules/cards'
-import getCroppedImage from '~/utils/getCroppedImage'
+import { SettingsCard } from '../cardsReducer'
+import getCroppedImage from '../crop/getCroppedImage'
 
 const wrapperStyle = css`
   flex: 1;

@@ -1,12 +1,12 @@
 import { DOMParser } from '@xmldom/xmldom'
 import jsPDF from 'jspdf'
 import registerPromiseWorker from 'promise-worker/register'
-import 'svg2pdf.js'
+import { svg2pdf } from 'svg2pdf.js'
 
 const globalThis = self as any
 
 // for svg2pdf.js
-globalThis.document = {
+globalThis.document = globalThis.document || {
   implementation: {
     createHTMLDocument: () => null,
   },
@@ -38,7 +38,7 @@ registerPromiseWorker<Option, string>(async (option) => {
       pdf.addPage()
     }
 
-    await pdf.svg(svg)
+    await svg2pdf(svg, pdf)
   }
 
   return URL.createObjectURL(pdf.output('blob'))

@@ -1,10 +1,10 @@
 import { css, Theme } from '@emotion/react'
 import { FormControl, InputAdornment, InputLabel, Select } from '@mui/material'
 import React, { Dispatch } from 'react'
-import NumberField from '~/components/atoms/NumberField'
+import NumberField from '~/common/atoms/NumberField'
+import { useAction } from '~/common/hooks/state'
 import { cardSizes, pageSizes } from '~/domains/settings'
-import { useAction } from '~/hooks/state'
-import { SettingsState, updateSettingsAction } from '~/modules/settings'
+import { SettingsState, updateSettingsAction } from '~/features/settings/settingsReducer'
 
 const settingStyle = (theme: Theme) => css`
   padding: ${theme.spacing(1)};

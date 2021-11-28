@@ -1,15 +1,15 @@
 import { css, Global, Theme } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
 import Head from 'next/head'
-import React, { useMemo, useReducer } from 'react'
-import Cards from '../components/cards/Cards'
-import Header from '../components/layouts/Header'
-import Preview from '../components/preview/Preview'
-import Usage from '../components/preview/Usage'
-import Settings from '../components/settings/Settings'
-import { PageSize, pageSizes } from '~/domains/settings'
-import cardsReducer, { CardsState } from '~/modules/cards'
-import settingsReducer from '~/modules/settings'
+import React, { useReducer } from 'react'
+import Header from '~/common/layouts/Header'
+import Cards from '~/features/cards/Cards'
+import cardsReducer, { CardsState } from '~/features/cards/cardsReducer'
+import Preview from '~/features/preview/Preview'
+import { usePreviewData } from '~/features/preview/previewHooks'
+import Settings from '~/features/settings/Settings'
+import settingsReducer from '~/features/settings/settingsReducer'
+import Usage from '~/features/usage/Usage'
 
 const globalStyle = css`
   body {
@@ -62,9 +62,6 @@ const previewStyle = (theme: Theme) => css`
   }
 `
 
-const toInt = (str: string, defaultValue = NaN) =>
-  /[1-9]*[0-9]/.test(str) ? +str : defaultValue
-
 const intiSettings = {
   pageSize: 'A4',
   cardSize: '59mm x 86mm',
@@ -79,26 +76,7 @@ const Index = () => {
   const [settingsForm, settingsDispatch] = useReducer(settingsReducer, intiSettings)
   const [cardsForm, cardsDispatch] = useReducer(cardsReducer, initCards)
 
-  const settings = useMemo(() => {
-    const [pageWidth, pageHeight] = pageSizes[settingsForm.pageSize as PageSize] || pageSizes['A4']
-    const cardWidth = Math.min(Math.max(1, toInt(settingsForm.cardWidth, 0)), pageWidth)
-    const cardHeight = Math.min(Math.max(1, toInt(settingsForm.cardHeight, 0)), pageHeight)
-    const cardInitCount = toInt(settingsForm.cardInitCount, 0)
-
-    const cards = cardsForm.map(card => ({
-      ...card,
-      count: toInt(card.count, cardInitCount),
-    }))
-
-    return {
-      pageWidth,
-      pageHeight,
-      cardWidth,
-      cardHeight,
-      cards,
-      cardInitCount,
-    }
-  }, [settingsForm, cardsForm])
+  const data = usePreviewData(settingsForm, cardsForm)
 
   return (
     <div css={appStyle}>
@@ -111,10 +89,10 @@ const Index = () => {
       <div css={contentsStyle}>
         <div css={conditionsStyle}>
           <Settings form={settingsForm} dispatch={settingsDispatch} />
-          <Cards cards={cardsForm} cardInitCount={settings.cardInitCount} dispatch={cardsDispatch} />
+          <Cards cards={cardsForm} cardInitCount={data.cardInitCount} dispatch={cardsDispatch} />
         </div>
-        {!settings.cards.length ? <Usage /> : (
-          <Preview css={previewStyle} settings={settings} />
+        {!data.cards.length ? <Usage /> : (
+          <Preview css={previewStyle} data={data} />
         )}
       </div>
     </div>
