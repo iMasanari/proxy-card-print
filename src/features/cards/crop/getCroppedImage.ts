@@ -28,5 +28,5 @@ export const getCroppedImage = async (image: HTMLImageElement, crop: Required<Cr
 
   const blob = await getBlob(canvas)
 
-  return URL.createObjectURL(blob)
+  return URL.createObjectURL(blob!)
 }
