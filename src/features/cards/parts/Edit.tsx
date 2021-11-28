@@ -3,7 +3,7 @@ import { Button } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { Crop } from 'react-image-crop'
 import { SettingsCard } from '../cardsReducer'
-import getCroppedImage from '../crop/getCroppedImage'
+import { getCroppedImage } from '../crop/getCroppedImage'
 
 const wrapperStyle = css`
   flex: 1;
@@ -30,7 +30,7 @@ interface Props {
   setCrop: (crop: Crop) => void
 }
 
-export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCrop }: Props) => {
+const Edit = ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCrop }: Props) => {
   const [crop, setCrop] = useState(orgCrop)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const imageEl = useRef<HTMLImageElement>()
@@ -79,3 +79,5 @@ export default ({ card, onRequestClose, update, crop: orgCrop, setCrop: setOrgCr
     </>
   )
 }
+
+export default Edit

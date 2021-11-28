@@ -3,7 +3,7 @@ import { Crop } from 'react-image-crop'
 const getBlob = (canvas: HTMLCanvasElement) =>
   new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/jpeg', 1))
 
-export default async (image: HTMLImageElement, crop: Required<Crop>) => {
+export const getCroppedImage = async (image: HTMLImageElement, crop: Required<Crop>) => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')!
   const scaleX = image.naturalWidth / image.width
