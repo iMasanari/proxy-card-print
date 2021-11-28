@@ -1,0 +1,46 @@
+import { Edit } from '@mui/icons-material'
+
+## 使い方
+
+1. カード追加から、印刷したい画像を選択します
+1. 各カード画像を印刷する枚数を入力します
+1. 画面上の印刷ボタンから印刷し、カードサイズに合わせてカットしてください
+
+- カード追加は複数選択やドラッグ&ドロップでの取り込みに対応しています
+- 画像は <Edit sx={{ fontSize: '1em', verticalAlign: 'text-top' }} /> ボタンでトリミングできます
+- 印刷はフチなし印刷、または拡大・縮小無し(倍率 100%/用紙に合わせる)で印刷してください
+- ダウンロードボタンで、印刷用データ(PDF)を保存できます
+  - 家にプリンタがなくても、[かんたん netprint][netprint] 等を利用して印刷ができます
+
+
+## カードサイズについて
+
+- 59mm×86mm: 遊戯王、ヴァンガード、バトルスピリッツ、ミラクルバトルカードダス
+- 63mm×88mm: MTG、デュエルマスターズ、ヴァイスシュヴァルツ、ChaosTCG、Z/X（ゼクス）、バディファイト、ポケモンカードゲーム、三国志大戦TCG
+
+参考: [トレカ（TCG）のサイズの種類についてまとめたった][card-size]
+
+## プロキシカードの使用について
+
+下記を守って使用してください。
+
+- 使用した画像の著作権や利用規約
+- プロキシカード使用についてのルールやマナー
+
+印刷物および印刷データ(PDF)は、自由に使用していただいて構いませんが、当サービス利用でなんらかの損害が生じても、製作者は一切の責任を負いません。
+
+## 推奨環境
+
+最新のモダンブラウザを使用してください。  
+推奨はデスクトップ版 Google Chrome です。Internet Explorer には対応しておりません。  
+なお、スマートフォンでの印刷は未検証です。
+
+## 開発
+
+GitHub にて、ソースコードを公開しています。issue やプルリクをお待ちしております。
+
+[![iMasanari/proxy-card-print - GitHub](https://gh-card.dev/repos/iMasanari/proxy-card-print.svg)](https://github.com/iMasanari/proxy-card-print)
+
+
+[netprint]: https://www.printing.ne.jp/support/lite/index.html
+[card-size]: http://www.mojahedin-enghelab.com/トレカ（tcg）のサイズの種類についてまとめたっ/

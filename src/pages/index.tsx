@@ -1,15 +1,17 @@
-import { Global, Theme } from '@emotion/react'
-import { css } from '@emotion/react'
-import { CssBaseline } from '@material-ui/core'
+import { css, Global, Theme } from '@emotion/react'
+import { CssBaseline } from '@mui/material'
 import Head from 'next/head'
-import React from 'react'
-import { useRecoilValue } from 'recoil'
-import Cards from '../components/cards/Cards'
-import Header from '../components/layouts/Header'
-import Preview from '../components/preview/Preview'
-import Usage from '../components/preview/Usage'
-import Settings from '../components/settings/Settings'
-import { cardsState } from '~/modules/cards'
+import React, { useReducer } from 'react'
+import favicon from '../assets/favicon.png'
+import icon from '../assets/icon.png'
+import Header from '~/common/layouts/Header'
+import Cards from '~/features/cards/Cards'
+import cardsReducer, { CardsState } from '~/features/cards/cardsReducer'
+import Preview from '~/features/preview/Preview'
+import { usePreviewData } from '~/features/preview/previewHooks'
+import Settings from '~/features/settings/Settings'
+import settingsReducer from '~/features/settings/settingsReducer'
+import Usage from '~/features/usage/Usage'
 
 const globalStyle = css`
   body {
@@ -62,24 +64,46 @@ const previewStyle = (theme: Theme) => css`
   }
 `
 
+const intiSettings = {
+  pageSize: 'A4',
+  cardSize: '59mm x 86mm',
+  cardWidth: '59',
+  cardHeight: '86',
+  cardInitCount: '1',
+}
+
+const initCards: CardsState = []
+
 const Index = () => {
-  const cards = useRecoilValue(cardsState)
+  const [settingsForm, settingsDispatch] = useReducer(settingsReducer, intiSettings)
+  const [cardsForm, cardsDispatch] = useReducer(cardsReducer, initCards)
+
+  const data = usePreviewData(settingsForm, cardsForm)
 
   return (
     <div css={appStyle}>
       <Head>
         <title>プロキシカード印刷</title>
+        <meta name="description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷するWebアプリ" />
+        <meta property="og:title" content="プロキシカード印刷" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷するWebアプリ" />
+        <meta property="og:url" content="https://imasanari.github.io/proxy-card-print/" />
+        <meta property="og:image" content={`https://imasanari.github.io/proxy-card-print${icon.src}`} />
+        <meta name="twitter:card" content="summary" />
+        <link rel="icon" href={favicon.src} />
+        <link rel="apple-touch-icon" href={icon.src} />
       </Head>
       <CssBaseline />
       <Global styles={globalStyle} />
       <Header />
       <div css={contentsStyle}>
         <div css={conditionsStyle}>
-          <Settings />
-          <Cards />
+          <Settings form={settingsForm} dispatch={settingsDispatch} />
+          <Cards cards={cardsForm} cardInitCount={data.cardInitCount} dispatch={cardsDispatch} />
         </div>
-        {!cards.length ? <Usage /> : (
-          <Preview css={previewStyle} />
+        {!data.cards.length ? <Usage /> : (
+          <Preview css={previewStyle} data={data} />
         )}
       </div>
     </div>
