@@ -1,5 +1,5 @@
 import { css, Theme } from '@emotion/react'
-import { Edit as EditIcon, RestoreFromTrash as TrashIcon } from '@mui/icons-material'
+import { Add, Edit as EditIcon, Remove, RestoreFromTrash as TrashIcon } from '@mui/icons-material'
 import { Dialog, IconButton, InputAdornment } from '@mui/material'
 import { useReducer, useState } from 'react'
 import { Crop } from 'react-image-crop'
@@ -36,6 +36,7 @@ const thumbStyle = css`
 
 const inputStyle = (theme: Theme) => css`
   margin: ${theme.spacing(0, 1)};
+  flex: 1;
 `
 
 const cardActions = css`
@@ -55,15 +56,27 @@ const Card = ({ card, cardInitCount, setCount, setSrc, remove }: Props) => {
       />
       <div css={inputStyle}>
         <NumberField
+          spinButton={false}
           min={0}
           placeholder={`${cardInitCount}`}
           value={card.count}
           onChange={e => setCount(e.currentTarget.value)}
           size="small"
+          fullWidth
           InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconButton edge="start" onClick={() => setCount(`${Math.max(+(card.count || cardInitCount) - 1, 0)}`)} >
+                  <Remove />
+                </IconButton>
+              </InputAdornment>
+            ),
             endAdornment: (
               <InputAdornment position="end">
                 枚
+                <IconButton edge="end" onClick={() => setCount(`${+(card.count || cardInitCount) + 1}`)}>
+                  <Add />
+                </IconButton>
               </InputAdornment>
             ),
           }}
