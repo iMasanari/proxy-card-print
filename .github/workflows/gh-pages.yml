@@ -30,6 +30,7 @@ jobs:
       - run: npm run build
         env:
           BASE_PATH: ${{ secrets.BASE_PATH }}
+          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
