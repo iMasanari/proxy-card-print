@@ -4,7 +4,7 @@ import React from 'react'
 const Header = () =>
   <AppBar position="static">
     <Toolbar>
-      <Typography variant="h6">
+      <Typography component="h1" variant="h6">
         プロキシカード印刷
       </Typography>
     </Toolbar>
