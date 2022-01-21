@@ -1,5 +1,6 @@
 import { css, Theme } from '@emotion/react'
-import { FormControl, InputAdornment, InputLabel, Select } from '@mui/material'
+import { Add, Remove } from '@mui/icons-material'
+import { FormControl, Grid, IconButton, InputAdornment, InputLabel, Select } from '@mui/material'
 import React, { Dispatch } from 'react'
 import NumberField from '~/common/atoms/NumberField'
 import { useAction } from '~/common/hooks/state'
@@ -48,42 +49,67 @@ const Settings = ({ form, dispatch }: Props) => {
         </Select>
       </FormControl>
       {form.cardSize === 'custom' && (
-        <div>
-          <NumberField
-            label="幅"
-            min={0}
-            max={150}
-            value={form.cardWidth}
-            onChange={(e) => updateSettings('cardWidth', e.target.value)}
-            size="small"
-            sx={{ mt: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {'mm'}
-                </InputAdornment>
-              ),
-            }}
-          />
-          <NumberField
-            label="縦"
-            min={0}
-            max={150}
-            value={form.cardHeight}
-            onChange={(e) => updateSettings('cardHeight', e.target.value)}
-            size="small"
-            sx={{ mt: 2, ml: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {'mm'}
-                </InputAdornment>
-              ),
-            }}
-          />
-        </div>
+        <Grid container spacing={2} my={0}>
+          <Grid item xs={6}>
+            <NumberField
+              spinButton={false}
+              label="カード幅 (mm)"
+              min={0}
+              max={150}
+              value={form.cardWidth}
+              onChange={(e) => updateSettings('cardWidth', e.target.value)}
+              size="small"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton edge="start" onClick={() => updateSettings('cardWidth', `${Math.max(+form.cardWidth - 1, 0)}`)} >
+                      <Remove />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => updateSettings('cardWidth', `${+form.cardWidth + 1}`)}>
+                      <Add />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <NumberField
+              spinButton={false}
+              label="カード縦 (mm)"
+              min={0}
+              max={150}
+              value={form.cardHeight}
+              onChange={(e) => updateSettings('cardHeight', e.target.value)}
+              size="small"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton edge="start" onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)} >
+                      <Remove />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}>
+                      <Add />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+        </Grid>
       )}
       <NumberField
+        spinButton={false}
         label="カード印刷数"
         min={0}
         max={150}
@@ -93,9 +119,19 @@ const Settings = ({ form, dispatch }: Props) => {
         sx={{ mt: 2 }}
         fullWidth
         InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton edge="start" onClick={() => updateSettings('cardInitCount', `${Math.max(+form.cardInitCount - 1, 0)}`)} >
+                <Remove />
+              </IconButton>
+            </InputAdornment>
+          ),
           endAdornment: (
             <InputAdornment position="end">
-              {'枚ずつ'}
+              枚ずつ
+              <IconButton edge="end" onClick={() => updateSettings('cardInitCount', `${+form.cardInitCount + 1}`)}>
+                <Add />
+              </IconButton>
             </InputAdornment>
           ),
         }}

@@ -84,10 +84,10 @@ const Index = () => {
     <div css={appStyle}>
       <Head>
         <title>プロキシカード印刷</title>
-        <meta name="description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷するWebアプリ" />
+        <meta name="description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷できるWebアプリ。PC・スマホの両方に対応しています。" />
         <meta property="og:title" content="プロキシカード印刷" />
         <meta property="og:type" content="website" />
-        <meta property="og:description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷するWebアプリ" />
+        <meta property="og:description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷できるWebアプリです。PC・スマホの両方に対応しています。" />
         <meta property="og:url" content="https://imasanari.github.io/proxy-card-print/" />
         <meta property="og:image" content={`https://imasanari.github.io/proxy-card-print${icon.src}`} />
         <meta name="twitter:card" content="summary" />
