@@ -4,8 +4,8 @@ import ContentCut from '@mui/icons-material/ContentCut'
 import Print from '@mui/icons-material/Print'
 import { Box, Card, Grid, Link, Typography, TypographyProps } from '@mui/material'
 import React from 'react'
-
-const UsageDocument = require('./UsageDocument.mdx').default
+// @ts-expect-error
+import UsageDocument from './UsageDocument.mdx'
 
 const usageStyle = css`
   overflow-y: auto;
@@ -21,10 +21,10 @@ const sectionStyle = (theme: Theme) => css`
 `
 
 const Title = (props: TypographyProps<'h2'>) =>
-  <Typography component="h2" variant='h5' gutterBottom fontWeight="bold" {...props} />
+  <Typography component="h2" variant="h5" gutterBottom fontWeight="bold" {...props} />
 
 const SubTitle = (props: TypographyProps<'h3'>) =>
-  <Typography component="h3" variant='h6' gutterBottom fontWeight="bold" {...props} />
+  <Typography component="h3" variant="h6" gutterBottom fontWeight="bold" {...props} />
 
 const Usage = () =>
   <div css={usageStyle}>
