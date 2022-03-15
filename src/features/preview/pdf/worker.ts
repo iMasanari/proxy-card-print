@@ -6,7 +6,7 @@ import { svg2pdf } from 'svg2pdf.js'
 const globalThis = self as any
 
 // for svg2pdf.js
-globalThis.document = globalThis.document || {
+globalThis.document = {
   implementation: {
     createHTMLDocument: () => null,
   },

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プロキシカード印刷</title>
+  <meta name="description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷できるWebアプリ。PC・スマホの両方に対応しています。" />
+  <meta property="og:title" content="プロキシカード印刷" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="カードゲームのプロキシ(コピーカード)を簡単に印刷できるWebアプリです。PC・スマホの両方に対応しています。" />
+  <meta property="og:url" content="https://imasanari.github.io/proxy-card-print/" />
+  <meta property="og:image" content="https://imasanari.github.io/proxy-card-print/images/icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="images/favicon.png" />
+  <link rel="apple-touch-icon" href="images/icon.png" />
+  <% if (GOOGLE_ANALYTICS_ID) { %>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= GOOGLE_ANALYTICS_ID %>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', '<%= GOOGLE_ANALYTICS_ID %>');
+  </script>
+  <% } %>
+</head>
+
+<body>
+  <div id="app"><!--app-html--></div>
+  <script type="module" src="./src/entry-main.tsx"></script>
+</body>
+
+</html>

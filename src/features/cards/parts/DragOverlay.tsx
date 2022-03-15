@@ -19,7 +19,7 @@ const overlayStyle = css`
   pointer-events: none;
 `
 
-const target = typeof window !== 'undefined' ? document.getElementById('__next') : null
+const target = typeof window !== 'undefined' ? document.getElementById('app') : null
 
 const DragOverlay = () => {
   return (
