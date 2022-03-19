@@ -22,7 +22,6 @@
     "types": [
       "vite/client"
     ],
-    "allowJs": true,
     "skipLibCheck": true,
     "noEmit": true,
     "resolveJsonModule": true,

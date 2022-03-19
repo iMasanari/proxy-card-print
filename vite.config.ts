@@ -13,9 +13,6 @@ export default defineConfig(({ mode }) => {
     worker: {
       format: 'es',
     },
-    build: {
-      assetsInlineLimit: 0,
-    },
     plugins: [
       ViteEjsPlugin({
         GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
@@ -25,9 +22,7 @@ export default defineConfig(({ mode }) => {
         jsxRuntime: 'automatic',
         jsxImportSource: '@emotion/react',
         babel: {
-          plugins: [
-            ['@emotion/babel-plugin', {}],
-          ],
+          plugins: ['@emotion/babel-plugin'],
         },
       }),
       mdx(),
