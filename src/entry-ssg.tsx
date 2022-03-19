@@ -1,8 +1,13 @@
+import createEmotionServer from '@emotion/server/create-instance'
 import { renderToString } from 'react-dom/server'
-import App from './App'
+import App, { cache } from './App'
 
 export function render() {
-  const html = renderToString(<App />)
+  const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
 
-  return { html }
+  const html = renderToString(<App />)
+  const chunks = extractCriticalToChunks(html)
+  const styles = constructStyleTagsFromChunks(chunks)
+
+  return { html, styles }
 }

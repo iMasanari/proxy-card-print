@@ -1,3 +1,5 @@
+import createCache from '@emotion/cache'
+import { CacheProvider } from '@emotion/react'
 import { createTheme, Theme as MuiTheme, ThemeProvider } from '@mui/material'
 import { StrictMode } from 'react'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -10,12 +12,16 @@ declare module '@emotion/react' {
 
 const theme = createTheme({})
 
+export const cache = createCache({ key: 'c', prepend: true })
+
 const App = () => {
   return (
     <StrictMode>
-      <ThemeProvider theme={theme}>
-        <Index />
-      </ThemeProvider>
+      <CacheProvider value={cache}>
+        <ThemeProvider theme={theme}>
+          <Index />
+        </ThemeProvider>
+      </CacheProvider>
     </StrictMode>
   )
 }
