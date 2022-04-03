@@ -14,16 +14,16 @@
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="images/favicon.png" />
   <link rel="apple-touch-icon" href="images/icon.png" />
-  <% if (GOOGLE_ANALYTICS_ID) { %>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= GOOGLE_ANALYTICS_ID %>"></script>
+  {{#if GOOGLE_ANALYTICS_ID}}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_ID }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
-    gtag('config', '<%= GOOGLE_ANALYTICS_ID %>');
+    gtag('config', '{{ GOOGLE_ANALYTICS_ID }}');
   </script>
-  <% } %>
+  {{/if}}
 </head>
 
 <body>

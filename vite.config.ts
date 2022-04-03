@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
-import { ViteEjsPlugin } from 'vite-plugin-ejs'
+import handlebars from 'vite-plugin-handlebars'
 import mdx from 'vite-plugin-mdx'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
@@ -8,16 +8,21 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''))
 
+  const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID
+  const BASE_PATH = process.env.BASE_PATH
+
   return {
-    base: process.env.BASE_PATH,
+    base: BASE_PATH,
     worker: {
       format: 'es',
     },
     plugins: [
-      ViteEjsPlugin({
-        GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
-      }),
       tsconfigPaths(),
+      handlebars({
+        context: {
+          GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID,
+        },
+      }),
       react({
         jsxRuntime: 'automatic',
         jsxImportSource: '@emotion/react',
