@@ -1,8 +1,23 @@
 import react from '@vitejs/plugin-react'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, PluginOption } from 'vite'
 import handlebars from 'vite-plugin-handlebars'
 import mdx from 'vite-plugin-mdx'
 import tsconfigPaths from 'vite-tsconfig-paths'
+
+const entrySsgPath = './generated/ssg/entry-ssg'
+
+const ssg = (): PluginOption => ({
+  name: 'ssg',
+  enforce: 'post',
+  transformIndexHtml: (html: string) => {
+    const { render } = require(entrySsgPath) as typeof import('./src/entry-ssg')
+    const app = render()
+
+    return html
+      .replace('<!--app-html-->', app.html)
+      .replace('</head>', `  ${app.styles}\n</head>`)
+  },
+})
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -19,9 +34,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       tsconfigPaths(),
       handlebars({
-        context: {
-          GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID,
-        },
+        context: { GOOGLE_ANALYTICS_ID },
       }),
       react({
         jsxRuntime: 'automatic',
@@ -31,6 +44,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
       mdx(),
+      mode === 'production' && ssg(),
     ],
   }
 })
