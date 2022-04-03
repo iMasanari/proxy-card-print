@@ -2,7 +2,6 @@ import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
 import { createTheme, Theme as MuiTheme, ThemeProvider } from '@mui/material'
 import { StrictMode } from 'react'
-import 'react-image-crop/dist/ReactCrop.css'
 import Index from './pages/index'
 
 declare module '@emotion/react' {

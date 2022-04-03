@@ -38,11 +38,13 @@ const footerStyle = (theme: Theme) => css`
 
 interface Props {
   cards: SettingsCard[]
+  cardWidth: number
+  cardHeight: number
   cardInitCount: number
   dispatch: Dispatch<any>
 }
 
-const Cards = ({ cards, cardInitCount, dispatch }: Props) => {
+const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props) => {
   const [isDraging, setDraging] = useState(false)
 
   const addCards = useAction(addCardsAction, dispatch)
@@ -96,6 +98,8 @@ const Cards = ({ cards, cardInitCount, dispatch }: Props) => {
             <li key={card.id} css={itemStyle}>
               <Card
                 card={card}
+                cardWidth={cardWidth}
+                cardHeight={cardHeight}
                 cardInitCount={cardInitCount}
                 setCount={count => updateCardCount(index, count)}
                 setSrc={src => updateCardSrc(index, src)}
