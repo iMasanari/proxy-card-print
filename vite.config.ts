@@ -28,6 +28,13 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: BASE_PATH,
+    resolve: {
+      alias: {
+        canvg: './src/noop.ts',
+        dompurify: './src/noop.ts',
+        html2canvas: './src/noop.ts',
+      },
+    },
     worker: {
       format: 'es',
     },
