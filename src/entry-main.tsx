@@ -1,6 +1,10 @@
-import { hydrate, render } from 'react-dom'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App'
 
-const renderer = import.meta.env.PROD ? hydrate : render
+const container = document.getElementById('app')!
 
-renderer(<App />, document.getElementById('app'))
+if (import.meta.env.PROD) {
+  hydrateRoot(container, <App />)
+} else {
+  createRoot(container).render(<App />)
+}

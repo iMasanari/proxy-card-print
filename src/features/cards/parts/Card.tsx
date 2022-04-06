@@ -1,22 +1,24 @@
 import { css, Theme } from '@emotion/react'
 import { Add, Edit as EditIcon, Remove, RestoreFromTrash as TrashIcon } from '@mui/icons-material'
-import { Dialog, IconButton, InputAdornment } from '@mui/material'
-import { useReducer, useState } from 'react'
-import { Crop } from 'react-image-crop'
+import { IconButton, InputAdornment } from '@mui/material'
+import { useState } from 'react'
 import { SettingsCard } from '../cardsReducer'
-import Edit from './Edit'
+import { Crop } from '../types/crop'
+import EditDialog from './EditDialog'
 import NumberField from '~/common/atoms/NumberField'
 
 interface Props {
   card: SettingsCard
+  cardWidth: number
+  cardHeight: number
   cardInitCount: number
   setCount: (count: string) => void
   setSrc: (src: string) => void
   remove: () => void
 }
 
-const toggleReducer = (state: boolean) => !state
-const initCrop: Crop = { aspect: 59 / 86 } as Crop
+const createInitCrop = (orgSrc: string): Crop =>
+  ({ src: orgSrc, orgSrc, x: 0, y: 0, rotation: 0, zoom: 1 })
 
 const cardStyle = (theme: Theme) => css`
   display: flex;
@@ -43,16 +45,28 @@ const cardActions = css`
   display: flex;
 `
 
-const Card = ({ card, cardInitCount, setCount, setSrc, remove }: Props) => {
-  const [isOpen, toggleOpen] = useReducer(toggleReducer, false)
-  const [crop, setCrop] = useState(initCrop)
+const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setSrc, remove }: Props) => {
+  const [isOpen, setOpen] = useState(false)
+  const [crop, setCrop] = useState<Crop>(() => createInitCrop(card.orgSrc))
+
+  const onClose = (crop: Crop | null) => {
+    setOpen(false)
+
+    if (!crop) {
+      setCrop(createInitCrop(card.orgSrc))
+      setSrc(card.orgSrc)
+    } else {
+      setCrop(crop)
+      setSrc(crop.src)
+    }
+  }
 
   return (
     <div css={cardStyle}>
       <div
         css={thumbStyle}
         style={{ backgroundImage: card.src ? `url(${card.src})` : undefined }}
-        onClick={toggleOpen}
+        onClick={() => setOpen(true)}
       />
       <div css={inputStyle}>
         <NumberField
@@ -83,27 +97,20 @@ const Card = ({ card, cardInitCount, setCount, setSrc, remove }: Props) => {
         />
       </div>
       <div css={cardActions}>
-        <IconButton onClick={toggleOpen}>
+        <IconButton onClick={() => setOpen(true)}>
           <EditIcon />
         </IconButton>
         <IconButton onClick={remove}>
           <TrashIcon />
         </IconButton>
       </div>
-      <Dialog
+      <EditDialog
         open={isOpen}
-        onClose={toggleOpen}
-        PaperProps={{ sx: { width: '100%', height: '100%' } }}
-        maxWidth={false}
-      >
-        <Edit
-          card={card}
-          onRequestClose={toggleOpen}
-          crop={crop}
-          setCrop={setCrop}
-          update={setSrc}
-        />
-      </Dialog>
+        cardWidth={cardWidth}
+        cardHeight={cardHeight}
+        onClose={onClose}
+        crop={crop}
+      />
     </div>
   )
 }

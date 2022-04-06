@@ -85,7 +85,13 @@ const Index = () => {
       <div css={contentsStyle}>
         <div css={conditionsStyle}>
           <Settings form={settingsForm} dispatch={settingsDispatch} />
-          <Cards cards={cardsForm} cardInitCount={data.cardInitCount} dispatch={cardsDispatch} />
+          <Cards
+            cards={cardsForm}
+            cardInitCount={data.cardInitCount}
+            cardWidth={data.cardWidth}
+            cardHeight={data.cardHeight}
+            dispatch={cardsDispatch}
+          />
         </div>
         {!data.cards.length ? <Usage /> : (
           <Preview css={previewStyle} data={data} />
