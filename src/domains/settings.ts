@@ -14,9 +14,9 @@ export const pageSizes = {
 export type PageSize = keyof typeof pageSizes
 
 export interface CardType {
-  id: string
-  src: string
-  orgSrc: string
+  id: number
+  file: Blob
+  orgFile: Blob
   count: number
 }
 

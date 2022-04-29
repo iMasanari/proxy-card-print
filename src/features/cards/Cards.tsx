@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react'
 import React, { Dispatch, useEffect, useState } from 'react'
-import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardSrcAction } from './cardsReducer'
+import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardFileAction } from './cardsReducer'
 import AddCard from './parts/AddCard'
 import Card from './parts/Card'
 import DragOverlay from './parts/DragOverlay'
@@ -49,7 +49,7 @@ const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props)
 
   const addCards = useAction(addCardsAction, dispatch)
   const updateCardCount = useAction(updateCardCountAction, dispatch)
-  const updateCardSrc = useAction(updateCardSrcAction, dispatch)
+  const updateCardFile = useAction(updateCardFileAction, dispatch)
   const removeCard = useAction(removeCardAction, dispatch)
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props)
                 cardHeight={cardHeight}
                 cardInitCount={cardInitCount}
                 setCount={count => updateCardCount(index, count)}
-                setSrc={src => updateCardSrc(index, src)}
+                setFile={src => updateCardFile(index, src)}
                 remove={() => removeCard(index)}
               />
             </li>

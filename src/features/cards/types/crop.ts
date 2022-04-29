@@ -1,6 +1,6 @@
 export interface Crop {
-  src: string
-  orgSrc: string
+  file: Blob
+  orgFile: Blob
   x: number
   y: number
   rotation: number

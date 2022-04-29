@@ -1,15 +1,17 @@
 import { css } from '@emotion/react'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import React, { useRef } from 'react'
+import { useBlobUrl } from '~/utils/blobUrlRef'
 
 interface Props {
   open: boolean
   onClose: () => void
-  pdf: string
+  pdf: Blob
 }
 
 const ExportDialog = ({ open, onClose, pdf }: Props) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const pdfUrl = useBlobUrl(pdf, 'export')
 
   const printPdf = () => {
     try {
@@ -21,18 +23,18 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
   }
 
   const downloadPdf = () => {
-    if (!pdf) return
+    if (!pdfUrl) return
 
     // スマホの場合、新規タブで開く
     if (/iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
-      window.open(pdf)
+      window.open(pdfUrl)
       return
     }
 
     const a = document.createElement('a')
 
-    a.download = `プロキシカード印刷-${pdf.slice(-8)}.pdf`
-    a.href = pdf
+    a.download = `プロキシカード印刷-${pdfUrl.slice(-8)}.pdf`
+    a.href = pdfUrl
     a.rel = 'noopener'
 
     a.click()
@@ -77,7 +79,7 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
           ダウンロード
         </Button>
       </DialogActions>
-      <iframe ref={iframeRef} src={pdf} css={css`display: none;`} />
+      <iframe ref={iframeRef} src={pdfUrl} css={css`display: none;`} />
     </Dialog>
   )
 }

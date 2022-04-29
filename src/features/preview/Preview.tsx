@@ -61,7 +61,7 @@ const Preview = ({ className, data }: Props) => {
 
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
-  const [pdf, setPdf] = useState<string | null>(null)
+  const [pdf, setPdf] = useState<Blob | null>(null)
 
   const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
   const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
@@ -73,11 +73,11 @@ const Preview = ({ className, data }: Props) => {
       return [
         ...acc,
         ...[...Array(v.count).keys()].map(i => ({
-          src: v.src,
+          file: v.file,
           id: `${i}-${v.id}`,
         })),
       ]
-    }, [] as { src: string, id: string }[])
+    }, [] as { file: Blob, id: string }[])
 
     if (!list.length) {
       return [[]]
@@ -107,12 +107,7 @@ const Preview = ({ className, data }: Props) => {
       return
     }
 
-    setPdf(prev => {
-      // TODO: setter内の副作用処理をなくす
-      prev && URL.revokeObjectURL(prev)
-
-      return pdf
-    })
+    setPdf(pdf)
   }
 
   return (
