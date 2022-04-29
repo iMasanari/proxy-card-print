@@ -23,7 +23,6 @@
     "@xmldom/xmldom": "^0.8.2",
     "action-reducer": "^0.3.1",
     "jspdf": "^2.5.1",
-    "keycode-js": "^3.1.0",
     "promise-worker": "^2.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
