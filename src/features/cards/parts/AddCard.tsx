@@ -4,7 +4,9 @@ import { KEY_RETURN, KEY_SPACE } from 'keycode-js'
 import React, { useRef } from 'react'
 
 const fileInputStyle = css`
-  display: none;
+  visibility: hidden;
+  width: 0;
+  height: 0;
 `
 
 interface Props {
