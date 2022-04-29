@@ -56,12 +56,12 @@ const chunks = <T,>(array: T[], chunk: number) => {
   return result
 }
 
-const Preview = ({ className, data: settings }: Props) => {
-  const { pageWidth, pageHeight, cards, cardWidth, cardHeight } = settings
+const Preview = ({ className, data }: Props) => {
+  const { pageWidth, pageHeight, cards, cardWidth, cardHeight } = data
 
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
-  const [pdf, setPdf] = useState<string | null>(null)
+  const [pdf, setPdf] = useState<Blob | null>(null)
 
   const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
   const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
@@ -73,11 +73,11 @@ const Preview = ({ className, data: settings }: Props) => {
       return [
         ...acc,
         ...[...Array(v.count).keys()].map(i => ({
-          src: v.src,
+          file: v.file,
           id: `${i}-${v.id}`,
         })),
       ]
-    }, [] as { src: string, id: string }[])
+    }, [] as { file: Blob, id: string }[])
 
     if (!list.length) {
       return [[]]
@@ -88,10 +88,13 @@ const Preview = ({ className, data: settings }: Props) => {
     return chunks(rows, rowCount)
   }, [cards, colCount, rowCount])
 
-  const createPdf = async () => {
+  const openModal = async () => {
     const container = containerRef.current
 
     if (!container) return
+
+    setOpen(true)
+    setPdf(null)
 
     const pdf = await createPdfFile({
       svg: Array.from(container.getElementsByTagName('svg'), svg => svg.outerHTML),
@@ -99,24 +102,12 @@ const Preview = ({ className, data: settings }: Props) => {
       height: pageHeight,
     })
 
-    return pdf
-  }
+    if (!pdf) {
+      setOpen(false)
+      return
+    }
 
-  const openModal = async () => {
-    setPdf(null)
-
-    const pdf = await createPdf()
-
-    if (!pdf) return
-
-    setPdf(prev => {
-      // TODO: setter内の副作用処理をなくす
-      prev && URL.revokeObjectURL(prev)
-
-      return pdf
-    })
-
-    setOpen(true)
+    setPdf(pdf)
   }
 
   return (
@@ -136,7 +127,7 @@ const Preview = ({ className, data: settings }: Props) => {
         )}
       </div>
       <div css={actionsStyle}>
-        <Button variant="contained" onClick={openModal}>
+        <Button variant="contained" onClick={openModal} disabled={open && !pdf}>
           印刷 / ダウンロード
         </Button>
       </div>

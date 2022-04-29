@@ -5,6 +5,7 @@ import Cropper from 'react-easy-crop'
 import { Area, Point } from 'react-easy-crop/types'
 import { getCroppedImage } from '../crop/getCroppedImage'
 import { Crop } from '../types/crop'
+import { createBlobURLRef, useBlobUrl } from '~/utils/blobUrlRef'
 
 const wrapperStyle = css`
   position: relative;
@@ -28,6 +29,7 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
   const [rotation, setRotation] = useState(crop.rotation)
   const [zoom, setZoom] = useState(crop.zoom)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
+  const orgSrc = useBlobUrl(crop.orgFile, 'editDialog')
 
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
@@ -39,8 +41,12 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
       return
     }
 
-    const src = await getCroppedImage(crop.orgSrc, croppedAreaPixels, rotation)
-    onClose({ ...crop, ...point, src, rotation, zoom })
+    const orgRef = createBlobURLRef(crop.orgFile, 'edit2')
+
+    const file = await getCroppedImage(orgRef.value, croppedAreaPixels, rotation)
+
+    orgRef.revoke()
+    onClose({ ...crop, ...point, file, rotation, zoom })
   }
 
   const reset = () => {
@@ -49,6 +55,10 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
     setZoom(1)
 
     onClose(null)
+  }
+
+  if (!orgSrc) {
+    return null
   }
 
   return (
@@ -60,7 +70,7 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
     >
       <div css={wrapperStyle}>
         <Cropper
-          image={crop.orgSrc}
+          image={orgSrc}
           crop={point}
           rotation={rotation}
           zoom={zoom}

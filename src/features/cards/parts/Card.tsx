@@ -6,6 +6,7 @@ import { SettingsCard } from '../cardsReducer'
 import { Crop } from '../types/crop'
 import EditDialog from './EditDialog'
 import NumberField from '~/common/atoms/NumberField'
+import { useBlobUrl } from '~/utils/blobUrlRef'
 
 interface Props {
   card: SettingsCard
@@ -13,12 +14,12 @@ interface Props {
   cardHeight: number
   cardInitCount: number
   setCount: (count: string) => void
-  setSrc: (src: string) => void
+  setFile: (file: Blob) => void
   remove: () => void
 }
 
-const createInitCrop = (orgSrc: string): Crop =>
-  ({ src: orgSrc, orgSrc, x: 0, y: 0, rotation: 0, zoom: 1 })
+const createInitCrop = (orgFile: Blob): Crop =>
+  ({ file: orgFile, orgFile, x: 0, y: 0, rotation: 0, zoom: 1 })
 
 const cardStyle = (theme: Theme) => css`
   display: flex;
@@ -45,19 +46,20 @@ const cardActions = css`
   display: flex;
 `
 
-const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setSrc, remove }: Props) => {
+const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, remove }: Props) => {
   const [isOpen, setOpen] = useState(false)
-  const [crop, setCrop] = useState<Crop>(() => createInitCrop(card.orgSrc))
+  const [crop, setCrop] = useState<Crop>(() => createInitCrop(card.orgFile))
+  const thumbUrl = useBlobUrl(card.file, 'card')
 
   const onClose = (crop: Crop | null) => {
     setOpen(false)
 
     if (!crop) {
-      setCrop(createInitCrop(card.orgSrc))
-      setSrc(card.orgSrc)
+      setCrop(createInitCrop(card.orgFile))
+      setFile(card.orgFile)
     } else {
       setCrop(crop)
-      setSrc(crop.src)
+      setFile(crop.file)
     }
   }
 
@@ -65,7 +67,7 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setSrc, re
     <div css={cardStyle}>
       <div
         css={thumbStyle}
-        style={{ backgroundImage: card.src ? `url(${card.src})` : undefined }}
+        style={{ backgroundImage: thumbUrl ? `url(${thumbUrl})` : undefined }}
         onClick={() => setOpen(true)}
       />
       <div css={inputStyle}>

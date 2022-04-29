@@ -1,5 +1,6 @@
 import { css } from '@emotion/react'
-import React from 'react'
+import React, { SVGProps } from 'react'
+import { useBlobUrl } from '~/utils/blobUrlRef'
 
 const svgStyle = css`
   display:block;
@@ -16,7 +17,7 @@ const range = (length: number) =>
   Array.from({ length }, (_, i) => i)
 
 interface Props {
-  page: { src: string, id: string }[][]
+  page: { file: Blob, id: string }[][]
   cardWidth: number
   cardHeight: number
   pageWidth: number
@@ -74,9 +75,9 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
       )}
       {page.map((row, y) =>
         row.map((card, x) =>
-          <image
+          <BlobImage
             key={card.id}
-            href={card.src}
+            file={card.file}
             preserveAspectRatio="none"
             width={toPx(cardWidth)}
             height={toPx(cardHeight)}
@@ -86,6 +87,14 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
         )
       )}
     </svg>
+  )
+}
+
+const BlobImage = ({ file, ...rest }: SVGProps<SVGImageElement> & { file: Blob }) => {
+  const href = useBlobUrl(file, 'page')
+
+  return (
+    <image href={href} {...rest} />
   )
 }
 

@@ -1,9 +1,9 @@
 import ActionReducer from 'action-reducer'
 
 export interface SettingsCard {
-  id: string
-  src: string
-  orgSrc: string
+  id: number
+  file: Blob
+  orgFile: Blob
   count: string
 }
 
@@ -11,22 +11,13 @@ export type CardsState = SettingsCard[]
 
 const { createAction, reducer: cardsReducer } = ActionReducer<CardsState>()
 
-const createCard = (blob: Blob): SettingsCard => {
-  const src = URL.createObjectURL(blob)
 
-  return { id: src, src, orgSrc: src, count: '' }
-}
+let _idIndex = 0
 
-const revokeCardSrc = (card: SettingsCard | undefined) => {
-  if (card && card.src !== card.orgSrc) {
-    URL.revokeObjectURL(card.src)
-  }
-}
+const createId = () => ++_idIndex
 
-const revokeCardOrgSrc = (card: SettingsCard | undefined) => {
-  if (card) {
-    URL.revokeObjectURL(card.src)
-  }
+const createCard = (file: Blob): SettingsCard => {
+  return { id: createId(), file, orgFile: file, count: '' }
 }
 
 export const addCardsAction = createAction((state, list: Blob[]) =>
@@ -37,19 +28,12 @@ export const updateCardCountAction = createAction((state, index: number, count: 
   state.map((v, i) => i === index ? { ...v, count } : v),
 )
 
-export const updateCardSrcAction = createAction((state, index: number, src: string) => {
-  revokeCardSrc(state[index])
+export const updateCardFileAction = createAction((state, index: number, file: Blob) =>
+  state.map((card, i) => i === index ? { ...card, file } : card)
+)
 
-  return state.map((card, i) => i === index ? { ...card, src } : card)
-})
-
-export const removeCardAction = createAction((state, index: number) => {
-  const card = state[index]
-
-  revokeCardSrc(card)
-  revokeCardOrgSrc(card)
-
-  return state.filter((_, i) => i !== index)
-})
+export const removeCardAction = createAction((state, index: number) =>
+  state.filter((_, i) => i !== index)
+)
 
 export default cardsReducer
