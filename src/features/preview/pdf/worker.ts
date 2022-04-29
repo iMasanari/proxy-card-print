@@ -38,7 +38,10 @@ registerPromiseWorker<Option, string>(async (option) => {
       pdf.addPage()
     }
 
-    await svg2pdf(svg, pdf)
+    await svg2pdf(svg, pdf, {
+      width: option.width,
+      height: option.height,
+    })
   }
 
   return URL.createObjectURL(pdf.output('blob'))
