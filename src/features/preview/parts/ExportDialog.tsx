@@ -52,7 +52,6 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
 
   const exportPdf = () => {
     navigator.share({
-      title: 'プロキシカード印刷',
       files: [pdf],
     })
   }
@@ -73,17 +72,15 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
           PCの場合
         </DialogContentText>
         <DialogContentText gutterBottom textAlign="justify">
-          「印刷」ボタンを押して印刷してください。
+          「<PrintIcon fontSize="inherit" />印刷」ボタンを押して印刷してください。
         </DialogContentText>
         <DialogContentText fontWeight="bold">
           スマートフォン（iPhone）の場合
         </DialogContentText>
         <DialogContentText gutterBottom textAlign="justify">
-          「ダウンロード」ボタンを押してPDFを新しいタブで開き、
-          <IosShareIcon fontSize="inherit" />
-          ボタンから「&quot;ファイル&quot;に保存」で保存できます。保存後、各種印刷アプリ・サービスで印刷してください。
+          「<IosShareIcon fontSize="inherit" />共有」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
           <br />
-          「印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
+          「<PrintIcon fontSize="inherit" />印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
         </DialogContentText>
         <DialogContentText fontWeight="bold">
           ※印刷時の注意
