@@ -12,5 +12,5 @@ export const createPdfFile = async (option: Option) => {
 
   URL.revokeObjectURL(blobURL)
 
-  return res.blob()
+  return new File([await res.blob()], 'プロキシカード印刷.pdf', { type: 'application/pdf' })
 }

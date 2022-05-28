@@ -1,16 +1,23 @@
 import { css } from '@emotion/react'
+import CloseIcon from '@mui/icons-material/Close'
 import DownloadIcon from '@mui/icons-material/Download'
 import IosShareIcon from '@mui/icons-material/IosShare'
 import PrintIcon from '@mui/icons-material/Print'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
 import React, { useRef } from 'react'
 import { useBlobUrl } from '~/utils/blobUrlRef'
 
 interface Props {
   open: boolean
   onClose: () => void
-  pdf: Blob
+  pdf: File
 }
+
+const closeIconStyle = css`
+  position: absolute;
+  right: 8px;
+  top: 8px;
+`
 
 const ExportDialog = ({ open, onClose, pdf }: Props) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -43,10 +50,20 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
     a.click()
   }
 
+  const exportPdf = () => {
+    navigator.share({
+      title: 'プロキシカード印刷',
+      files: [pdf],
+    })
+  }
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
         エクスポート
+        <IconButton css={closeIconStyle} aria-label="close" onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent>
         <DialogContentText gutterBottom textAlign="justify">
@@ -76,15 +93,17 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} sx={{ mr: 'auto' }}>
-          閉じる
-        </Button>
         <Button startIcon={<PrintIcon />} onClick={printPdf}>
           印刷
         </Button>
         <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
           ダウンロード
         </Button>
+        {'share' in navigator && (
+          <Button startIcon={<IosShareIcon />} onClick={exportPdf}>
+            共有
+          </Button>
+        )}
       </DialogActions>
       <iframe ref={iframeRef} src={pdfUrl} css={css`display: none;`} />
     </Dialog>
