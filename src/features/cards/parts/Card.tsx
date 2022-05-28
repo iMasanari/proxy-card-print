@@ -82,7 +82,7 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, r
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <IconButton edge="start" onClick={() => setCount(`${Math.max(+(card.count || cardInitCount) - 1, 0)}`)} >
+                <IconButton edge="start" aria-label="減らす" onClick={() => setCount(`${Math.max(+(card.count || cardInitCount) - 1, 0)}`)} >
                   <Remove />
                 </IconButton>
               </InputAdornment>
@@ -90,7 +90,7 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, r
             endAdornment: (
               <InputAdornment position="end">
                 枚
-                <IconButton edge="end" onClick={() => setCount(`${+(card.count || cardInitCount) + 1}`)}>
+                <IconButton edge="end" aria-label="増やす" onClick={() => setCount(`${+(card.count || cardInitCount) + 1}`)}>
                   <Add />
                 </IconButton>
               </InputAdornment>
@@ -99,10 +99,10 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, r
         />
       </div>
       <div css={cardActions}>
-        <IconButton onClick={() => setOpen(true)}>
+        <IconButton aria-label="編集" onClick={() => setOpen(true)}>
           <EditIcon />
         </IconButton>
-        <IconButton onClick={remove}>
+        <IconButton aria-label="削除" onClick={remove}>
           <TrashIcon />
         </IconButton>
       </div>

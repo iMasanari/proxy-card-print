@@ -63,14 +63,14 @@ const Settings = ({ form, dispatch }: Props) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton edge="start" onClick={() => updateSettings('cardWidth', `${Math.max(+form.cardWidth - 1, 0)}`)} >
+                    <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardWidth', `${Math.max(+form.cardWidth - 1, 0)}`)} >
                       <Remove />
                     </IconButton>
                   </InputAdornment>
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton edge="end" onClick={() => updateSettings('cardWidth', `${+form.cardWidth + 1}`)}>
+                    <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardWidth', `${+form.cardWidth + 1}`)}>
                       <Add />
                     </IconButton>
                   </InputAdornment>
@@ -91,14 +91,14 @@ const Settings = ({ form, dispatch }: Props) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton edge="start" onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)} >
+                    <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)} >
                       <Remove />
                     </IconButton>
                   </InputAdornment>
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton edge="end" onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}>
+                    <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}>
                       <Add />
                     </IconButton>
                   </InputAdornment>
@@ -121,7 +121,7 @@ const Settings = ({ form, dispatch }: Props) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton edge="start" onClick={() => updateSettings('cardInitCount', `${Math.max(+form.cardInitCount - 1, 0)}`)} >
+              <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardInitCount', `${Math.max(+form.cardInitCount - 1, 0)}`)} >
                 <Remove />
               </IconButton>
             </InputAdornment>
@@ -129,7 +129,7 @@ const Settings = ({ form, dispatch }: Props) => {
           endAdornment: (
             <InputAdornment position="end">
               枚ずつ
-              <IconButton edge="end" onClick={() => updateSettings('cardInitCount', `${+form.cardInitCount + 1}`)}>
+              <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardInitCount', `${+form.cardInitCount + 1}`)}>
                 <Add />
               </IconButton>
             </InputAdornment>
