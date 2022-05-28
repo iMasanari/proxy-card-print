@@ -61,7 +61,7 @@ const Preview = ({ className, data }: Props) => {
 
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
-  const [pdf, setPdf] = useState<Blob | null>(null)
+  const [pdf, setPdf] = useState<File | null>(null)
 
   const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
   const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
@@ -131,7 +131,7 @@ const Preview = ({ className, data }: Props) => {
           印刷 / ダウンロード
         </Button>
       </div>
-      {pdf && (
+      {pdf && open && (
         <ExportDialog
           open={open}
           onClose={() => setOpen(false)}
