@@ -1,10 +1,10 @@
 import { css } from '@emotion/react'
 import CloseIcon from '@mui/icons-material/Close'
 import DownloadIcon from '@mui/icons-material/Download'
-import IosShareIcon from '@mui/icons-material/IosShare'
 import PrintIcon from '@mui/icons-material/Print'
+import SendToMobileIcon from '@mui/icons-material/SendToMobile'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { useBlobUrl } from '~/utils/blobUrlRef'
 
 interface Props {
@@ -21,6 +21,8 @@ const closeIconStyle = css`
 
 const ExportDialog = ({ open, onClose, pdf }: Props) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const isMobile = useMemo(() => /iPhone|iPad|iPod|Android/.test(navigator.userAgent), [])
+  const canShare = useMemo(() => navigator.canShare && navigator.canShare({ files: [pdf] }), [pdf])
 
   useBlobUrl(pdf, src => {
     if (iframeRef.current) {
@@ -42,7 +44,7 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
     if (!url) return
 
     // スマホの場合、新規タブで開く
-    if (/iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
+    if (isMobile) {
       window.open(url)
       return
     }
@@ -57,9 +59,7 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
   }
 
   const exportPdf = () => {
-    navigator.share({
-      files: [pdf],
-    })
+    navigator.share({ files: [pdf] })
   }
 
   return (
@@ -79,15 +79,15 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
             PCの場合
           </DialogContentText>
           <DialogContentText gutterBottom textAlign="justify">
-            「<PrintIcon fontSize="inherit" />印刷」ボタンを押して印刷してください。
+            「<PrintIcon fontSize="inherit" /> 印刷」ボタンを押して印刷してください。
           </DialogContentText>
           <DialogContentText fontWeight="bold">
             スマートフォン（iPhone）の場合
           </DialogContentText>
           <DialogContentText gutterBottom textAlign="justify">
-            「<IosShareIcon fontSize="inherit" />共有」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
+            「<SendToMobileIcon fontSize="inherit" /> エクスポート」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
             <br />
-            「<PrintIcon fontSize="inherit" />印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
+            「<PrintIcon fontSize="inherit" /> 印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
           </DialogContentText>
           <DialogContentText fontWeight="bold">
             ※印刷時の注意
@@ -100,12 +100,14 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
           <Button startIcon={<PrintIcon />} onClick={printPdf}>
             印刷
           </Button>
-          <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
-            ダウンロード
-          </Button>
-          {'share' in navigator && (
-            <Button startIcon={<IosShareIcon />} onClick={exportPdf}>
-              共有
+          {(!isMobile || !canShare) && (
+            <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
+              ダウンロード
+            </Button>
+          )}
+          {canShare && (
+            <Button startIcon={<SendToMobileIcon />} onClick={exportPdf}>
+              エクスポート
             </Button>
           )}
         </DialogActions>
