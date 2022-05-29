@@ -20,9 +20,10 @@ const getTimeStamp = (date: Date) => {
 export const createPdfFile = async (option: Option) => {
   const blobURL = await ps.postMessage<string, Option>(option)
   const res = await fetch(blobURL)
+  const buffer = await res.arrayBuffer()
   const name = `プロキシカード印刷-${getTimeStamp(new Date())}.pdf`
 
   URL.revokeObjectURL(blobURL)
 
-  return new File([await res.blob()], name, { type: 'application/pdf' })
+  return new File([buffer], name, { type: 'application/pdf' })
 }
