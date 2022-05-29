@@ -3,7 +3,7 @@ import { CardSize, cardSizes } from '~/domains/settings'
 
 export interface SettingsState {
   pageSize: string
-  cardSize: string
+  cardSize: CardSize
   cardWidth: string
   cardHeight: string
   cardInitCount: string

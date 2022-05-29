@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react'
 import { Add, Remove } from '@mui/icons-material'
-import { FormControl, Grid, IconButton, InputAdornment, InputLabel, Select } from '@mui/material'
+import { FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, Select } from '@mui/material'
 import React, { Dispatch } from 'react'
 import NumberField from '~/common/atoms/NumberField'
 import { useAction } from '~/common/hooks/state'
@@ -47,6 +47,12 @@ const Settings = ({ form, dispatch }: Props) => {
           )}
           <option value="custom">カスタム</option>
         </Select>
+        {form.cardSize === 'スモールサイズ' && (
+          <FormHelperText>59mm x 86mm: 遊戯王、ヴァンガードなど</FormHelperText>
+        )}
+        {form.cardSize === 'スタンダードサイズ' && (
+          <FormHelperText>63mm x 88mm: MTG、デュエマ、ポケカなど</FormHelperText>
+        )}
       </FormControl>
       {form.cardSize === 'custom' && (
         <Grid container spacing={2} my={0}>

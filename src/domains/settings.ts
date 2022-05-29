@@ -1,6 +1,6 @@
 export const cardSizes = {
-  '59mm x 86mm': ['59', '86'],
-  '63mm x 88mm': ['63', '88'],
+  'スモールサイズ': ['59', '86'],
+  'スタンダードサイズ': ['63', '88'],
 } as const
 
 export type CardSize = keyof typeof cardSizes | 'custom'

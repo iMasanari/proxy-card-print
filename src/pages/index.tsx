@@ -7,7 +7,7 @@ import cardsReducer, { CardsState } from '~/features/cards/cardsReducer'
 import Preview from '~/features/preview/Preview'
 import { usePreviewData } from '~/features/preview/previewHooks'
 import Settings from '~/features/settings/Settings'
-import settingsReducer from '~/features/settings/settingsReducer'
+import settingsReducer, { SettingsState } from '~/features/settings/settingsReducer'
 import Usage from '~/features/usage/Usage'
 
 const globalStyle = css`
@@ -61,9 +61,9 @@ const previewStyle = (theme: Theme) => css`
   }
 `
 
-const intiSettings = {
+const intiSettings: SettingsState = {
   pageSize: 'A4',
-  cardSize: '59mm x 86mm',
+  cardSize: 'スモールサイズ',
   cardWidth: '59',
   cardHeight: '86',
   cardInitCount: '1',
