@@ -21,7 +21,12 @@ const closeIconStyle = css`
 
 const ExportDialog = ({ open, onClose, pdf }: Props) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const pdfUrl = useBlobUrl(pdf, 'export')
+
+  useBlobUrl(pdf, src => {
+    if (iframeRef.current) {
+      iframeRef.current.src = src
+    }
+  })
 
   const printPdf = () => {
     try {
@@ -33,18 +38,19 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
   }
 
   const downloadPdf = () => {
-    if (!pdfUrl) return
+    const url = iframeRef.current?.src
+    if (!url) return
 
     // スマホの場合、新規タブで開く
     if (/iPhone|iPad|iPod|Android/.test(navigator.userAgent)) {
-      window.open(pdfUrl)
+      window.open(url)
       return
     }
 
     const a = document.createElement('a')
 
-    a.download = `プロキシカード印刷-${pdfUrl.slice(-8)}.pdf`
-    a.href = pdfUrl
+    a.download = `プロキシカード印刷-${url.slice(-8)}.pdf`
+    a.href = url
     a.rel = 'noopener'
 
     a.click()
@@ -57,53 +63,55 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
   }
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>
-        エクスポート
-        <IconButton css={closeIconStyle} aria-label="close" onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText gutterBottom textAlign="justify">
-          エクスポートの準備が完了しました。下記の方法で印刷してください。
-        </DialogContentText>
-        <DialogContentText fontWeight="bold">
-          PCの場合
-        </DialogContentText>
-        <DialogContentText gutterBottom textAlign="justify">
-          「<PrintIcon fontSize="inherit" />印刷」ボタンを押して印刷してください。
-        </DialogContentText>
-        <DialogContentText fontWeight="bold">
-          スマートフォン（iPhone）の場合
-        </DialogContentText>
-        <DialogContentText gutterBottom textAlign="justify">
-          「<IosShareIcon fontSize="inherit" />共有」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
-          <br />
-          「<PrintIcon fontSize="inherit" />印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
-        </DialogContentText>
-        <DialogContentText fontWeight="bold">
-          ※印刷時の注意
-        </DialogContentText>
-        <DialogContentText gutterBottom textAlign="justify">
-          フチなし印刷、または拡大・縮小無し(倍率 100%/用紙に合わせる)で印刷してください。
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button startIcon={<PrintIcon />} onClick={printPdf}>
-          印刷
-        </Button>
-        <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
-          ダウンロード
-        </Button>
-        {'share' in navigator && (
-          <Button startIcon={<IosShareIcon />} onClick={exportPdf}>
-            共有
+    <>
+      <Dialog open={open} onClose={onClose}>
+        <DialogTitle>
+          エクスポート
+          <IconButton css={closeIconStyle} aria-label="close" onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText gutterBottom textAlign="justify">
+            エクスポートの準備が完了しました。下記の方法で印刷してください。
+          </DialogContentText>
+          <DialogContentText fontWeight="bold">
+            PCの場合
+          </DialogContentText>
+          <DialogContentText gutterBottom textAlign="justify">
+            「<PrintIcon fontSize="inherit" />印刷」ボタンを押して印刷してください。
+          </DialogContentText>
+          <DialogContentText fontWeight="bold">
+            スマートフォン（iPhone）の場合
+          </DialogContentText>
+          <DialogContentText gutterBottom textAlign="justify">
+            「<IosShareIcon fontSize="inherit" />共有」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
+            <br />
+            「<PrintIcon fontSize="inherit" />印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
+          </DialogContentText>
+          <DialogContentText fontWeight="bold">
+            ※印刷時の注意
+          </DialogContentText>
+          <DialogContentText gutterBottom textAlign="justify">
+            フチなし印刷、または拡大・縮小無し(倍率 100%/用紙に合わせる)で印刷してください。
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button startIcon={<PrintIcon />} onClick={printPdf}>
+            印刷
           </Button>
-        )}
-      </DialogActions>
-      <iframe ref={iframeRef} src={pdfUrl} css={css`display: none;`} />
-    </Dialog>
+          <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
+            ダウンロード
+          </Button>
+          {'share' in navigator && (
+            <Button startIcon={<IosShareIcon />} onClick={exportPdf}>
+              共有
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
+      <iframe ref={iframeRef} css={css`display: none;`} />
+    </>
   )
 }
 
