@@ -51,7 +51,7 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
 
     const a = document.createElement('a')
 
-    a.download = `プロキシカード印刷-${url.slice(-8)}.pdf`
+    a.download = pdf.name
     a.href = url
     a.rel = 'noopener'
 
