@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect } from 'react'
 
 interface Ref {
   value: string
@@ -7,7 +7,7 @@ interface Ref {
 
 const blobMap = new Map<Blob | MediaSource, Ref>()
 
-export const createBlobURLRef = (blob: Blob | MediaSource, label: string) => {
+export const createBlobURLRef = (blob: Blob | MediaSource) => {
   let ref = blobMap.get(blob)!
   let isRevoked = false
 
@@ -43,18 +43,15 @@ export const createBlobURLRef = (blob: Blob | MediaSource, label: string) => {
   }
 }
 
-export const useBlobUrl = (blob: Blob, label: string) => {
-  const [url, setUrl] = useState<string>()
-
+export const useBlobUrl = (blob: Blob, setter: (url: string) => void) => {
   useLayoutEffect(() => {
-    const ref = createBlobURLRef(blob, label)
+    const blobUrl = createBlobURLRef(blob)
 
-    setUrl(ref.value)
+    setter(blobUrl.value)
 
     return () => {
-      Promise.resolve().then(ref.revoke)
+      blobUrl.revoke()
     }
-  }, [blob, label])
-
-  return url
+    // eslint-disable-next-line
+  }, [blob])
 }

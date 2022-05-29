@@ -29,7 +29,11 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
   const [rotation, setRotation] = useState(crop.rotation)
   const [zoom, setZoom] = useState(crop.zoom)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
-  const orgSrc = useBlobUrl(crop.orgFile, 'editDialog')
+  const [orgSrc, setOrgSrc] = useState<string>()
+
+  useBlobUrl(crop.orgFile, src => {
+    setOrgSrc(src)
+  })
 
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
@@ -41,7 +45,7 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
       return
     }
 
-    const orgRef = createBlobURLRef(crop.orgFile, 'edit2')
+    const orgRef = createBlobURLRef(crop.orgFile)
 
     const file = await getCroppedImage(orgRef.value, croppedAreaPixels, rotation)
 

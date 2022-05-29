@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import React, { SVGProps } from 'react'
+import React, { SVGProps, useRef } from 'react'
 import { useBlobUrl } from '~/utils/blobUrlRef'
 
 const svgStyle = css`
@@ -91,10 +91,16 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
 }
 
 const BlobImage = ({ file, ...rest }: SVGProps<SVGImageElement> & { file: Blob }) => {
-  const href = useBlobUrl(file, 'page')
+  const ref = useRef<SVGImageElement>(null)
+
+  useBlobUrl(file, src => {
+    if (ref.current) {
+      ref.current.href.baseVal = src
+    }
+  })
 
   return (
-    <image href={href} {...rest} />
+    <image ref={ref} {...rest} />
   )
 }
 

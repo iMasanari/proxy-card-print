@@ -1,7 +1,7 @@
 import { css, Theme } from '@emotion/react'
 import { Add, Edit as EditIcon, Remove, RestoreFromTrash as TrashIcon } from '@mui/icons-material'
 import { IconButton, InputAdornment } from '@mui/material'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { SettingsCard } from '../cardsReducer'
 import { Crop } from '../types/crop'
 import EditDialog from './EditDialog'
@@ -49,7 +49,13 @@ const cardActions = css`
 const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, remove }: Props) => {
   const [isOpen, setOpen] = useState(false)
   const [crop, setCrop] = useState<Crop>(() => createInitCrop(card.orgFile))
-  const thumbUrl = useBlobUrl(card.file, 'card')
+  const thumbRef = useRef<HTMLDivElement>(null)
+
+  useBlobUrl(card.file, src => {
+    if (thumbRef.current) {
+      thumbRef.current.style.backgroundImage = `url(${src})`
+    }
+  })
 
   const onClose = (crop: Crop | null) => {
     setOpen(false)
@@ -65,11 +71,7 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, r
 
   return (
     <div css={cardStyle}>
-      <div
-        css={thumbStyle}
-        style={{ backgroundImage: thumbUrl ? `url(${thumbUrl})` : undefined }}
-        onClick={() => setOpen(true)}
-      />
+      <div ref={thumbRef} css={thumbStyle} onClick={() => setOpen(true)} />
       <div css={inputStyle}>
         <NumberField
           spinButton={false}

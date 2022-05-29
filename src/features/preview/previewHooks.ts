@@ -4,7 +4,7 @@ import { SettingsState } from '../settings/settingsReducer'
 import { PageSize, pageSizes } from '~/domains/settings'
 
 const toInt = (str: string, defaultValue = NaN) =>
-  /[1-9]*[0-9]/.test(str) ? +str : defaultValue
+  /^([1-9][0-9]*|0)$/.test(str) ? +str : defaultValue
 
 export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsState) => {
   const settings = useMemo(() => {
