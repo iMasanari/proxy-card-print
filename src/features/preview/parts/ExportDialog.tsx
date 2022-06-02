@@ -100,11 +100,9 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
           <Button startIcon={<PrintIcon />} onClick={printPdf}>
             印刷
           </Button>
-          {(!isMobile || !canShare) && (
-            <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
-              ダウンロード
-            </Button>
-          )}
+          <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
+            保存
+          </Button>
           {canShare && (
             <Button startIcon={<SendToMobileIcon />} onClick={exportPdf}>
               エクスポート
