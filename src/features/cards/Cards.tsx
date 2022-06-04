@@ -6,14 +6,6 @@ import Card from './parts/Card'
 import DragOverlay from './parts/DragOverlay'
 import { useAction } from '~/common/hooks/state'
 
-const cardsStyle = css`
-  position: relative;
-  @media (min-width: 600px) {
-    flex: 1;
-    overflow: auto;
-  }
-`
-
 const listStyle = css`
   list-style: none;
   padding: 0;
@@ -90,7 +82,7 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
   }, [addCards])
 
   return (
-    <div css={cardsStyle}>
+    <div>
       {!cards.length ? <p css={emptyStyle}>カード画像がありません</p> : (
         <ul css={listStyle}>
           {cards.map((card, index) =>

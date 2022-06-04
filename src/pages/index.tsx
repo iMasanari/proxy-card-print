@@ -48,9 +48,11 @@ const contentsStyle = css`
 
 const conditionsStyle = css`
   @media (min-width: 600px) {
-    width: 300px;
+    overflow: auto;
+    position: relative;
     display: flex;
     flex-direction: column;
+    width: 300px;
   }
 `
 
