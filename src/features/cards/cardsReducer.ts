@@ -17,7 +17,7 @@ let _idIndex = 0
 const createId = () => ++_idIndex
 
 const createCard = (file: Blob): SettingsCard => {
-  return { id: createId(), file, orgFile: file, count: '' }
+  return { id: createId(), file, orgFile: file, count: '1' }
 }
 
 export const addCardsAction = createAction((state, list: Blob[]) =>

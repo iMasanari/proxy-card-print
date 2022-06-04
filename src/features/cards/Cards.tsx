@@ -6,14 +6,6 @@ import Card from './parts/Card'
 import DragOverlay from './parts/DragOverlay'
 import { useAction } from '~/common/hooks/state'
 
-const cardsStyle = css`
-  position: relative;
-  @media (min-width: 600px) {
-    flex: 1;
-    overflow: auto;
-  }
-`
-
 const listStyle = css`
   list-style: none;
   padding: 0;
@@ -40,11 +32,10 @@ interface Props {
   cards: SettingsCard[]
   cardWidth: number
   cardHeight: number
-  cardInitCount: number
   dispatch: Dispatch<any>
 }
 
-const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props) => {
+const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
   const [isDraging, setDraging] = useState(false)
 
   const addCards = useAction(addCardsAction, dispatch)
@@ -91,7 +82,7 @@ const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props)
   }, [addCards])
 
   return (
-    <div css={cardsStyle}>
+    <div>
       {!cards.length ? <p css={emptyStyle}>カード画像がありません</p> : (
         <ul css={listStyle}>
           {cards.map((card, index) =>
@@ -100,7 +91,6 @@ const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props)
                 card={card}
                 cardWidth={cardWidth}
                 cardHeight={cardHeight}
-                cardInitCount={cardInitCount}
                 setCount={count => updateCardCount(index, count)}
                 setFile={src => updateCardFile(index, src)}
                 remove={() => removeCard(index)}

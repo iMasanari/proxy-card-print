@@ -48,9 +48,11 @@ const contentsStyle = css`
 
 const conditionsStyle = css`
   @media (min-width: 600px) {
-    width: 300px;
+    overflow: auto;
+    position: relative;
     display: flex;
     flex-direction: column;
+    width: 300px;
   }
 `
 
@@ -66,7 +68,6 @@ const intiSettings: SettingsState = {
   cardSize: 'スモールサイズ',
   cardWidth: '59',
   cardHeight: '86',
-  cardInitCount: '1',
 }
 
 const initCards: CardsState = []
@@ -87,7 +88,6 @@ const Index = () => {
           <Settings form={settingsForm} dispatch={settingsDispatch} />
           <Cards
             cards={cardsForm}
-            cardInitCount={data.cardInitCount}
             cardWidth={data.cardWidth}
             cardHeight={data.cardHeight}
             dispatch={cardsDispatch}

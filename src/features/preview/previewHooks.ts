@@ -11,11 +11,10 @@ export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsStat
     const [pageWidth, pageHeight] = pageSizes[settingsForm.pageSize as PageSize] || pageSizes['A4']
     const cardWidth = Math.min(Math.max(1, toInt(settingsForm.cardWidth, 0)), pageWidth)
     const cardHeight = Math.min(Math.max(1, toInt(settingsForm.cardHeight, 0)), pageHeight)
-    const cardInitCount = toInt(settingsForm.cardInitCount, 0)
 
     const cards = cardsForm.map(card => ({
       ...card,
-      count: toInt(card.count, cardInitCount),
+      count: toInt(card.count, 0),
     }))
 
     return {
@@ -24,7 +23,6 @@ export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsStat
       cardWidth,
       cardHeight,
       cards,
-      cardInitCount,
     }
   }, [settingsForm, cardsForm])
 

@@ -1,7 +1,6 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, PluginOption } from 'vite'
 import handlebars from 'vite-plugin-handlebars'
-import mdx from 'vite-plugin-mdx'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 const entrySsgPath = './generated/ssg/entry-ssg'
@@ -20,7 +19,9 @@ const ssg = (): PluginOption => ({
 })
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(async ({ mode }) => {
+  const { default: mdx } = await import('@mdx-js/rollup')
+
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''))
 
   const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID
@@ -37,6 +38,9 @@ export default defineConfig(({ mode }) => {
     },
     worker: {
       format: 'es',
+    },
+    optimizeDeps: {
+      include: ['react/jsx-runtime'],
     },
     plugins: [
       tsconfigPaths(),
