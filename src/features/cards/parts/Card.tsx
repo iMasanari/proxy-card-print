@@ -12,7 +12,6 @@ interface Props {
   card: SettingsCard
   cardWidth: number
   cardHeight: number
-  cardInitCount: number
   setCount: (count: string) => void
   setFile: (file: Blob) => void
   remove: () => void
@@ -46,7 +45,7 @@ const cardActions = css`
   display: flex;
 `
 
-const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, remove }: Props) => {
+const Card = ({ card, cardWidth, cardHeight, setCount, setFile, remove }: Props) => {
   const [isOpen, setOpen] = useState(false)
   const [crop, setCrop] = useState<Crop>(() => createInitCrop(card.orgFile))
   const thumbRef = useRef<HTMLDivElement>(null)
@@ -76,7 +75,7 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, r
         <NumberField
           spinButton={false}
           min={0}
-          placeholder={`${cardInitCount}`}
+          placeholder="0"
           value={card.count}
           onChange={e => setCount(e.currentTarget.value)}
           size="small"
@@ -84,7 +83,7 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, r
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <IconButton edge="start" aria-label="減らす" onClick={() => setCount(`${Math.max(+(card.count || cardInitCount) - 1, 0)}`)} >
+                <IconButton edge="start" aria-label="減らす" onClick={() => setCount(`${Math.max(+card.count - 1, 0)}`)} >
                   <Remove />
                 </IconButton>
               </InputAdornment>
@@ -92,7 +91,7 @@ const Card = ({ card, cardWidth, cardHeight, cardInitCount, setCount, setFile, r
             endAdornment: (
               <InputAdornment position="end">
                 枚
-                <IconButton edge="end" aria-label="増やす" onClick={() => setCount(`${+(card.count || cardInitCount) + 1}`)}>
+                <IconButton edge="end" aria-label="増やす" onClick={() => setCount(`${+card.count + 1}`)}>
                   <Add />
                 </IconButton>
               </InputAdornment>

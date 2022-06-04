@@ -114,34 +114,6 @@ const Settings = ({ form, dispatch }: Props) => {
           </Grid>
         </Grid>
       )}
-      <NumberField
-        spinButton={false}
-        label="カード印刷数"
-        min={0}
-        max={150}
-        value={form.cardInitCount}
-        onChange={(e) => updateSettings('cardInitCount', e.target.value)}
-        size="small"
-        sx={{ mt: 2 }}
-        fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardInitCount', `${Math.max(+form.cardInitCount - 1, 0)}`)} >
-                <Remove />
-              </IconButton>
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              枚ずつ
-              <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardInitCount', `${+form.cardInitCount + 1}`)}>
-                <Add />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
     </div>
   )
 }

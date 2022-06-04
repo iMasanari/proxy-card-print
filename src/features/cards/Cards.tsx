@@ -40,11 +40,10 @@ interface Props {
   cards: SettingsCard[]
   cardWidth: number
   cardHeight: number
-  cardInitCount: number
   dispatch: Dispatch<any>
 }
 
-const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props) => {
+const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
   const [isDraging, setDraging] = useState(false)
 
   const addCards = useAction(addCardsAction, dispatch)
@@ -100,7 +99,6 @@ const Cards = ({ cards, cardWidth, cardHeight, cardInitCount, dispatch }: Props)
                 card={card}
                 cardWidth={cardWidth}
                 cardHeight={cardHeight}
-                cardInitCount={cardInitCount}
                 setCount={count => updateCardCount(index, count)}
                 setFile={src => updateCardFile(index, src)}
                 remove={() => removeCard(index)}

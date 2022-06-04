@@ -6,7 +6,6 @@ export interface SettingsState {
   cardSize: CardSize
   cardWidth: string
   cardHeight: string
-  cardInitCount: string
 }
 
 const { createAction, reducer: settingsReducer } = ActionReducer<SettingsState>()
