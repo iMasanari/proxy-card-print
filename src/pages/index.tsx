@@ -1,6 +1,6 @@
 import { css, Global, Theme } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
-import React, { useReducer } from 'react'
+import { useReducer } from 'react'
 import Header from '~/common/layouts/Header'
 import Cards from '~/features/cards/Cards'
 import cardsReducer, { CardsState } from '~/features/cards/cardsReducer'

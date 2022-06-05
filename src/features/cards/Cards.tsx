@@ -1,5 +1,5 @@
 import { css, Theme } from '@emotion/react'
-import React, { Dispatch, useEffect, useState } from 'react'
+import { Dispatch, useEffect, useState } from 'react'
 import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardFileAction } from './cardsReducer'
 import AddCard from './parts/AddCard'
 import Card from './parts/Card'
@@ -100,7 +100,7 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
         </ul>
       )}
       <div css={footerStyle}>
-        <AddCard add={addCards} fullWidth />
+        <AddCard add={addCards} fullWidth showFab={!cards.length} />
       </div>
       {isDraging && <DragOverlay />}
     </div>
