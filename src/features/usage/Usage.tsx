@@ -3,17 +3,15 @@ import AddPhotoAlternate from '@mui/icons-material/AddPhotoAlternate'
 import ContentCut from '@mui/icons-material/ContentCut'
 import Print from '@mui/icons-material/Print'
 import { Box, Card, Grid, Link, Typography, TypographyProps } from '@mui/material'
-import React from 'react'
-// @ts-expect-error
-import UsageDocument from './UsageDocument.mdx'
 
 const usageStyle = css`
   overflow-y: auto;
   flex: 1;
   padding: 0 0.5rem;
-  & img {
-    max-width: 100%;
-  }
+`
+
+const imageStyle = css`
+  max-width: 100%;
 `
 
 const sectionStyle = (theme: Theme) => css`
@@ -33,11 +31,11 @@ const Usage = () =>
       <Typography gutterBottom>
         これはカードゲームのプロキシ(コピーカード)を簡単に印刷できるWebアプリです。PC・スマホの両方に対応しています。
         <br />
-        また、印刷用データ(PDF)のダウンロードができるので、家にプリンタがなくても
+        また、印刷用データ(PDF)のダウンロードができるので、家にプリンタがなくても、コンビニ印刷(
         <Link href="https://www.printing.ne.jp/support/lite/index.html" target="_blank" rel="noopener">
           かんたん netprint
         </Link>
-        等を利用して作成できます。
+        等)を利用して作成できます。
       </Typography>
     </section>
     <section css={sectionStyle}>
@@ -78,7 +76,65 @@ const Usage = () =>
         </Grid>
       </Grid>
     </section>
-    <UsageDocument />
+    <section css={sectionStyle}>
+      <Title>カードサイズについて</Title>
+      <Typography gutterBottom>
+        作成するプロキシの種類によって、サイズを変更してください。
+      </Typography>
+      <ul>
+        <li>スモールサイズ (59mm x 86mm)
+          <ul>
+            <li>バトルスピリッツ、遊戯王OCG、ミラクルバトルカードダス、ヴァンガード</li>
+          </ul>
+        </li>
+        <li>スタンダードサイズ (63mm x 88mm)
+          <ul>
+            <li>ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、フューチャーカード、バディファイト、WIXOSS、ポケモンカードゲーム、デュエルマスターズ</li>
+          </ul>
+        </li>
+      </ul>
+      <Typography gutterBottom>
+        {'参考: '}
+        <Link href="https://www.sizekensaku.com/sonota/toreca.html" target="_blank" rel="noopener">
+          トレーディングカードのサイズ!!【サイズ.com】
+        </Link>
+      </Typography>
+    </section>
+    <section css={sectionStyle}>
+      <Title>プロキシカードの使用について</Title>
+      <Typography gutterBottom>
+        下記を守って使用してください。
+      </Typography>
+      <ul>
+        <li>使用した画像の著作権や利用規約</li>
+        <li>プロキシカード使用についてのルールやマナー</li>
+      </ul>
+      <Typography gutterBottom>
+        印刷物および印刷データ(PDF)は、自由に使用していただいて構いませんが、当サービス利用でなんらかの損害が生じても、製作者は一切の責任を負いません。
+      </Typography>
+    </section>
+    <section css={sectionStyle}>
+      <Title>推奨環境</Title>
+      <Typography gutterBottom>
+        最新のモダンブラウザを使用してください。<br />
+        推奨はデスクトップ版 Google Chrome です。Internet Explorer には対応しておりません。
+      </Typography>
+    </section>
+    <section css={sectionStyle}>
+      <Title>開発</Title>
+      <Typography gutterBottom>
+        GitHub にて、ソースコードを公開しています。issue やプルリクをお待ちしております。
+      </Typography>
+      <a href="https://github.com/iMasanari/proxy-card-print" target="_blank" rel="noopener">
+        <img
+          css={imageStyle}
+          width="442"
+          height="109"
+          src="https://gh-card.dev/repos/iMasanari/proxy-card-print.svg"
+          alt="iMasanari/proxy-card-print - GitHub"
+        />
+      </a>
+    </section>
   </div>
 
 export default Usage
