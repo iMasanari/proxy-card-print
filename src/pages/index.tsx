@@ -1,5 +1,4 @@
-import { css, Global, Theme } from '@emotion/react'
-import { CssBaseline } from '@mui/material'
+import { css, Theme } from '@emotion/react'
 import { useReducer } from 'react'
 import Header from '~/common/layouts/Header'
 import Cards from '~/features/cards/Cards'
@@ -9,26 +8,6 @@ import { usePreviewData } from '~/features/preview/previewHooks'
 import Settings from '~/features/settings/Settings'
 import settingsReducer, { SettingsState } from '~/features/settings/settingsReducer'
 import Usage from '~/features/usage/Usage'
-
-const globalStyle = css`
-  body {
-    margin: 0;
-    font-family: sans-serif;
-    @media (min-width: 600px) {
-        overflow: hidden;
-    }
-  }
-  html,
-  body,
-  #app {
-    @media (min-width: 600px) {
-      height: 100%;
-    }
-  }
-  .svg-icon {
-    vertical-align: text-top;
-  }
-`
 
 const appStyle = css`
   @media (min-width: 600px) {
@@ -80,8 +59,6 @@ const Index = () => {
 
   return (
     <div css={appStyle}>
-      <CssBaseline />
-      <Global styles={globalStyle} />
       <Header />
       <div css={contentsStyle}>
         <div css={conditionsStyle}>
