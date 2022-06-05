@@ -19,9 +19,7 @@ const ssg = (): PluginOption => ({
 })
 
 // https://vitejs.dev/config/
-export default defineConfig(async ({ mode }) => {
-  const { default: mdx } = await import('@mdx-js/rollup')
-
+export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''))
 
   const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID
@@ -40,7 +38,7 @@ export default defineConfig(async ({ mode }) => {
       format: 'es',
     },
     optimizeDeps: {
-      include: ['react/jsx-runtime'],
+      include: ['@emotion/react/jsx-dev-runtime'],
     },
     plugins: [
       tsconfigPaths(),
@@ -54,7 +52,6 @@ export default defineConfig(async ({ mode }) => {
           plugins: ['@emotion/babel-plugin'],
         },
       }),
-      mdx(),
       mode === 'production' && ssg(),
     ],
   }

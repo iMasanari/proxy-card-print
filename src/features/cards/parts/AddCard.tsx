@@ -1,5 +1,6 @@
 import { css } from '@emotion/react'
-import { Button } from '@mui/material'
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
+import { Button, Fab, Theme, useScrollTrigger, Zoom } from '@mui/material'
 import React, { useRef } from 'react'
 
 const fileInputStyle = css`
@@ -8,13 +9,29 @@ const fileInputStyle = css`
   height: 0;
 `
 
+const favStyle = (theme: Theme) => css`
+  position: fixed;
+  bottom: ${theme.spacing(2)};
+  right: ${theme.spacing(2)};
+`
+
 interface Props {
   fullWidth?: boolean
   add: (fileList: Blob[]) => void
+  showFab: boolean
 }
 
-const AddCard = ({ add, fullWidth }: Props) => {
+const AddCard = ({ add, fullWidth, showFab }: Props) => {
   const fileRef = useRef<HTMLInputElement>(null)
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100,
+  })
+
+  const onFabButtonClick = () => {
+    fileRef.current?.click()
+  }
 
   const onButtonKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -33,18 +50,32 @@ const AddCard = ({ add, fullWidth }: Props) => {
   }
 
   return (
-    <Button variant="outlined" fullWidth={fullWidth} component="label" onKeyDown={onButtonKeyDown}>
-      カード追加
-      <input
-        type="file"
-        css={fileInputStyle}
-        accept="image/*"
-        multiple
-        ref={fileRef}
-        tabIndex={-1}
-        onChange={onFileChanhge}
-      />
-    </Button>
+    <>
+      <Button variant="outlined" startIcon={<AddPhotoAlternateIcon />} fullWidth={fullWidth} component="label" onKeyDown={onButtonKeyDown}>
+        カード追加
+        <input
+          type="file"
+          css={fileInputStyle}
+          accept="image/*"
+          multiple
+          ref={fileRef}
+          tabIndex={-1}
+          onChange={onFileChanhge}
+        />
+      </Button>
+      {showFab &&
+        <Zoom appear={false} in={trigger}>
+          <Fab
+            css={favStyle}
+            onClick={onFabButtonClick}
+            aria-label="カード追加"
+            color="primary"
+          >
+            <AddPhotoAlternateIcon />
+          </Fab>
+        </Zoom>
+      }
+    </>
   )
 }
 
