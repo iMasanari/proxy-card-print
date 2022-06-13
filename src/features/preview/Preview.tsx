@@ -1,26 +1,26 @@
 import { css, Theme } from '@emotion/react'
 import { Button } from '@mui/material'
-import React, { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import ExportDialog from './parts/ExportDialog'
 import Page from './parts/Page'
 import { createPdfFile } from './pdf'
 import { PreviewData } from '~/domains/settings'
 
-const previewStyle = css`
+const previewStyle = (theme: Theme) => css`
   position: relative;
-  @media (min-width: 600px) {
+  ${theme.breakpoints.up('sm')} {
     display: flex;
     flex-direction: column;
   }
 `
 
-const containerStyle = css`
+const containerStyle = (theme: Theme) => css`
   box-sizing: border-box;
   overflow: auto;
   width: 100%;
   border: 1px solid #ddd;
   background-color: gray;
-  @media (min-width: 600px) {
+  ${theme.breakpoints.up('sm')} {
     flex: 1;
   }
 `

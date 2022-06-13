@@ -1,5 +1,5 @@
 import createCache from '@emotion/cache'
-import { CacheProvider, css, Global } from '@emotion/react'
+import { CacheProvider, css, Global, Theme } from '@emotion/react'
 import { createTheme, CssBaseline, Theme as MuiTheme, ThemeProvider } from '@mui/material'
 import { StrictMode } from 'react'
 import Index from './pages/index'
@@ -9,20 +9,18 @@ declare module '@emotion/react' {
   }
 }
 
-const theme = createTheme({})
+const theme = createTheme()
 
-const globalStyle = css`
+const globalStyle = (theme: Theme) => css`
   body {
-    margin: 0;
-    font-family: sans-serif;
-    @media (min-width: 600px) {
+    ${theme.breakpoints.up('sm')} {
       overflow: hidden;
     }
   }
   html,
   body,
   #app {
-    @media (min-width: 600px) {
+    ${theme.breakpoints.up('sm')} {
       height: 100%;
     }
   }
