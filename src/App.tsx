@@ -17,13 +17,6 @@ const globalStyle = (theme: Theme) => css`
       overflow: hidden;
     }
   }
-  html,
-  body,
-  #app {
-    ${theme.breakpoints.up('sm')} {
-      height: 100%;
-    }
-  }
 `
 
 export const cache = createCache({ key: 'c', prepend: true })

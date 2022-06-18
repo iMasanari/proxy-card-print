@@ -11,7 +11,8 @@ import Usage from '~/features/usage/Usage'
 
 const appStyle = (theme: Theme) => css`
   ${theme.breakpoints.up('sm')} {
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
   }
