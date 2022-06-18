@@ -53,6 +53,9 @@ export async function getCroppedImage(
   canvas.width = bBoxWidth
   canvas.height = bBoxHeight
 
+  ctx.fillStyle = '#fff'
+  ctx.fillRect(0, 0, bBoxWidth, bBoxHeight)
+
   // translate canvas context to a central location to allow rotating and flipping around the center
   ctx.translate(bBoxWidth / 2, bBoxHeight / 2)
   ctx.rotate(rotRad)

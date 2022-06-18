@@ -9,24 +9,25 @@ import Settings from '~/features/settings/Settings'
 import settingsReducer, { SettingsState } from '~/features/settings/settingsReducer'
 import Usage from '~/features/usage/Usage'
 
-const appStyle = css`
-  @media (min-width: 600px) {
-    height: 100%;
+const appStyle = (theme: Theme) => css`
+  ${theme.breakpoints.up('sm')} {
+    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
   }
 `
 
-const contentsStyle = css`
-  @media (min-width: 600px) {
+const contentsStyle = (theme: Theme) => css`
+  ${theme.breakpoints.up('sm')} {
     display: flex;
     flex: 1;
     overflow: hidden;
   }
 `
 
-const conditionsStyle = css`
-  @media (min-width: 600px) {
+const conditionsStyle = (theme: Theme) => css`
+  ${theme.breakpoints.up('sm')} {
     overflow: auto;
     position: relative;
     display: flex;
@@ -37,7 +38,7 @@ const conditionsStyle = css`
 
 const previewStyle = (theme: Theme) => css`
   margin-top: ${theme.spacing(1)};
-  @media (min-width: 600px) {
+  ${theme.breakpoints.up('sm')} {
     flex: 1;
   }
 `
