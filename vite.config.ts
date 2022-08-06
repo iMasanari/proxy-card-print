@@ -27,12 +27,18 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: BASE_PATH,
+    legacy: {
+      buildSsrCjsExternalHeuristics: true,
+    },
     resolve: {
       alias: {
         canvg: './src/noop.ts',
         dompurify: './src/noop.ts',
         html2canvas: './src/noop.ts',
       },
+    },
+    esbuild: {
+      logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
     worker: {
       format: 'es',
@@ -44,7 +50,7 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths(),
       handlebars({
         context: { GOOGLE_ANALYTICS_ID },
-      }),
+      }) as PluginOption,
       react({
         jsxRuntime: 'automatic',
         jsxImportSource: '@emotion/react',
