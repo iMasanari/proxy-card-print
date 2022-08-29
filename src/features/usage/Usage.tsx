@@ -110,7 +110,7 @@ const Usage = () =>
           <Typography gutterBottom>カードサイズに「スモールサイズ」を選択します。</Typography>
           <Typography variant="body2" my={1} mx={2}>
             他、スモールサイズ (59mm x 86mm) のカードゲーム:<br />
-            バトルスピリッツ、ミラクルバトルカードダスなど
+            バトルスピリッツなど
           </Typography>
         </section>
         <section css={subSectionStyle}>
@@ -118,7 +118,7 @@ const Usage = () =>
           <Typography gutterBottom>カードサイズに「スタンダードサイズ」を選択します。</Typography>
           <Typography variant="body2" my={1} mx={2}>
             他、スタンダードサイズ (63mm x 88mm) のカードゲーム:<br />
-            ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、フューチャーカード バディファイト、WIXOSSなど
+            ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、WIXOSS、ONE PIECEカードゲームなど
           </Typography>
         </section>
         <section css={subSectionStyle}>
