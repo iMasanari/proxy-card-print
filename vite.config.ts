@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''))
 
   const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID
-  const BASE_PATH = process.env.BASE_PATH
+  const BASE_PATH = process.env.BASE_PATH || '/'
 
   return {
     base: BASE_PATH,
@@ -49,7 +49,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       tsconfigPaths(),
       handlebars({
-        context: { GOOGLE_ANALYTICS_ID },
+        context: { GOOGLE_ANALYTICS_ID, BASE_PATH },
       }) as PluginOption,
       react({
         jsxRuntime: 'automatic',
