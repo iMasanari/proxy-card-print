@@ -18,7 +18,7 @@
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.3",
-    "@xmldom/xmldom": "^0.8.2",
+    "@xmldom/xmldom": "^0.8.3",
     "action-reducer": "^0.3.1",
     "jspdf": "^2.5.1",
     "promise-worker": "^2.0.1",
