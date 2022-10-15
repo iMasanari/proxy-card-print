@@ -33,9 +33,16 @@ const pageStyle = (theme: Theme) => css`
 const actionsStyle = (theme: Theme) => css`
   position: sticky;
   bottom: 0;
-  padding: ${theme.spacing(1, 0)};
+  padding: ${theme.spacing(1)};
   text-align: center;
   background-color: #fff;
+`
+
+const exportButtonStyle = (theme: Theme) => css`
+  width: 100%;
+  ${theme.breakpoints.up('sm')} {
+    width: auto;
+  }
 `
 
 interface Props {
@@ -127,7 +134,7 @@ const Preview = ({ className, data }: Props) => {
         )}
       </div>
       <div css={actionsStyle}>
-        <Button variant="contained" onClick={openModal} disabled={open && !pdf}>
+        <Button variant="contained" css={exportButtonStyle} onClick={openModal} disabled={open && !pdf}>
           印刷 / ダウンロード
         </Button>
       </div>
