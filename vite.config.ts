@@ -50,7 +50,7 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths(),
       handlebars({
         context: { GOOGLE_ANALYTICS_ID, BASE_PATH },
-      }) as PluginOption,
+      }),
       react({
         jsxRuntime: 'automatic',
         jsxImportSource: '@emotion/react',
