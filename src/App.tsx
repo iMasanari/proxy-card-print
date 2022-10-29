@@ -9,7 +9,13 @@ declare module '@emotion/react' {
   }
 }
 
-const theme = createTheme()
+const theme = createTheme({
+  typography: {
+    button: {
+      textTransform: 'none',
+    },
+  },
+})
 
 const globalStyle = (theme: Theme) => css`
   body {
