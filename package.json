@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "prebuild": "tsc && vite build --ssr src/entry-ssg.tsx --outDir generated/ssg",
-    "build": "vite build"
+    "prebuild": "tsc",
+    "build": "vite build",
+    "postbuild": "vite build --ssr src/ssg.tsx --outDir generated && node generated/ssg"
   },
   "keywords": [],
   "author": "iMasanari",
