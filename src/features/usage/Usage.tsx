@@ -29,7 +29,7 @@ const SubTitle = (props: TypographyProps<'h3'>) =>
   <Typography component="h3" variant="h6" gutterBottom fontWeight="bold" {...props} />
 
 const Usage = () =>
-  <div css={usageStyle}>
+  <div css={usageStyle} lang="ja">
     <Container>
       <section css={sectionStyle}>
         <Title css={css`word-break: keep-all;`}>

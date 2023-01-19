@@ -5,6 +5,7 @@ import PrintIcon from '@mui/icons-material/Print'
 import SendToMobileIcon from '@mui/icons-material/SendToMobile'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
 import React, { useMemo, useRef } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import { useBlobUrl } from '~/utils/blobUrlRef'
 
 interface Props {
@@ -23,6 +24,8 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const isMobile = useMemo(() => /iPhone|iPad|iPod|Android/.test(navigator.userAgent), [])
   const canShare = useMemo(() => navigator.canShare && navigator.canShare({ files: [pdf] }), [pdf])
+
+  const { t } = useTranslation()
 
   useBlobUrl(pdf, src => {
     if (iframeRef.current) {
@@ -66,46 +69,52 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
     <>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>
-          エクスポート
+          {t('ExportDialog.export', 'エクスポート')}
           <IconButton css={closeIconStyle} aria-label="close" onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
         <DialogContent>
           <DialogContentText gutterBottom textAlign="justify">
-            エクスポートの準備が完了しました。下記の方法で印刷してください。
+            {t('ExportDialog.exportDescription', 'エクスポートの準備が完了しました。下記の方法で印刷してください。')}
           </DialogContentText>
           <DialogContentText fontWeight="bold">
-            PCの場合
+            {t('ExportDialog.forPC', 'PCの場合')}
           </DialogContentText>
           <DialogContentText gutterBottom textAlign="justify">
-            「<PrintIcon fontSize="inherit" /> 印刷」ボタンを押して印刷してください。
+            <Trans t={t} i18nKey="ExportDialog.forPCDescription">
+              「<PrintIcon fontSize="inherit" /> 印刷」ボタンを押して印刷してください。
+            </Trans>
           </DialogContentText>
           <DialogContentText fontWeight="bold">
-            スマートフォン（iPhone）の場合
+            {t('ExportDialog.forIPhone', 'スマートフォン（iPhone）の場合')}
           </DialogContentText>
           <DialogContentText gutterBottom textAlign="justify">
-            「<SendToMobileIcon fontSize="inherit" /> エクスポート」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
+            <Trans t={t} i18nKey="ExportDialog.forIPhoneDescription1">
+              「<SendToMobileIcon fontSize="inherit" /> エクスポート」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
+            </Trans>
             <br />
-            「<PrintIcon fontSize="inherit" /> 印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
+            <Trans t={t} i18nKey="ExportDialog.forIPhoneDescription2">
+              「<PrintIcon fontSize="inherit" /> 印刷」ボタンから印刷すると、縮小して印刷される可能性があります。
+            </Trans>
           </DialogContentText>
           <DialogContentText fontWeight="bold">
-            ※印刷時の注意
+            {t('ExportDialog.CautionsForPrinting', '※印刷時の注意')}
           </DialogContentText>
           <DialogContentText gutterBottom textAlign="justify">
-            フチなし印刷、または拡大・縮小無し(倍率 100%/用紙に合わせる)で印刷してください。
+            {t('ExportDialog.CautionsForPrintingDescription', 'フチなし印刷、または拡大・縮小無し(倍率 100%/用紙に合わせる)で印刷してください。')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button startIcon={<PrintIcon />} onClick={printPdf}>
-            印刷
+            {t('ExportDialog.print', '印刷')}
           </Button>
           <Button startIcon={<DownloadIcon />} onClick={downloadPdf}>
-            保存
+            {t('ExportDialog.save', '保存')}
           </Button>
           {canShare && (
             <Button startIcon={<SendToMobileIcon />} onClick={exportPdf}>
-              エクスポート
+              {t('ExportDialog.export', 'エクスポート')}
             </Button>
           )}
         </DialogActions>

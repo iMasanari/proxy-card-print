@@ -1,6 +1,7 @@
 import { css, Theme } from '@emotion/react'
 import { Button } from '@mui/material'
 import { useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import ExportDialog from './parts/ExportDialog'
 import Page from './parts/Page'
 import { createPdfFile } from './pdf'
@@ -69,6 +70,7 @@ const Preview = ({ className, data }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
   const [pdf, setPdf] = useState<File | null>(null)
+  const { t } = useTranslation()
 
   const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
   const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
@@ -135,7 +137,7 @@ const Preview = ({ className, data }: Props) => {
       </div>
       <div css={actionsStyle}>
         <Button variant="contained" css={exportButtonStyle} onClick={openModal} disabled={open && !pdf}>
-          印刷 / ダウンロード
+          {t('Preview.printSlashDownload', '印刷 / ダウンロード')}
         </Button>
       </div>
       {pdf && open && (

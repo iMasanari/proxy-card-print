@@ -1,11 +1,13 @@
 import { css, Theme } from '@emotion/react'
 import { Add, Remove } from '@mui/icons-material'
 import { FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, Select } from '@mui/material'
-import React, { Dispatch } from 'react'
+import { Dispatch } from 'react'
+import { useTranslation } from 'react-i18next'
 import NumberField from '~/common/atoms/NumberField'
 import { useAction } from '~/common/hooks/state'
 import { cardSizes, pageSizes } from '~/domains/settings'
 import { SettingsState, updateSettingsAction } from '~/features/settings/settingsReducer'
+
 
 const settingStyle = (theme: Theme) => css`
   padding: ${theme.spacing(1)};
@@ -18,13 +20,14 @@ interface Props {
 
 const Settings = ({ form, dispatch }: Props) => {
   const updateSettings = useAction(updateSettingsAction, dispatch)
+  const { t } = useTranslation()
 
   return (
     <div css={settingStyle}>
       <FormControl variant="outlined" size="small" fullWidth sx={{ mt: 2 }}>
-        <InputLabel>用紙サイズ</InputLabel>
+        <InputLabel>{t('Settings.paperSize', '用紙サイズ')}</InputLabel>
         <Select
-          label="用紙サイズ"
+          label={t('Settings.paperSize', '用紙サイズ')}
           value={form.pageSize}
           onChange={(e) => updateSettings('pageSize', e.target.value)}
           native
@@ -35,17 +38,20 @@ const Settings = ({ form, dispatch }: Props) => {
         </Select>
       </FormControl>
       <FormControl variant="outlined" size="small" fullWidth sx={{ mt: 2 }}>
-        <InputLabel>カードサイズ</InputLabel>
+        <InputLabel>{t('Settings.cardSize', 'カードサイズ')}</InputLabel>
         <Select
-          label="カードサイズ"
+          label={t('Settings.cardSize', 'カードサイズ')}
           value={form.cardSize}
           onChange={(e) => updateSettings('cardSize', e.target.value)}
           native
         >
           {Object.keys(cardSizes).map(v =>
-            <option key={v} value={v}>{v}</option>
+            <option key={v} value={v}>
+              {/* i18next-extract-mark-context-next-line ["スモールサイズ", "スタンダードサイズ"] */}
+              {t('Settings.cardSizeList', v, { context: v })}
+            </option>
           )}
-          <option value="custom">カスタム</option>
+          <option value="custom">{t('Settings.cardSizeCustom', 'カスタム')}</option>
         </Select>
         {form.cardSize === 'スモールサイズ' && (
           <FormHelperText>59mm x 86mm: 遊戯王、ヴァンガードなど</FormHelperText>

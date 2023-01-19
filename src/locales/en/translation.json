@@ -1,0 +1,41 @@
+{
+  "AddCard": {
+    "addCard": "Add Card"
+  },
+  "Cards": {
+    "cancel": "Cancel",
+    "clipping": "Clipping",
+    "emptyCardImage": "Empty card image.",
+    "undo": "Undo"
+  },
+  "DragOverlay": {
+    "DropImagesHere": "Drop images here."
+  },
+  "ExportDialog": {
+    "CautionsForPrinting": "Cautions for printing",
+    "CautionsForPrintingDescription": "Please print without border or without scaling (magnification 100% / fit to paper).",
+    "export": "Export",
+    "exportDescription": "Export is ready. Please use the following method to print.",
+    "forIPhone": "For iPhone",
+    "forIPhoneDescription1": "Press the \"<1/> Export\" button and select \"Save to Files\" to save the file. After saving the file, you can print it using various printing applications and services.",
+    "forIPhoneDescription2": "If you print from the \"<1/> Print\" button, the image may be printed at a reduced size.",
+    "forPC": "For PC",
+    "forPCDescription": "Press the \"<1/> Print\" button to print.",
+    "print": "Print",
+    "save": "Save"
+  },
+  "Header": {
+    "title": "Proxy Card Print",
+    "tweet": "Tweet"
+  },
+  "Preview": {
+    "printSlashDownload": "Print / Download"
+  },
+  "Settings": {
+    "cardSize": "Card Size",
+    "cardSizeCustom": "Custom",
+    "cardSizeList_スタンダードサイズ": "Standard",
+    "cardSizeList_スモールサイズ": "Small",
+    "paperSize": "Paper Size"
+  }
+}

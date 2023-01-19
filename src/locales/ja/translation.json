@@ -1,0 +1,41 @@
+{
+  "AddCard": {
+    "addCard": "カード追加"
+  },
+  "Cards": {
+    "cancel": "キャンセル",
+    "clipping": "切り取り",
+    "emptyCardImage": "カード画像がありません",
+    "undo": "元に戻す"
+  },
+  "DragOverlay": {
+    "DropImagesHere": "ここに画像をドロップ"
+  },
+  "ExportDialog": {
+    "CautionsForPrinting": "※印刷時の注意",
+    "CautionsForPrintingDescription": "フチなし印刷、または拡大・縮小無し(倍率 100%/用紙に合わせる)で印刷してください。",
+    "export": "エクスポート",
+    "exportDescription": "エクスポートの準備が完了しました。下記の方法で印刷してください。",
+    "forIPhone": "スマートフォン（iPhone）の場合",
+    "forIPhoneDescription1": "「<1></1> エクスポート」ボタンから「\"ファイル\"に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。",
+    "forIPhoneDescription2": "「<1></1> 印刷」ボタンから印刷すると、縮小して印刷される可能性があります。",
+    "forPC": "PCの場合",
+    "forPCDescription": "「<1></1> 印刷」ボタンを押して印刷してください。",
+    "print": "印刷",
+    "save": "保存"
+  },
+  "Header": {
+    "title": "プロキシカード印刷",
+    "tweet": "Tweet"
+  },
+  "Preview": {
+    "printSlashDownload": "印刷 / ダウンロード"
+  },
+  "Settings": {
+    "cardSize": "カードサイズ",
+    "cardSizeCustom": "カスタム",
+    "cardSizeList_スタンダードサイズ": "スタンダードサイズ",
+    "cardSizeList_スモールサイズ": "スモールサイズ",
+    "paperSize": "用紙サイズ"
+  }
+}

@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { Button, Fab, Theme, useScrollTrigger, Zoom } from '@mui/material'
 import React, { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const fileInputStyle = css`
   visibility: hidden;
@@ -29,6 +30,8 @@ const AddCard = ({ add, fullWidth, showFab }: Props) => {
     threshold: 100,
   })
 
+  const { t } = useTranslation()
+
   const onFabButtonClick = () => {
     fileRef.current?.click()
   }
@@ -52,7 +55,7 @@ const AddCard = ({ add, fullWidth, showFab }: Props) => {
   return (
     <>
       <Button variant="outlined" startIcon={<AddPhotoAlternateIcon />} fullWidth={fullWidth} component="label" onKeyDown={onButtonKeyDown}>
-        カード追加
+        {t('AddCard.addCard', 'カード追加')}
         <input
           type="file"
           css={fileInputStyle}
@@ -68,7 +71,7 @@ const AddCard = ({ add, fullWidth, showFab }: Props) => {
           <Fab
             css={favStyle}
             onClick={onFabButtonClick}
-            aria-label="カード追加"
+            aria-label={t('AddCard.addCard', 'カード追加')!}
             color="primary"
           >
             <AddPhotoAlternateIcon />
