@@ -36,7 +36,10 @@ interface Props {
 const App = ({ i18n }: Props) => {
   useEffect(() => {
     const listener = (e: PopStateEvent) => {
-      i18n.changeLanguage(e.state && e.state.lang || 'ja')
+      const lang = e.state && e.state.lang || 'ja'
+
+      document.documentElement.lang = lang
+      i18n.changeLanguage(lang)
     }
 
     window.addEventListener('popstate', listener)

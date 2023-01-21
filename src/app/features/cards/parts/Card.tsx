@@ -1,7 +1,8 @@
 import { css, Theme } from '@emotion/react'
 import { Add, Edit as EditIcon, Remove, RestoreFromTrash as TrashIcon } from '@mui/icons-material'
-import { IconButton, InputAdornment } from '@mui/material'
-import { useRef, useState } from 'react'
+import { IconButton, InputAdornment, Typography } from '@mui/material'
+import { useId, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { SettingsCard } from '../cardsReducer'
 import { Crop } from '../types/crop'
 import EditDialog from './EditDialog'
@@ -41,6 +42,12 @@ const inputStyle = (theme: Theme) => css`
   flex: 1;
 `
 
+const cardUnitStyle = css`
+  &:lang(en) {
+    font-size: 0.7em;
+  }
+`
+
 const cardActions = css`
   display: flex;
 `
@@ -49,6 +56,8 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setFile, remove }: Props)
   const [isOpen, setOpen] = useState(false)
   const [crop, setCrop] = useState<Crop>(() => createInitCrop(card.orgFile))
   const thumbRef = useRef<HTMLDivElement>(null)
+  const labelId = useId()
+  const { t } = useTranslation()
 
   useBlobUrl(card.file, src => {
     if (thumbRef.current) {
@@ -73,6 +82,7 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setFile, remove }: Props)
       <div ref={thumbRef} css={thumbStyle} onClick={() => setOpen(true)} />
       <div css={inputStyle}>
         <NumberField
+          id={labelId}
           spinButton={false}
           min={0}
           placeholder="0"
@@ -83,15 +93,25 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setFile, remove }: Props)
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <IconButton edge="start" aria-label="減らす" onClick={() => setCount(`${Math.max(+card.count - 1, 0)}`)} >
+                <IconButton
+                  edge="start"
+                  aria-label={t('Card.decrement', '減らす')!}
+                  onClick={() => setCount(`${Math.max(+card.count - 1, 0)}`)}
+                >
                   <Remove />
                 </IconButton>
               </InputAdornment>
             ),
             endAdornment: (
               <InputAdornment position="end">
-                枚
-                <IconButton edge="end" aria-label="増やす" onClick={() => setCount(`${+card.count + 1}`)}>
+                <Typography component="label" htmlFor={labelId} css={cardUnitStyle}>
+                  {t('Card.cardUnits', '枚')}
+                </Typography>
+                <IconButton
+                  edge="end"
+                  aria-label={t('Card.increment', '増やす')!}
+                  onClick={() => setCount(`${+card.count + 1}`)}
+                >
                   <Add />
                 </IconButton>
               </InputAdornment>
@@ -100,10 +120,10 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setFile, remove }: Props)
         />
       </div>
       <div css={cardActions}>
-        <IconButton aria-label="編集" onClick={() => setOpen(true)}>
+        <IconButton aria-label={t('Card.edit', '編集')!} onClick={() => setOpen(true)}>
           <EditIcon />
         </IconButton>
-        <IconButton aria-label="削除" onClick={remove}>
+        <IconButton aria-label={t('Card.delete', '削除')!} onClick={remove}>
           <TrashIcon />
         </IconButton>
       </div>

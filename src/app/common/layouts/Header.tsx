@@ -59,6 +59,7 @@ const Header = () => {
                 </InputAdornment>
               ),
             }}
+            aria-label={t('Header.language', '言語選択')!}
           >
             <MenuItem value="ja" lang="ja">日本語</MenuItem>
             <MenuItem value="en" lang="en">English</MenuItem>

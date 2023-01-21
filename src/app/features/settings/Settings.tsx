@@ -33,7 +33,12 @@ const Settings = ({ form, dispatch }: Props) => {
           native
         >
           {Object.keys(pageSizes).map(v =>
-            <option key={v} value={v}>{v}</option>
+            // t('Settings.paperSizeList.A4', 'A4')
+            // t('Settings.paperSizeList.A4(縦)', 'A4(縦)')
+            // t('Settings.paperSizeList.A3', 'A3')
+            <option key={v} value={v}>
+              {t('Settings.paperSizeList.' + v, v)}
+            </option>
           )}
         </Select>
       </FormControl>
@@ -55,10 +60,14 @@ const Settings = ({ form, dispatch }: Props) => {
           <option value="custom">{t('Settings.cardSizeCustom', 'カスタム')}</option>
         </Select>
         {form.cardSize === 'スモールサイズ' && (
-          <FormHelperText>59mm x 86mm: 遊戯王、ヴァンガードなど</FormHelperText>
+          <FormHelperText>
+            {t('Settings.cardSizeSmallDescription', '59mm x 86mm: 遊戯王、ヴァンガードなど')}
+          </FormHelperText>
         )}
         {form.cardSize === 'スタンダードサイズ' && (
-          <FormHelperText>63mm x 88mm: MTG、デュエマ、ポケカなど</FormHelperText>
+          <FormHelperText>
+            {t('Settings.cardSizeStandardDescription', '63mm x 88mm: MTG、デュエマ、ポケカなど')}
+          </FormHelperText>
         )}
       </FormControl>
       {form.cardSize === 'custom' && (
@@ -66,7 +75,7 @@ const Settings = ({ form, dispatch }: Props) => {
           <Grid item xs={6}>
             <NumberField
               spinButton={false}
-              label="カード幅 (mm)"
+              label={t('Settings.cardWidth', 'カード幅 (mm)')}
               min={0}
               max={150}
               value={form.cardWidth}
@@ -94,7 +103,7 @@ const Settings = ({ form, dispatch }: Props) => {
           <Grid item xs={6}>
             <NumberField
               spinButton={false}
-              label="カード縦 (mm)"
+              label={t('Settings.cardHeight', 'カード縦 (mm)')}
               min={0}
               max={150}
               value={form.cardHeight}
@@ -104,14 +113,22 @@ const Settings = ({ form, dispatch }: Props) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)} >
+                    <IconButton
+                      edge="start"
+                      aria-label={t('Settings.decrement', '減らす')!}
+                      onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)}
+                    >
                       <Remove />
                     </IconButton>
                   </InputAdornment>
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}>
+                    <IconButton
+                      edge="end"
+                      aria-label={t('Settings.increment', '増やす')!}
+                      onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}
+                    >
                       <Add />
                     </IconButton>
                   </InputAdornment>
