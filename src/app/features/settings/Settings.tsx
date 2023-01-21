@@ -46,9 +46,10 @@ const Settings = ({ form, dispatch }: Props) => {
           native
         >
           {Object.keys(cardSizes).map(v =>
+            // t('Settings.cardSizeList.スモールサイズ', 'スモールサイズ')
+            // t('Settings.cardSizeList.スタンダードサイズ', 'スタンダードサイズ')
             <option key={v} value={v}>
-              {/* i18next-extract-mark-context-next-line ["スモールサイズ", "スタンダードサイズ"] */}
-              {t('Settings.cardSizeList', v, { context: v })}
+              {t('Settings.cardSizeList.' + v, v)}
             </option>
           )}
           <option value="custom">{t('Settings.cardSizeCustom', 'カスタム')}</option>

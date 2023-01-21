@@ -25,8 +25,7 @@
     "save": "Save"
   },
   "Header": {
-    "title": "Proxy Card Print",
-    "tweet": "Tweet"
+    "title": "Proxy Card Print"
   },
   "Preview": {
     "printSlashDownload": "Print / Download"
@@ -34,8 +33,10 @@
   "Settings": {
     "cardSize": "Card Size",
     "cardSizeCustom": "Custom",
-    "cardSizeList_スタンダードサイズ": "Standard",
-    "cardSizeList_スモールサイズ": "Small",
+    "cardSizeList": {
+      "スタンダードサイズ": "Standard",
+      "スモールサイズ": "Small"
+    },
     "paperSize": "Paper Size"
   }
 }

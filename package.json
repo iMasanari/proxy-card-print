@@ -8,7 +8,7 @@
     "prebuild": "tsc",
     "build": "vite build --emptyOutDir",
     "postbuild": "vite build --emptyOutDir --ssr ssg.tsx && node generated/ssg",
-    "i18next-extract": "NODE_ENV=development babel --config-file ./i18next-extract.babelrc './src/**/*.{js,jsx,ts,tsx}' > /dev/null"
+    "i18next": "i18next"
   },
   "keywords": [],
   "author": "iMasanari",
@@ -32,15 +32,12 @@
     "svg2pdf.js": "^2.2.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
-    "@babel/preset-typescript": "^7.18.6",
     "@emotion/babel-plugin": "^11.10.2",
     "@types/node": "^18.11.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
-    "babel-plugin-i18next-extract": "^0.9.0",
+    "i18next-parser": "^7.6.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.8",
     "vite-plugin-handlebars": "^1.6.0"

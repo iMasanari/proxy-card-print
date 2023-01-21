@@ -25,8 +25,7 @@
     "save": "保存"
   },
   "Header": {
-    "title": "プロキシカード印刷",
-    "tweet": "Tweet"
+    "title": "プロキシカード印刷"
   },
   "Preview": {
     "printSlashDownload": "印刷 / ダウンロード"
@@ -34,8 +33,10 @@
   "Settings": {
     "cardSize": "カードサイズ",
     "cardSizeCustom": "カスタム",
-    "cardSizeList_スタンダードサイズ": "スタンダードサイズ",
-    "cardSizeList_スモールサイズ": "スモールサイズ",
+    "cardSizeList": {
+      "スタンダードサイズ": "スタンダードサイズ",
+      "スモールサイズ": "スモールサイズ"
+    },
     "paperSize": "用紙サイズ"
   }
 }
