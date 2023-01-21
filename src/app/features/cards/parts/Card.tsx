@@ -5,8 +5,8 @@ import { useRef, useState } from 'react'
 import { SettingsCard } from '../cardsReducer'
 import { Crop } from '../types/crop'
 import EditDialog from './EditDialog'
-import NumberField from '~/common/atoms/NumberField'
-import { useBlobUrl } from '~/utils/blobUrlRef'
+import NumberField from '~/app/common/atoms/NumberField'
+import { useBlobUrl } from '~/app/utils/blobUrlRef'
 
 interface Props {
   card: SettingsCard

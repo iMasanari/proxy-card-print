@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import React, { SVGProps, useRef } from 'react'
-import { useBlobUrl } from '~/utils/blobUrlRef'
+import { useBlobUrl } from '~/app/utils/blobUrlRef'
 
 const svgStyle = css`
   display:block;

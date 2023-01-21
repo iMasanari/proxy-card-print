@@ -6,7 +6,7 @@ import SendToMobileIcon from '@mui/icons-material/SendToMobile'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
 import React, { useMemo, useRef } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { useBlobUrl } from '~/utils/blobUrlRef'
+import { useBlobUrl } from '~/app/utils/blobUrlRef'
 
 interface Props {
   open: boolean

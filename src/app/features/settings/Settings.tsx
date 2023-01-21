@@ -3,10 +3,10 @@ import { Add, Remove } from '@mui/icons-material'
 import { FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, Select } from '@mui/material'
 import { Dispatch } from 'react'
 import { useTranslation } from 'react-i18next'
-import NumberField from '~/common/atoms/NumberField'
-import { useAction } from '~/common/hooks/state'
+import NumberField from '~/app/common/atoms/NumberField'
+import { useAction } from '~/app/common/hooks/state'
+import { SettingsState, updateSettingsAction } from '~/app/features/settings/settingsReducer'
 import { cardSizes, pageSizes } from '~/domains/settings'
-import { SettingsState, updateSettingsAction } from '~/features/settings/settingsReducer'
 
 
 const settingStyle = (theme: Theme) => css`

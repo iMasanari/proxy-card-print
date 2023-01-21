@@ -4,7 +4,7 @@ import { createTheme, CssBaseline, Theme as MuiTheme, ThemeProvider } from '@mui
 import { type i18n } from 'i18next'
 import { StrictMode, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import Index from './pages/index'
+import Index from './Page'
 
 declare module '@emotion/react' {
   interface Theme extends MuiTheme {

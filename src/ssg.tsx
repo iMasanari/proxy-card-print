@@ -1,8 +1,8 @@
 import { readFile, writeFile } from 'fs/promises'
 import createEmotionServer from '@emotion/server/create-instance'
 import { renderToString } from 'react-dom/server'
-import App, { cache } from './App'
-import { initI18n } from './i18n'
+import App, { cache } from './app/App'
+import { initI18n } from './app/i18n'
 
 const generate = async (path: string, lang: string) => {
   const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)

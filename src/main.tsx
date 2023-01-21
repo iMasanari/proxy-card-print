@@ -1,6 +1,6 @@
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import App from './App'
-import { initI18n } from './i18n'
+import App from './app/App'
+import { initI18n } from './app/i18n'
 
 const container = document.getElementById('app')!
 

@@ -5,7 +5,7 @@ import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, 
 import AddCard from './parts/AddCard'
 import Card from './parts/Card'
 import DragOverlay from './parts/DragOverlay'
-import { useAction } from '~/common/hooks/state'
+import { useAction } from '~/app/common/hooks/state'
 
 const listStyle = css`
   list-style: none;

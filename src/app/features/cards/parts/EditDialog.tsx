@@ -6,7 +6,7 @@ import { Area, Point } from 'react-easy-crop/types'
 import { useTranslation } from 'react-i18next'
 import { getCroppedImage } from '../crop/getCroppedImage'
 import { Crop } from '../types/crop'
-import { createBlobURLRef, useBlobUrl } from '~/utils/blobUrlRef'
+import { createBlobURLRef, useBlobUrl } from '~/app/utils/blobUrlRef'
 
 const wrapperStyle = css`
   position: relative;

@@ -1,13 +1,13 @@
 import { css, Theme } from '@emotion/react'
 import { useReducer } from 'react'
-import Header from '~/common/layouts/Header'
-import Cards from '~/features/cards/Cards'
-import cardsReducer, { CardsState } from '~/features/cards/cardsReducer'
-import Preview from '~/features/preview/Preview'
-import { usePreviewData } from '~/features/preview/previewHooks'
-import Settings from '~/features/settings/Settings'
-import settingsReducer, { SettingsState } from '~/features/settings/settingsReducer'
-import Usage from '~/features/usage/Usage'
+import Header from './common/layouts/Header'
+import Cards from './features/cards/Cards'
+import cardsReducer, { CardsState } from './features/cards/cardsReducer'
+import Preview from './features/preview/Preview'
+import { usePreviewData } from './features/preview/previewHooks'
+import Settings from './features/settings/Settings'
+import settingsReducer, { SettingsState } from './features/settings/settingsReducer'
+import Usage from './features/usage/Usage'
 
 const appStyle = (theme: Theme) => css`
   ${theme.breakpoints.up('sm')} {

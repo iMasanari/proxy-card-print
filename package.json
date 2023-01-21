@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "tsc",
-    "build": "vite build",
-    "postbuild": "vite build --ssr src/ssg.tsx --outDir generated && node generated/ssg",
+    "build": "vite build --emptyOutDir",
+    "postbuild": "vite build --emptyOutDir --ssr ssg.tsx && node generated/ssg",
     "i18next-extract": "NODE_ENV=development babel --config-file ./i18next-extract.babelrc './src/**/*.{js,jsx,ts,tsx}' > /dev/null"
   },
   "keywords": [],
@@ -43,8 +43,7 @@
     "babel-plugin-i18next-extract": "^0.9.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.8",
-    "vite-plugin-handlebars": "^1.6.0",
-    "vite-tsconfig-paths": "^3.5.1"
+    "vite-plugin-handlebars": "^1.6.0"
   },
   "overrides": {
     "vite-plugin-handlebars": {
