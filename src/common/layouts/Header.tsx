@@ -1,14 +1,42 @@
 import { css } from '@emotion/react'
-import { Twitter } from '@mui/icons-material'
-import { AppBar, Button, Toolbar, Typography } from '@mui/material'
+import TranslateIcon from '@mui/icons-material/Translate'
+import { AppBar, createTheme, InputAdornment, MenuItem, TextField, ThemeProvider, Toolbar, Typography } from '@mui/material'
+import { ChangeEvent, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const titleStyle = css`
   margin-right: auto;
 `
 
+const langSelectStyle = css`
+  & svg {
+    color: currentColor;
+  }
+`
+
+const langSelectTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#fff',
+    },
+    text: {
+      primary: 'currentColor',
+      secondary: 'currentColor',
+    },
+  },
+})
+
 const Header = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const labelId = useId()
+
+  const onSelectLang = (e: ChangeEvent<HTMLInputElement>) => {
+    const lang = e.target.value
+    const path = lang === 'ja' ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}${lang}/`
+
+    history.pushState({ lang }, '', path)
+    window.dispatchEvent(new PopStateEvent('popstate', { state: { lang } }))
+  }
 
   return (
     <AppBar position="static">
@@ -16,9 +44,26 @@ const Header = () => {
         <Typography component="h1" variant="h6" css={titleStyle}>
           {t('Header.title', 'プロキシカード印刷')}
         </Typography>
-        <Button color="inherit" startIcon={<Twitter />} href="https://twitter.com/intent/tweet?text=プロキシカード印刷｜PCスマホで簡単作成、コンビニ印刷！%20%23プロキシ印刷%0A&url=https%3A%2F%2Fimasanari.github.io%2Fproxy-card-print%2F">
-          {t('Header.tweet', 'Tweet')}
-        </Button>
+        <ThemeProvider theme={langSelectTheme}>
+          <TextField
+            id={labelId}
+            select
+            size="small"
+            value={i18n.language}
+            onChange={onSelectLang}
+            css={langSelectStyle}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start" sx={{ color: 'currentColor' }}>
+                  <TranslateIcon />
+                </InputAdornment>
+              ),
+            }}
+          >
+            <MenuItem value="ja" lang="ja">日本語</MenuItem>
+            <MenuItem value="en" lang="en">English</MenuItem>
+          </TextField>
+        </ThemeProvider>
       </Toolbar>
     </AppBar>
   )

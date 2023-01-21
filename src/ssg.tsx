@@ -1,18 +1,26 @@
-import { readFileSync, writeFileSync } from 'fs'
+import { readFile, writeFile } from 'fs/promises'
 import createEmotionServer from '@emotion/server/create-instance'
 import { renderToString } from 'react-dom/server'
 import App, { cache } from './App'
+import { initI18n } from './i18n'
 
-const path = './dist/index.html'
-const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
+const generate = async (path: string, lang: string) => {
+  const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
+  const html = await readFile(path, 'utf-8')
+  const app = renderToString(<App i18n={initI18n(lang)} />)
+  const chunks = extractCriticalToChunks(app)
+  const styles = constructStyleTagsFromChunks(chunks)
 
-const html = readFileSync(path, 'utf-8')
-const app = renderToString(<App />)
-const chunks = extractCriticalToChunks(app)
-const styles = constructStyleTagsFromChunks(chunks)
+  const result = html
+    .replace('<!--app-html-->', app)
+    .replace('</head>', `  ${styles}\n</head>`)
 
-const result = html
-  .replace('<!--app-html-->', app)
-  .replace('</head>', `  ${styles}\n</head>`)
+  await writeFile(path, result)
+}
 
-writeFileSync(path, result)
+const main = async () => {
+  await generate('./dist/index.html', 'ja')
+  await generate('./dist/en/index.html', 'en')
+}
+
+main()
