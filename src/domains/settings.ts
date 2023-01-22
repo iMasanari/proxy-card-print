@@ -9,6 +9,8 @@ export const pageSizes = {
   A4: [297, 210],
   'A4(縦)': [210, 297],
   A3: [420, 297],
+  'レターサイズ': [279.4, 215.9],
+  'レターサイズ(縦)': [215.9, 279.4],
 } as const
 
 export type PageSize = keyof typeof pageSizes

@@ -1,11 +1,13 @@
 import { css, Theme } from '@emotion/react'
 import { Add, Remove } from '@mui/icons-material'
 import { FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, Select } from '@mui/material'
-import React, { Dispatch } from 'react'
-import NumberField from '~/common/atoms/NumberField'
-import { useAction } from '~/common/hooks/state'
+import { Dispatch } from 'react'
+import { useTranslation } from 'react-i18next'
+import NumberField from '~/app/common/atoms/NumberField'
+import { useAction } from '~/app/common/hooks/state'
+import { SettingsState, updateSettingsAction } from '~/app/features/settings/settingsReducer'
 import { cardSizes, pageSizes } from '~/domains/settings'
-import { SettingsState, updateSettingsAction } from '~/features/settings/settingsReducer'
+
 
 const settingStyle = (theme: Theme) => css`
   padding: ${theme.spacing(1)};
@@ -18,40 +20,56 @@ interface Props {
 
 const Settings = ({ form, dispatch }: Props) => {
   const updateSettings = useAction(updateSettingsAction, dispatch)
+  const { t } = useTranslation()
 
   return (
     <div css={settingStyle}>
       <FormControl variant="outlined" size="small" fullWidth sx={{ mt: 2 }}>
-        <InputLabel>用紙サイズ</InputLabel>
+        <InputLabel>{t('Settings.paperSize', '用紙サイズ')}</InputLabel>
         <Select
-          label="用紙サイズ"
+          label={t('Settings.paperSize', '用紙サイズ')}
           value={form.pageSize}
           onChange={(e) => updateSettings('pageSize', e.target.value)}
           native
         >
           {Object.keys(pageSizes).map(v =>
-            <option key={v} value={v}>{v}</option>
+            // t('Settings.paperSizeList.A4', 'A4')
+            // t('Settings.paperSizeList.A4(縦)', 'A4(縦)')
+            // t('Settings.paperSizeList.A3', 'A3')
+            // t('Settings.paperSizeList.レターサイズ', 'レターサイズ')
+            // t('Settings.paperSizeList.レターサイズ(縦)', 'レターサイズ(縦)')
+            <option key={v} value={v}>
+              {t('Settings.paperSizeList.' + v, v)}
+            </option>
           )}
         </Select>
       </FormControl>
       <FormControl variant="outlined" size="small" fullWidth sx={{ mt: 2 }}>
-        <InputLabel>カードサイズ</InputLabel>
+        <InputLabel>{t('Settings.cardSize', 'カードサイズ')}</InputLabel>
         <Select
-          label="カードサイズ"
+          label={t('Settings.cardSize', 'カードサイズ')}
           value={form.cardSize}
           onChange={(e) => updateSettings('cardSize', e.target.value)}
           native
         >
           {Object.keys(cardSizes).map(v =>
-            <option key={v} value={v}>{v}</option>
+            // t('Settings.cardSizeList.スモールサイズ', 'スモールサイズ')
+            // t('Settings.cardSizeList.スタンダードサイズ', 'スタンダードサイズ')
+            <option key={v} value={v}>
+              {t('Settings.cardSizeList.' + v, v)}
+            </option>
           )}
-          <option value="custom">カスタム</option>
+          <option value="custom">{t('Settings.cardSizeCustom', 'カスタム')}</option>
         </Select>
         {form.cardSize === 'スモールサイズ' && (
-          <FormHelperText>59mm x 86mm: 遊戯王、ヴァンガードなど</FormHelperText>
+          <FormHelperText>
+            {t('Settings.cardSizeSmallDescription', '59mm x 86mm: 遊戯王、ヴァンガードなど')}
+          </FormHelperText>
         )}
         {form.cardSize === 'スタンダードサイズ' && (
-          <FormHelperText>63mm x 88mm: MTG、デュエマ、ポケカなど</FormHelperText>
+          <FormHelperText>
+            {t('Settings.cardSizeStandardDescription', '63mm x 88mm: MTG、デュエマ、ポケカなど')}
+          </FormHelperText>
         )}
       </FormControl>
       {form.cardSize === 'custom' && (
@@ -59,7 +77,7 @@ const Settings = ({ form, dispatch }: Props) => {
           <Grid item xs={6}>
             <NumberField
               spinButton={false}
-              label="カード幅 (mm)"
+              label={t('Settings.cardWidth', 'カード幅 (mm)')}
               min={0}
               max={150}
               value={form.cardWidth}
@@ -87,7 +105,7 @@ const Settings = ({ form, dispatch }: Props) => {
           <Grid item xs={6}>
             <NumberField
               spinButton={false}
-              label="カード縦 (mm)"
+              label={t('Settings.cardHeight', 'カード縦 (mm)')}
               min={0}
               max={150}
               value={form.cardHeight}
@@ -97,14 +115,22 @@ const Settings = ({ form, dispatch }: Props) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)} >
+                    <IconButton
+                      edge="start"
+                      aria-label={t('Settings.decrement', '減らす')!}
+                      onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)}
+                    >
                       <Remove />
                     </IconButton>
                   </InputAdornment>
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}>
+                    <IconButton
+                      edge="end"
+                      aria-label={t('Settings.increment', '増やす')!}
+                      onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}
+                    >
                       <Add />
                     </IconButton>
                   </InputAdornment>

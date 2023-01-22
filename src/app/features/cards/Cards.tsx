@@ -1,10 +1,11 @@
 import { css, Theme } from '@emotion/react'
 import { Dispatch, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardFileAction } from './cardsReducer'
 import AddCard from './parts/AddCard'
 import Card from './parts/Card'
 import DragOverlay from './parts/DragOverlay'
-import { useAction } from '~/common/hooks/state'
+import { useAction } from '~/app/common/hooks/state'
 
 const listStyle = css`
   list-style: none;
@@ -37,6 +38,7 @@ interface Props {
 
 const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
   const [isDraging, setDraging] = useState(false)
+  const { t } = useTranslation()
 
   const addCards = useAction(addCardsAction, dispatch)
   const updateCardCount = useAction(updateCardCountAction, dispatch)
@@ -83,7 +85,7 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
 
   return (
     <div>
-      {!cards.length ? <p css={emptyStyle}>カード画像がありません</p> : (
+      {!cards.length ? <p css={emptyStyle}>{t('Cards.emptyCardImage', 'カード画像がありません')}</p> : (
         <ul css={listStyle}>
           {cards.map((card, index) =>
             <li key={card.id} css={itemStyle}>

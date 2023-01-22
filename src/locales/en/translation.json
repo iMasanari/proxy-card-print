@@ -1,0 +1,99 @@
+{
+  "AddCard": {
+    "addCard": "Add Card"
+  },
+  "Card": {
+    "cardUnits": "card(s)",
+    "decrement": "Decrement",
+    "delete": "Delete",
+    "edit": "Edit",
+    "increment": "Increment"
+  },
+  "Cards": {
+    "cancel": "Cancel",
+    "clipping": "Clipping",
+    "emptyCardImage": "Empty card images.",
+    "undo": "Undo"
+  },
+  "DragOverlay": {
+    "DropImagesHere": "Drop images here."
+  },
+  "ExportDialog": {
+    "CautionsForPrinting": "Cautions for printing",
+    "CautionsForPrintingDescription": "Please print without border or without scaling (magnification 100% / fit to paper).",
+    "export": "Export",
+    "exportDescription": "Export is ready. Please use the following method to print.",
+    "forIPhone": "For iPhone",
+    "forIPhoneDescription1": "Press the \"<1/> Export\" button and select \"Save to Files\" to save the file. After saving the file, you can print it using various printing applications and services.",
+    "forIPhoneDescription2": "If you print from the \"<1/> Print\" button, the image may be printed at a reduced size.",
+    "forPC": "For PC",
+    "forPCDescription": "Press the \"<1/> Print\" button to print.",
+    "print": "Print",
+    "save": "Save"
+  },
+  "Header": {
+    "language": "Select Language",
+    "title": "Proxy Card Print"
+  },
+  "Preview": {
+    "printSlashDownload": "Print / Download"
+  },
+  "Settings": {
+    "cardHeight": "Card Height (mm)",
+    "cardSize": "Card Size",
+    "cardSizeCustom": "Custom",
+    "cardSizeList": {
+      "スタンダードサイズ": "Standard Size",
+      "スモールサイズ": "Small Size"
+    },
+    "cardSizeSmallDescription": "59mm x 86mm: Yu-Gi-Oh, Vanguard, etc.",
+    "cardSizeStandardDescription": "63mm x 88mm: MTG, Pokémon, etc.",
+    "cardWidth": "Card Width (mm)",
+    "decrement": "Decrement",
+    "increment": "Increment",
+    "paperSize": "Paper Size",
+    "paperSizeList": {
+      "A3": "A3",
+      "A4": "A4",
+      "A4(縦)": "A4 (portrait)",
+      "レターサイズ": "Letter Size",
+      "レターサイズ(縦)": "Letter Size (portrait)"
+    }
+  },
+  "Usage": {
+    "aboutCardSizeContents": "Select the Card Size item according to the type of proxy card you are creating.",
+    "aboutCardSizeTitle": "About Card Size",
+    "developmentContents": "The source code is available on GitHub, and we welcome issues and pull requests.",
+    "developmentTitle": "Development",
+    "mainDescription": "This is a web app to easily print card game proxy cards (copy cards). It is compatible with both PCs and smartphones.",
+    "mainTitle": "Create proxy cards easily on the Web.",
+    "otherCardSizeContents1": "If \"Custom\" is selected for the card size, the size can be set freely.",
+    "otherCardSizeContents2": "Maybe it could be used for board game cards or something.",
+    "otherCardSizeTitle": "For cards of other sizes",
+    "printingServicesContents": "Printable data (PDF) is available for download, so you can use the printing service even if you do not have a printer at home. In Japan, you can print it at convenience stores.",
+    "printingServicesTitle": "Use of Printing Services",
+    "recommendedBrowserContents1": "Use the latest modern browsers.",
+    "recommendedBrowserContents2": "We recommend the desktop version of Google Chrome; Internet Explorer is not supported.",
+    "recommendedBrowserTitle": "Recommended system requirements",
+    "smallCardSizeContents": "Select \"Small Size\" for the card size.",
+    "smallCardSizeContentsOther1": "Other small size (59mm x 86mm) card games:",
+    "smallCardSizeContentsOther2": "Battle Spirits, etc.",
+    "smallCardSizeTitle": "For Yu-Gi-Oh, Vanguard, etc.",
+    "standardCardSizeContents": "Select \"Standard Size\" for the card size.",
+    "standardCardSizeContentsOther1": "Other standard size (63mm x 88mm) card games:",
+    "standardCardSizeContentsOther2": "Duel Masters, Weiss Schwarz, ZEX, Precious Memories, WIXOSS, ONE PIECE card game, etc.",
+    "standardCardSizeTitle": "For Magic the Gathering, Pokémon card games, etc.",
+    "usageDescription1": "Press \"Add Card\" and select the images you wish to print and the number of cards. Images can also be added by drag & drop.",
+    "usageDescription2": "Press \"Print / Download\" button to print. Please print without borders or without scaling (magnification 100% / fit to paper).",
+    "usageDescription3": "Cut with a cutter knife or similar tool to match the trim marks. Insert the cut proxy into the sleeve, and you're done!",
+    "usageSubTitle1": "1. Select images",
+    "usageSubTitle2": "2. Print",
+    "usageSubTitle3": "3. Cut",
+    "usageTitle": "Usage",
+    "useOfProxyCardsContents1": "Please observe the following:",
+    "useOfProxyCardsContents1List1": "Copyrights and terms of use of images used.",
+    "useOfProxyCardsContents1List2": "Rules and manners regarding the use of proxy cards.",
+    "useOfProxyCardsContents2": "You are free to use the printouts and print data (PDF), but the producer will not be held responsible for any damage that may occur as a result of using this service.",
+    "useOfProxyCardsTitle": "Use of Proxy Cards"
+  }
+}

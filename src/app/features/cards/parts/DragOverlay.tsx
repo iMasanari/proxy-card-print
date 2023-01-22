@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
-import React from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 
 const overlayStyle = css`
   display: flex;
@@ -22,10 +22,12 @@ const overlayStyle = css`
 const target = typeof window !== 'undefined' ? document.getElementById('app') : null
 
 const DragOverlay = () => {
+  const { t } = useTranslation()
+
   return (
     createPortal(
       <div css={overlayStyle}>
-        ここに画像をドロップ
+        {t('DragOverlay.DropImagesHere', 'ここに画像をドロップ')}
       </div>,
       target!
     )

@@ -3,9 +3,10 @@ import { Button, Dialog, DialogActions, Slider } from '@mui/material'
 import { useCallback, useState } from 'react'
 import Cropper from 'react-easy-crop'
 import { Area, Point } from 'react-easy-crop/types'
+import { useTranslation } from 'react-i18next'
 import { getCroppedImage } from '../crop/getCroppedImage'
 import { Crop } from '../types/crop'
-import { createBlobURLRef, useBlobUrl } from '~/utils/blobUrlRef'
+import { createBlobURLRef, useBlobUrl } from '~/app/utils/blobUrlRef'
 
 const wrapperStyle = css`
   position: relative;
@@ -30,6 +31,7 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
   const [zoom, setZoom] = useState(crop.zoom)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [orgSrc, setOrgSrc] = useState<string>()
+  const { t } = useTranslation()
 
   useBlobUrl(crop.orgFile, src => {
     setOrgSrc(src)
@@ -105,13 +107,13 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
       </div>
       <DialogActions>
         <Button onClick={reset} sx={{ mr: 'auto' }}>
-          元に戻す
+          {t('Cards.undo', '元に戻す')}
         </Button>
         <Button onClick={() => onClose(crop)}>
-          キャンセル
+          {t('Cards.cancel', 'キャンセル')}
         </Button>
         <Button variant="contained" onClick={executeCrop}>
-          切り取り
+          {t('Cards.clipping', '切り取り')}
         </Button>
       </DialogActions>
     </Dialog>
