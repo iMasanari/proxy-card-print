@@ -3,4 +3,4 @@
 # プロキシカード印刷
 
 カードゲームのプロキシ(コピーカード)を簡単に印刷するWebアプリ  
-https://proxy-card-print.imasanari.dev/
+https://proxy-card.imasanari.dev/
