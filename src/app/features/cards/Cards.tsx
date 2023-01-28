@@ -1,6 +1,7 @@
 import { css, Theme } from '@emotion/react'
 import { Dispatch, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Affiliate from '../affiliate/Affiliate'
 import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardFileAction } from './cardsReducer'
 import AddCard from './parts/AddCard'
 import Card from './parts/Card'
@@ -38,7 +39,7 @@ interface Props {
 
 const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
   const [isDraging, setDraging] = useState(false)
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const addCards = useAction(addCardsAction, dispatch)
   const updateCardCount = useAction(updateCardCountAction, dispatch)
@@ -104,6 +105,10 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
       <div css={footerStyle}>
         <AddCard add={addCards} fullWidth showFab={!cards.length} />
       </div>
+
+      {i18n.language === 'ja' && (
+        <Affiliate />
+      )}
       {isDraging && <DragOverlay />}
     </div>
   )
