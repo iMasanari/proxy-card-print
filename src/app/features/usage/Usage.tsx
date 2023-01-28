@@ -215,6 +215,21 @@ const Usage = () => {
             />
           </a>
         </section>
+        <section css={sectionStyle}>
+          <Title>
+            {t('Usage.analysisTitle', 'アクセス解析ツールについて')}
+          </Title>
+          <Typography gutterBottom>
+            <Trans i18nKey="Usage.analysisContents1">
+              当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」を使用しています。このGoogleアナリティクスはデータの収集のためにCookieを使用しています。このデータは匿名で収集されており、個人を特定するものではありません。
+            </Trans>
+          </Typography>
+          <Typography gutterBottom>
+            <Trans i18nKey="Usage.analysisContents2">
+              この機能は<Link target="_blank" rel="noopener" href={t('URL.Google アナリティクス オプトアウト アドオン', 'https://tools.google.com/dlpage/gaoptout?hl=ja')!}>Google アナリティクス オプトアウト アドオン</Link>を使用、またはCookieを無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関しての詳細は<Link target="_blank" rel="noopener" href={t('URL.Googleアナリティクスサービス利用規約', 'https://marketingplatform.google.com/about/analytics/terms/jp/')!}>Googleアナリティクスサービス利用規約</Link>ページや<Link target="_blank" rel="noopener" href={t('URL.Googleポリシーと規約', 'https://policies.google.com/technologies/ads?hl=ja')!}>Googleポリシーと規約</Link>ページをご覧ください。
+            </Trans>
+          </Typography>
+        </section>
       </Container>
     </div>
   )

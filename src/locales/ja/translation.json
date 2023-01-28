@@ -60,9 +60,17 @@
       "レターサイズ(縦)": "レターサイズ(縦)"
     }
   },
+  "URL": {
+    "Google アナリティクス オプトアウト アドオン": "https://tools.google.com/dlpage/gaoptout?hl=ja",
+    "Googleアナリティクスサービス利用規約": "https://marketingplatform.google.com/about/analytics/terms/jp/",
+    "Googleポリシーと規約": "https://policies.google.com/technologies/ads?hl=ja"
+  },
   "Usage": {
     "aboutCardSizeContents": "作成するプロキシカードの種類によって、カードサイズの項目を変更してください。",
     "aboutCardSizeTitle": "カードサイズについて",
+    "analysisContents1": "当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」を使用しています。このGoogleアナリティクスはデータの収集のためにCookieを使用しています。このデータは匿名で収集されており、個人を特定するものではありません。",
+    "analysisContents2": "この機能は<1>Google アナリティクス オプトアウト アドオン</1>を使用、またはCookieを無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関しての詳細は<3>Googleアナリティクスサービス利用規約</3>ページや<5>Googleポリシーと規約</5>ページをご覧ください。",
+    "analysisTitle": "アクセス解析ツールについて",
     "developmentContents": "GitHub にて、ソースコードを公開しています。issue やプルリクをお待ちしております。",
     "developmentTitle": "開発",
     "mainDescription": "これはカードゲームのプロキシ (コピーカード) を簡単に印刷できるWebアプリです。PC・スマホの両方に対応しています。",

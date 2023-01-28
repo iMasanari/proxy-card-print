@@ -60,9 +60,17 @@
       "レターサイズ(縦)": "Letter Size (portrait)"
     }
   },
+  "URL": {
+    "Google アナリティクス オプトアウト アドオン": "https://tools.google.com/dlpage/gaoptout?hl=en",
+    "Googleアナリティクスサービス利用規約": "https://marketingplatform.google.com/about/analytics/terms/us/",
+    "Googleポリシーと規約": "https://policies.google.com/technologies/ads?hl=en"
+  },
   "Usage": {
     "aboutCardSizeContents": "Select the Card Size item according to the type of proxy card you are creating.",
     "aboutCardSizeTitle": "About Card Size",
+    "analysisContents1": "This website uses Google Analytics, an access analysis tool provided by Google. This Google Analytics uses cookies to collect data. This data is collected anonymously and does not personally identify you.",
+    "analysisContents2": "This feature can be disabled by using the <1>Google Analytics Opt-Out Add-on</1> or by disabling cookies, so please check your browser settings. For more information about this agreement, please see the <3>Google Analytics Terms of Service</3> page and the <5>Google Privacy and Terms</5> page.",
+    "analysisTitle": "About Access Analysis Tools",
     "developmentContents": "The source code is available on GitHub, and we welcome issues and pull requests.",
     "developmentTitle": "Development",
     "mainDescription": "This is a web app to easily print card game proxy cards (copy cards). It is compatible with both PCs and smartphones.",
