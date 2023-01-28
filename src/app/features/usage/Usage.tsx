@@ -230,6 +230,16 @@ const Usage = () => {
             </Trans>
           </Typography>
         </section>
+        {i18n.language === 'ja' && (
+          <section css={sectionStyle}>
+            <Title>広告について</Title>
+            <Typography gutterBottom>
+              Amazonのアソシエイトとして、サイト運営者
+              <Link href="https://github.com/iMasanari/proxy-card-print" target="_blank" rel="noopener">iMasanari</Link>
+              は適格販売により収入を得ています。
+            </Typography>
+          </section>
+        )}
       </Container>
     </div>
   )
