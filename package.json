@@ -23,6 +23,7 @@
     "@xmldom/xmldom": "^0.8.6",
     "action-reducer": "^0.4.0",
     "i18next": "^22.4.9",
+    "jimp": "^0.16.2",
     "jspdf": "^2.5.1",
     "promise-worker": "^2.0.1",
     "react": "^18.2.0",
