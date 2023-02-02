@@ -106,8 +106,8 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
         <AddCard add={addCards} fullWidth showFab={!cards.length} />
       </div>
 
-      {i18n.language === 'ja' && (
-        <Affiliate />
+      {i18n.language === 'ja' && cards.length > 0 && (
+        <Affiliate cards={cards} />
       )}
       {isDraging && <DragOverlay />}
     </div>
