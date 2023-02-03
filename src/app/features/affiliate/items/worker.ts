@@ -1,12 +1,14 @@
-import Jimp from 'jimp/browser/lib/jimp'
 import registerPromiseWorker from 'promise-worker/register'
 import duelmasters from '../data/duelmasters.json'
 import onepiece from '../data/onepiece.json'
 import pokemon from '../data/pokemon.json'
 import yugioh from '../data/yugioh.json'
+import { toBin } from '../utils/baseConverter'
+import { distance, getHash } from '../utils/dhash'
+import { ImagePixelData } from '../utils/resize'
 
 export interface Option {
-  image: string
+  image: ImagePixelData
 }
 
 const cardList = [
@@ -14,14 +16,13 @@ const cardList = [
   ...onepiece,
   ...pokemon,
   ...yugioh,
-]
+].map(v => ({ asin: v.asin, hash: toBin(v.hash) }))
 
 registerPromiseWorker<Option, string>(async (option) => {
-  const image = await Jimp.read(option.image)
-  const hash = image.hash()
+  const hash = getHash(option.image)
 
   const result = cardList.reduce((acc, v) => {
-    const compare = Jimp.compareHashes(v.hash, hash)
+    const compare = distance(v.hash, hash)
 
     if (compare > acc.compare) return acc
 

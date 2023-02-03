@@ -36,8 +36,23 @@ const Item = ({ card }: { card: Blob }) => {
   useEffect(() => {
     (async () => {
       const src = URL.createObjectURL(card)
+      const image = new Image()
 
-      const asin = await getItem({ image: src })
+      await new Promise(resolve => {
+        image.onload = resolve
+        image.src = src
+      })
+
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')!
+
+      canvas.width = image.width
+      canvas.height = image.height
+
+      ctx.drawImage(image, 0, 0)
+
+      const pixcelData = ctx.getImageData(0, 0, image.width, image.height)
+      const asin = await getItem({ image: pixcelData })
 
       setAsin(asin)
 
