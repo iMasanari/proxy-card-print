@@ -11,12 +11,15 @@ export interface Option {
   image: ImagePixelData
 }
 
+const toCardList = (data: Record<string, string>) =>
+  Object.keys(data).map(asin => ({ asin, hash: toBin(data[asin]) }))
+
 const cardList = [
-  ...duelmasters,
-  ...onepiece,
-  ...pokemon,
-  ...yugioh,
-].map(v => ({ asin: v.asin, hash: toBin(v.hash) }))
+  ...toCardList(duelmasters),
+  ...toCardList(onepiece),
+  ...toCardList(pokemon),
+  ...toCardList(yugioh),
+]
 
 registerPromiseWorker<Option, string>(async (option) => {
   const hash = getHash(option.image)
