@@ -105,9 +105,8 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
       <div css={footerStyle}>
         <AddCard add={addCards} fullWidth showFab={!cards.length} />
       </div>
-
-      {i18n.language === 'ja' && cards.length > 0 && (
-        <Affiliate cards={cards} />
+      {import.meta.env.VITE_AMAZON_ASSOCIATE_ID && i18n.language === 'ja' && cards.length > 0 && (
+        <Affiliate cards={cards} associateId={import.meta.env.VITE_AMAZON_ASSOCIATE_ID} />
       )}
       {isDraging && <DragOverlay />}
     </div>
