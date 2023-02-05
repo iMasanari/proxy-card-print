@@ -9,7 +9,7 @@ import { SettingsState, updateSettingsAction } from '~/app/features/settings/set
 import { cardSizes, pageSizes } from '~/domains/settings'
 
 const settingStyle = (theme: Theme) => css`
-  padding: ${theme.spacing(1)};
+  padding: ${theme.spacing(0, 1)};
 `
 
 interface Props {

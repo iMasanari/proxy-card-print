@@ -5,22 +5,20 @@ const listStyle = (theme: Theme) => css`
   list-style: none;
   padding: ${theme.spacing(0, 1)};
   margin: 0;
-  display: flex;
   overflow-x: auto;
+  display: grid;
+  grid-auto-flow: column;
   gap: ${theme.spacing(1)};
   ${theme.breakpoints.up('sm')} {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0;
-    justify-items: center;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fill, 120px);
+    justify-content: center;
   }
 `
 
 const itemStyle = css`
   padding: 0;
   margin: 0;
-  display: flex;
-  justify-content: center;
 `
 
 interface Props {
@@ -44,7 +42,7 @@ const sleeves = [
 
 export default ({ associateId }: Props) => {
   return (
-    <div>
+    <aside>
       <Typography variant="body2" gutterBottom fontWeight="bolder" sx={{ textAlign: 'center' }}>
         おすすめスリーブ
       </Typography>
@@ -64,6 +62,6 @@ export default ({ associateId }: Props) => {
           </li>
         )}
       </ul>
-    </div>
+    </aside>
   )
 }
