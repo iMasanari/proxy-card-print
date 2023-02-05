@@ -147,7 +147,7 @@ const Usage = () => {
           </section>
           <section css={subSectionStyle}>
             <SubTitle>
-              {t('Usage.standardCardSizeTitle', 'ポケモンカードゲーム、デュエルマスターズなどの場合')}
+              {t('Usage.standardCardSizeTitle', 'ONE PIECEカードゲーム、ポケモンカードゲーム、デュエルマスターズなどの場合')}
             </SubTitle>
             <Typography gutterBottom>
               {t('Usage.standardCardSizeContents', 'カードサイズに「スタンダードサイズ」を選択します。')}
@@ -155,7 +155,7 @@ const Usage = () => {
             <Typography variant="body2" my={1} mx={2}>
               {t('Usage.standardCardSizeContentsOther1', '他、スタンダードサイズ (63mm x 88mm) のカードゲーム:')}
               <br />
-              {t('Usage.standardCardSizeContentsOther2', 'ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、WIXOSS、ONE PIECEカードゲームなど')}
+              {t('Usage.standardCardSizeContentsOther2', 'ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、WIXOSSなど')}
             </Typography>
           </section>
           <section css={subSectionStyle}>
