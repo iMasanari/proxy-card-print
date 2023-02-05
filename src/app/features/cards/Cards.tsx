@@ -1,7 +1,7 @@
 import { css, Theme } from '@emotion/react'
 import { Dispatch, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Affiliate from '../affiliate/Affiliate'
+import Affiliate from '../affiliate/AffiliateSleeve'
 import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardFileAction } from './cardsReducer'
 import AddCard from './parts/AddCard'
 import Card from './parts/Card'
@@ -105,9 +105,8 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
       <div css={footerStyle}>
         <AddCard add={addCards} fullWidth showFab={!cards.length} />
       </div>
-
-      {i18n.language === 'ja' && cards.length > 0 && (
-        <Affiliate cards={cards} />
+      {import.meta.env.VITE_AMAZON_ASSOCIATE_ID && i18n.language === 'ja' && (
+        <Affiliate associateId={import.meta.env.VITE_AMAZON_ASSOCIATE_ID} />
       )}
       {isDraging && <DragOverlay />}
     </div>

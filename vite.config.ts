@@ -7,12 +7,10 @@ export default defineConfig(({ mode, ssrBuild }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''))
 
   const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID
-  const BASE_PATH = process.env.BASE_PATH || '/'
 
   return {
     root: 'src',
     publicDir: `${__dirname}/public`,
-    base: BASE_PATH,
     legacy: {
       buildSsrCjsExternalHeuristics: true,
     },
@@ -44,7 +42,7 @@ export default defineConfig(({ mode, ssrBuild }) => {
     },
     plugins: [
       handlebars({
-        context: { GOOGLE_ANALYTICS_ID, BASE_PATH },
+        context: { GOOGLE_ANALYTICS_ID },
       }),
       react({
         jsxRuntime: 'automatic',

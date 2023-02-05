@@ -8,7 +8,6 @@ import { useAction } from '~/app/common/hooks/state'
 import { SettingsState, updateSettingsAction } from '~/app/features/settings/settingsReducer'
 import { cardSizes, pageSizes } from '~/domains/settings'
 
-
 const settingStyle = (theme: Theme) => css`
   padding: ${theme.spacing(1)};
 `
@@ -63,12 +62,12 @@ const Settings = ({ form, dispatch }: Props) => {
         </Select>
         {form.cardSize === 'スモールサイズ' && (
           <FormHelperText>
-            {t('Settings.cardSizeSmallDescription', '59mm x 86mm: 遊戯王、ヴァンガードなど')}
+            {t('Settings.cardSizeSmallDescription', '59mm x 86mm: 遊戯王/ヴァンガード等')}
           </FormHelperText>
         )}
         {form.cardSize === 'スタンダードサイズ' && (
           <FormHelperText>
-            {t('Settings.cardSizeStandardDescription', '63mm x 88mm: MTG、デュエマ、ポケカなど')}
+            {t('Settings.cardSizeStandardDescription', '63mm x 88mm: ワンピ/デュエマ/ポケカ等')}
           </FormHelperText>
         )}
       </FormControl>

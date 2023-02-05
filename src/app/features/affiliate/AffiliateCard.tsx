@@ -28,16 +28,32 @@ const itemStyle = css`
 
 interface Props {
   cards: SettingsCard[]
+  associateId: string
 }
 
-const Item = ({ card }: { card: Blob }) => {
+const Item = ({ card, associateId }: { card: Blob, associateId: string }) => {
   const [asin, setAsin] = useState<string | null>(null)
 
   useEffect(() => {
     (async () => {
       const src = URL.createObjectURL(card)
+      const image = new Image()
 
-      const asin = await getItem({ image: src })
+      await new Promise(resolve => {
+        image.onload = resolve
+        image.src = src
+      })
+
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')!
+
+      canvas.width = image.width
+      canvas.height = image.height
+
+      ctx.drawImage(image, 0, 0)
+
+      const pixcelData = ctx.getImageData(0, 0, image.width, image.height)
+      const asin = await getItem({ image: pixcelData })
 
       setAsin(asin)
 
@@ -46,18 +62,25 @@ const Item = ({ card }: { card: Blob }) => {
 
   }, [card])
 
-  if (!asin) return null
+  if (!asin) {
+    return null
+  }
 
   return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: `<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=imasanari-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=${asin}"></iframe>`,
-      }}
+    <iframe
+      loading="lazy"
+      sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin"
+      style={{ width: 120, height: 240 }}
+      marginWidth={0}
+      marginHeight={0}
+      scrolling="no"
+      frameBorder={0}
+      src={`//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=${associateId}&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=${asin}`}
     />
   )
 }
 
-export default ({ cards }: Props) => {
+export default ({ cards, associateId }: Props) => {
   return (
     <div>
       <Typography variant="body2" gutterBottom fontWeight="bolder" sx={{ textAlign: 'center' }}>
@@ -66,7 +89,7 @@ export default ({ cards }: Props) => {
       <ul css={listStyle}>
         {cards.map(card =>
           <li key={card.id} css={itemStyle}>
-            <Item card={card.file} />
+            <Item card={card.file} associateId={associateId} />
           </li>
         )}
       </ul>
