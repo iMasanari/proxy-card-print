@@ -1,6 +1,8 @@
 import { css, Theme } from '@emotion/react'
 import { useReducer } from 'react'
+import { useTranslation } from 'react-i18next'
 import Header from './common/layouts/Header'
+import AffiliateSleeve from './features/affiliate/AffiliateSleeve'
 import Cards from './features/cards/Cards'
 import cardsReducer, { CardsState } from './features/cards/cardsReducer'
 import Preview from './features/preview/Preview'
@@ -27,12 +29,21 @@ const contentsStyle = (theme: Theme) => css`
 `
 
 const conditionsStyle = (theme: Theme) => css`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ${theme.spacing(1)};
+  padding-top: ${theme.spacing(1)};
+  padding-bottom: ${theme.spacing(1)};
   ${theme.breakpoints.up('sm')} {
     overflow: auto;
     position: relative;
-    display: flex;
-    flex-direction: column;
     width: 300px;
+  }
+`
+
+const affiliateStyle = (theme: Theme) => css`
+  ${theme.breakpoints.up('sm')} {
+    grid-row-start: 3;
   }
 `
 
@@ -55,6 +66,7 @@ const initCards: CardsState = []
 const Index = () => {
   const [settingsForm, settingsDispatch] = useReducer(settingsReducer, intiSettings)
   const [cardsForm, cardsDispatch] = useReducer(cardsReducer, initCards)
+  const { i18n } = useTranslation()
 
   const data = usePreviewData(settingsForm, cardsForm)
 
@@ -63,6 +75,11 @@ const Index = () => {
       <Header />
       <div css={contentsStyle}>
         <div css={conditionsStyle}>
+          {import.meta.env.VITE_AMAZON_ASSOCIATE_ID && i18n.language === 'ja' && (
+            <div css={affiliateStyle}>
+              <AffiliateSleeve associateId={import.meta.env.VITE_AMAZON_ASSOCIATE_ID} />
+            </div>
+          )}
           <Settings form={settingsForm} dispatch={settingsDispatch} />
           <Cards
             cards={cardsForm}

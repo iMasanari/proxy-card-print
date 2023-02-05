@@ -5,22 +5,20 @@ const listStyle = (theme: Theme) => css`
   list-style: none;
   padding: ${theme.spacing(0, 1)};
   margin: 0;
-  display: flex;
   overflow-x: auto;
+  display: grid;
+  grid-auto-flow: column;
   gap: ${theme.spacing(1)};
   ${theme.breakpoints.up('sm')} {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0;
-    justify-items: center;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fill, 120px);
+    justify-content: center;
   }
 `
 
 const itemStyle = css`
   padding: 0;
   margin: 0;
-  display: flex;
-  justify-content: center;
 `
 
 interface Props {
@@ -28,6 +26,18 @@ interface Props {
 }
 
 const sleeves = [
+  // きゃらスリーブコレクション マットシリーズ SPY×FAMILY キービジュアル(No.MT1515)
+  'B0BSF18Q94',
+  // きゃらスリーブコレクション マットシリーズ グランブルーファンタジー エニュオ(No.MT1449)
+  'B0BLRNKZYT',
+  // ブシロードスリーブコレクション ハイグレード Vol.3326 コウペンちゃん『コウペンちゃん ドローしてえらい!』
+  'B0BG6YWCQK',
+  // キャラクタースリーブ ソニック・ザ・ヘッジホッグ 『墨絵 超音速針鼠』ソニック(EN-1135)
+  'B0BL2BDGKJ',
+  // きゃらスリーブコレクション マットシリーズ グランブルーファンタジー アズサ(No.MT1451)
+  'B0BLS1Q1LM',
+  // ブロッコリーモノクロームスリーブプレミアム とーとつにエジプト神2「メジェド」
+  'B0BM3BW9JP',
   // Shadowverse EVOLVE 公式スリーブ Vol.25 Shadowverse EVOLVE『ラプラトン星』
   'B09ZP8NTX7',
   // キャラクタースリーブ お隣の天使様にいつの間にか駄目人間にされていた件 白河千歳 (EN-1180) パック
@@ -44,7 +54,7 @@ const sleeves = [
 
 export default ({ associateId }: Props) => {
   return (
-    <div>
+    <aside>
       <Typography variant="body2" gutterBottom fontWeight="bolder" sx={{ textAlign: 'center' }}>
         おすすめスリーブ
       </Typography>
@@ -64,6 +74,6 @@ export default ({ associateId }: Props) => {
           </li>
         )}
       </ul>
-    </div>
+    </aside>
   )
 }
