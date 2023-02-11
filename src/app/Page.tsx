@@ -32,8 +32,8 @@ const conditionsStyle = (theme: Theme) => css`
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: ${theme.spacing(1)};
+  align-content: start;
   padding-top: ${theme.spacing(1)};
-  padding-bottom: ${theme.spacing(1)};
   ${theme.breakpoints.up('sm')} {
     overflow: auto;
     position: relative;
