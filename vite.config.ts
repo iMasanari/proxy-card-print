@@ -2,6 +2,14 @@ import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
 import handlebars from 'vite-plugin-handlebars'
 
+const banner = `/*!
+ * @license プロキシカード印刷
+ * https://proxy-card.imasanari.dev
+ * 
+ * MIT License
+ * Copyright (c) 2020 iMasanari
+ */`
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, ssrBuild }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''))
@@ -21,6 +29,9 @@ export default defineConfig(({ mode, ssrBuild }) => {
           ja: `${__dirname}/src/index.html`,
           en: `${__dirname}/src/en/index.html`,
         },
+        output: {
+          banner,
+        },
       },
     },
     resolve: {
@@ -36,6 +47,11 @@ export default defineConfig(({ mode, ssrBuild }) => {
     },
     worker: {
       format: 'es',
+      rollupOptions: {
+        output: {
+          banner,
+        },
+      },
     },
     optimizeDeps: {
       include: ['@emotion/react/jsx-dev-runtime'],
