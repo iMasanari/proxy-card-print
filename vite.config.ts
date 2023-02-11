@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
 import handlebars from 'vite-plugin-handlebars'
+import { VitePWA } from 'vite-plugin-pwa'
 
 const banner = `/*!
  * @license プロキシカード印刷
@@ -33,6 +34,7 @@ export default defineConfig(({ mode, ssrBuild }) => {
           banner,
         },
       },
+      assetsInlineLimit: 0,
     },
     resolve: {
       alias: {
@@ -66,6 +68,11 @@ export default defineConfig(({ mode, ssrBuild }) => {
         babel: {
           plugins: ['@emotion/babel-plugin'],
         },
+      }),
+      VitePWA({
+        registerType: 'autoUpdate',
+        manifest: false,
+        minify: false,
       }),
     ],
   }
