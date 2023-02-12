@@ -106,6 +106,7 @@ const Preview = ({ className, data }: Props) => {
     setPdf(null)
 
     const pdf = await createPdfFile({
+      name: t('Preview.pdfName', 'プロキシカード印刷'),
       svg: Array.from(container.getElementsByTagName('svg'), svg => svg.outerHTML),
       width: pageWidth,
       height: pageHeight,

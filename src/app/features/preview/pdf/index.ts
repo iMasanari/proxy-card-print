@@ -21,7 +21,7 @@ export const createPdfFile = async (option: Option) => {
   const blobURL = await ps.postMessage<string, Option>(option)
   const res = await fetch(blobURL)
   const buffer = await res.arrayBuffer()
-  const name = `プロキシカード印刷-${getTimeStamp(new Date())}.pdf`
+  const name = `${option.name}-${getTimeStamp(new Date())}.pdf`
 
   URL.revokeObjectURL(blobURL)
 

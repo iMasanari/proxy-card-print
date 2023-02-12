@@ -1,5 +1,5 @@
 module.exports = {
-  locales: ['ja', 'en'],
+  locales: ['ja', 'en', 'zh-Hans'],
   sort: true,
   createOldCatalogs: false,
   defaultNamespace:'translation',
