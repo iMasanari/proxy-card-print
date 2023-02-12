@@ -21,6 +21,7 @@ proto.querySelectorAll = proto.querySelectorAll || (() => [])
 proto.style = proto.style || { getPropertyValue: () => null }
 
 export interface Option {
+  name: string
   svg: string[]
   width: number
   height: number
