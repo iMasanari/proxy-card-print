@@ -3,8 +3,9 @@ import { CacheProvider, css, Global, Theme } from '@emotion/react'
 import { createTheme, CssBaseline, Theme as MuiTheme, ThemeProvider } from '@mui/material'
 import { type i18n } from 'i18next'
 import { StrictMode, useEffect } from 'react'
-import { I18nextProvider } from 'react-i18next'
-import Index from './Page'
+import { I18nextProvider, useTranslation } from 'react-i18next'
+import Meta from './features/meta/Meta'
+import Page from './Page'
 
 declare module '@emotion/react' {
   interface Theme extends MuiTheme {
@@ -38,7 +39,6 @@ const App = ({ i18n }: Props) => {
     const listener = (e: PopStateEvent) => {
       const lang = e.state && e.state.lang || 'ja'
 
-      document.documentElement.lang = lang
       i18n.changeLanguage(lang)
     }
 
@@ -54,7 +54,8 @@ const App = ({ i18n }: Props) => {
           <I18nextProvider i18n={i18n}>
             <CssBaseline />
             <Global styles={globalStyle} />
-            <Index />
+            <Meta />
+            <Page />
           </I18nextProvider>
         </ThemeProvider>
       </CacheProvider>

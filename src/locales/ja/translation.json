@@ -35,6 +35,10 @@
     "language": "言語選択",
     "title": "プロキシカード印刷"
   },
+  "Meta": {
+    "manifestURL": "/manifest/ja.webmanifest",
+    "title": "プロキシカード印刷｜PCスマホで簡単作成、コンビニ印刷！"
+  },
   "Preview": {
     "printSlashDownload": "印刷 / ダウンロード"
   },
