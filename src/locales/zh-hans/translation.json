@@ -1,9 +1,111 @@
 {
+  "AddCard": {
+    "addCard": "加卡"
+  },
+  "Card": {
+    "cardUnits": "张",
+    "decrement": "减少",
+    "delete": "删除",
+    "edit": "编辑",
+    "increment": "增加"
+  },
+  "Cards": {
+    "cancel": "取消",
+    "clipping": "剪下",
+    "emptyCardImage": "没有卡片图片",
+    "undo": "撤消"
+  },
+  "DragOverlay": {
+    "DropImagesHere": "将图片放在这里"
+  },
+  "ExportDialog": {
+    "CautionsForPrinting": "打印时的注意事项",
+    "CautionsForPrintingDescription": "请使用无边距打印或不放大/缩小（100% 放大/适合纸张）打印。",
+    "export": "导出",
+    "exportDescription": "准备导出。 请使用以下方法打印。",
+    "forIPhone": "智能手机（iPhone）",
+    "forIPhoneDescription1": "从“<1></1> 导出”按钮中选择“存储到‘文件’”进行保存。 保存后，您可以使用各种打印应用程序和服务进行打印。",
+    "forIPhoneDescription2": "如果您从“<1></1> 打印”按钮打印，它可能会以缩小尺寸打印。",
+    "forPC": "电脑版",
+    "forPCDescription": "按“<1></1> 打印”按钮进行打印。",
+    "print": "打印",
+    "save": "保存"
+  },
   "Header": {
+    "language": "语言选择",
     "title": "代理卡印刷"
   },
   "Meta": {
     "manifestURL": "/manifest/zh-hans.webmanifest",
     "title": "代理卡印刷 | 使用 PC 智能手机轻松创建！"
+  },
+  "Preview": {
+    "printSlashDownload": "打印 / 下载"
+  },
+  "Settings": {
+    "cardHeight": "卡片高 (mm)",
+    "cardSize": "卡片尺寸",
+    "cardSizeCustom": "自定义",
+    "cardSizeList": {
+      "スタンダードサイズ": "标准尺寸",
+      "スモールサイズ": "小尺寸"
+    },
+    "cardSizeSmallDescription": "59mm x 86mm: 游戏王、VG等",
+    "cardSizeStandardDescription": "63mm x 88mm: 万智牌等",
+    "cardWidth": "卡片宽 (mm)",
+    "decrement": "减少",
+    "increment": "增加",
+    "paperSize": "纸张尺寸",
+    "paperSizeList": {
+      "A3": "A3",
+      "A4": "A4",
+      "A4(縦)": "A4(竖)",
+      "レターサイズ": "Letter Size",
+      "レターサイズ(縦)": "Letter Size (竖)"
+    }
+  },
+  "URL": {
+    "Google アナリティクス オプトアウト アドオン": "https://tools.google.com/dlpage/gaoptout?hl=zh-CN",
+    "Googleアナリティクスサービス利用規約": "https://marketingplatform.google.com/about/analytics/terms/cn/",
+    "Googleポリシーと規約": "https://policies.google.com/technologies/ads?hl=zh-CN"
+  },
+  "Usage": {
+    "aboutCardSizeContents": "根据要创建的代理卡类型更改卡大小项目。",
+    "aboutCardSizeTitle": "关于卡片尺寸",
+    "analysisContents1": "本网站使用谷歌的访问分析工具“Google Analytics”。 此 Google Analytics 使用 cookie 来收集数据。 这些数据是匿名收集的，无法识别个人身份。",
+    "analysisContents2": "此功能可以通过使用 <1>“停用Google Analytics（分析）”浏览器插件</1> 或禁用 cookie 来拒绝收集，因此请检查您的浏览器设置。 有关此协议的详细信息，请参阅 <3>Google Analytics（分析）服务条款</3> 页面和 <5>Google 隐私权和条款</5> 页面。",
+    "analysisTitle": "关于访问分析工具",
+    "developmentContents": "源代码发布在 GitHub 上。 我们期待您的问题和拉取请求。",
+    "developmentTitle": "发展",
+    "mainDescription": "这是一个网络应用程序，可让您轻松打印纸牌游戏代理（复印卡）。 它支持 PC 和智能手机。",
+    "mainTitle": "在网络上轻松创建代理卡",
+    "otherCardSizeContents1": "如果为卡片尺寸选择“自定义”，则可以自由设置尺寸。",
+    "otherCardSizeContents2": "可用作棋盘游戏卡。",
+    "otherCardSizeTitle": "对于其他尺寸的卡片",
+    "printingServicesContents": "可打印数据（PDF）可供下载，即使家中没有打印机也可使用打印服务。 在日本，您可以在便利店打印它。",
+    "printingServicesTitle": "使用打印服务",
+    "recommendedBrowserContents1": "请使用最新的现代浏览器。",
+    "recommendedBrowserContents2": "建议使用桌面版 Google Chrome。 不支持 Internet Explorer。",
+    "recommendedBrowserTitle": "推荐环境",
+    "smallCardSizeContents": "为卡片尺寸选择“小尺寸”。",
+    "smallCardSizeContentsOther1": "其他小尺寸（59mm x 86mm）纸牌游戏：",
+    "smallCardSizeContentsOther2": "バトルスピリッツ等",
+    "smallCardSizeTitle": "对于游戏王、卡片战斗先导者等",
+    "standardCardSizeContents": "为卡片尺寸选择“标准尺寸”。",
+    "standardCardSizeContentsOther1": "其他标准尺寸（63mm x 88mm）纸牌游戏：",
+    "standardCardSizeContentsOther2": "ONE PIECEカードゲーム、ポケモンカードゲーム、デュエルマスターズ等",
+    "standardCardSizeTitle": "万智牌等",
+    "usageDescription1": "从“添加卡”中选择要打印的图像和份数。 您还可以通过拖放来添加图像。",
+    "usageDescription2": "使用“打印/下载”按钮进行打印。 请使用无边界打印或无缩放（100% 放大/适合纸张）。",
+    "usageDescription3": "对准修剪标记并用美工刀切割。 将剪下的代理放入套筒中，大功告成！",
+    "usageSubTitle1": "1. 选择一个图像",
+    "usageSubTitle2": "2. 打印",
+    "usageSubTitle3": "3. 裁剪",
+    "usageTitle": "用法",
+    "useOfProxyCardsContents1": "使用时请遵守以下事项。",
+    "useOfProxyCardsContents1List1": "所用图像的版权和使用条款",
+    "useOfProxyCardsContents1List2": "代办卡使用规则及礼仪",
+    "useOfProxyCardsContents2": "您可以自由使用打印资料和打印数据（PDF），但创作者不对因使用本服务而造成的任何损害负责。",
+    "useOfProxyCardsTitle": "关于使用代理卡"
   }
 }
