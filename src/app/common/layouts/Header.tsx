@@ -32,7 +32,7 @@ const Header = () => {
 
   const onSelectLang = (e: ChangeEvent<HTMLInputElement>) => {
     const lang = e.target.value
-    const path = lang === 'ja' ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}${lang}/`
+    const path = lang === 'ja' ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}${lang.toLowerCase()}/`
 
     history.pushState({ lang }, '', path)
     window.dispatchEvent(new PopStateEvent('popstate', { state: { lang } }))
@@ -63,6 +63,7 @@ const Header = () => {
           >
             <MenuItem value="ja" lang="ja">日本語</MenuItem>
             <MenuItem value="en" lang="en">English</MenuItem>
+            <MenuItem value="zh-Hans" lang="zh-Hans">简体中文</MenuItem>
           </TextField>
         </ThemeProvider>
       </Toolbar>

@@ -29,6 +29,7 @@ export default defineConfig(({ mode, ssrBuild }) => {
         input: {
           ja: `${__dirname}/src/index.html`,
           en: `${__dirname}/src/en/index.html`,
+          'zh-hans': `${__dirname}/src/zh-hans/index.html`,
         },
         output: {
           banner,

@@ -21,6 +21,7 @@ const generate = async (path: string, lang: string) => {
 const main = async () => {
   await generate('./dist/index.html', 'ja')
   await generate('./dist/en/index.html', 'en')
+  await generate('./dist/zh-hans/index.html', 'en')
 }
 
 main()
