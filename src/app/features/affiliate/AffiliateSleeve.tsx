@@ -21,6 +21,12 @@ const itemStyle = css`
   margin: 0;
 `
 
+const iframeStyle = css`
+  body:has(.app-modal) & {
+    visibility: hidden;
+  }
+`
+
 interface Props {
   associateId: string
 }
@@ -62,6 +68,7 @@ export default ({ associateId }: Props) => {
         {sleeves.map(asin =>
           <li key={asin} css={itemStyle}>
             <iframe
+              css={iframeStyle}
               loading="lazy"
               sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin"
               style={{ width: 120, height: 240 }}
