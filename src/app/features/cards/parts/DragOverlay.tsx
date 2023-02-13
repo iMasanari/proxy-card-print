@@ -15,8 +15,10 @@ const overlayStyle = css`
   border-radius: 20px;
   font-size: 1.5rem;
   background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
   color: #444;
   pointer-events: none;
+  z-index: 1;
 `
 
 const target = typeof window !== 'undefined' ? document.getElementById('app') : null
@@ -26,7 +28,7 @@ const DragOverlay = () => {
 
   return (
     createPortal(
-      <div css={overlayStyle}>
+      <div className="app-modal" css={overlayStyle}>
         {t('DragOverlay.DropImagesHere', 'ここに画像をドロップ')}
       </div>,
       target!
