@@ -2,8 +2,8 @@ import createCache from '@emotion/cache'
 import { CacheProvider, css, Global, Theme } from '@emotion/react'
 import { createTheme, CssBaseline, Theme as MuiTheme, ThemeProvider } from '@mui/material'
 import { type i18n } from 'i18next'
-import { StrictMode, useEffect } from 'react'
-import { I18nextProvider, useTranslation } from 'react-i18next'
+import { StrictMode } from 'react'
+import { I18nextProvider } from 'react-i18next'
 import Meta from './features/meta/Meta'
 import Page from './Page'
 
@@ -35,18 +35,6 @@ interface Props {
 }
 
 const App = ({ i18n }: Props) => {
-  useEffect(() => {
-    const listener = (e: PopStateEvent) => {
-      const lang = e.state && e.state.lang || 'ja'
-
-      i18n.changeLanguage(lang)
-    }
-
-    window.addEventListener('popstate', listener)
-
-    return () => window.removeEventListener('popstate', listener)
-  }, [i18n])
-
   return (
     <StrictMode>
       <CacheProvider value={cache}>

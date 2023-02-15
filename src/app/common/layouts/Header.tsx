@@ -34,8 +34,7 @@ const Header = () => {
     const lang = e.target.value
     const path = lang === 'ja' ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}${lang.toLowerCase()}/`
 
-    history.pushState({ lang }, '', path)
-    window.dispatchEvent(new PopStateEvent('popstate', { state: { lang } }))
+    location.href = path
   }
 
   return (

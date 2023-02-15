@@ -18,18 +18,15 @@ export default defineConfig(({ mode, ssrBuild }) => {
   const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID
 
   return {
-    root: 'src',
-    publicDir: `${__dirname}/public`,
     legacy: {
       buildSsrCjsExternalHeuristics: true,
     },
     build: {
-      outDir: ssrBuild ? `${__dirname}/generated` : `${__dirname}/dist`,
       rollupOptions: {
         input: {
-          ja: `${__dirname}/src/index.html`,
-          en: `${__dirname}/src/en/index.html`,
-          'zh-hans': `${__dirname}/src/zh-hans/index.html`,
+          ja: `${__dirname}/index.html`,
+          en: `${__dirname}/en/index.html`,
+          'zh-hans': `${__dirname}/zh-hans/index.html`,
         },
         output: {
           banner,

@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "tsc",
-    "build": "vite build --emptyOutDir",
-    "postbuild": "vite build --emptyOutDir --ssr ssg.tsx && node generated/ssg",
+    "build": "vite build",
+    "postbuild": "vite build --ssr src/ssg.tsx --outDir generated && node generated/ssg",
     "i18next": "i18next"
   },
   "keywords": [],
