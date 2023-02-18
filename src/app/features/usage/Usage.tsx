@@ -230,7 +230,7 @@ const Usage = () => {
             </Trans>
           </Typography>
         </section>
-        {i18n.language === 'ja' && (
+        {import.meta.env.VITE_AMAZON_ASSOCIATE_ID && i18n.language === 'ja' && (
           <section css={sectionStyle}>
             <Title>広告について</Title>
             <Typography gutterBottom>
