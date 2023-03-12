@@ -42,6 +42,10 @@ const Item = ({ card }: { card: Blob }) => {
         const url = new URL('https://www.amazon.co.jp/s')
         url.searchParams.set('k', name)
 
+        if (import.meta.env.VITE_AMAZON_ASSOCIATE_ID) {
+          url.searchParams.set('tag', import.meta.env.VITE_AMAZON_ASSOCIATE_ID)
+        }
+
         return { name, url: url.toString() }
       }))
 

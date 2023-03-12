@@ -237,9 +237,7 @@ const Usage = () => {
               {/* Amazonのアソシエイトとして、サイト運営者
               <Link href="https://github.com/iMasanari/proxy-card-print" target="_blank" rel="noopener">iMasanari</Link>
               は適格販売により収入を得ています。 */}
-              Amazonアソシエイト申請中です(2023/01/28現在)。審査が通り次第、サイト運営者
-              <Link href="https://github.com/iMasanari/proxy-card-print" target="_blank" rel="noopener">iMasanari</Link>
-              はAmazonのアソシエイトとして、適格販売により収入を得ます。
+              Amazonアソシエイト申請中です(2023/03/12現在)。審査が通り次第、プロキシカード印刷はAmazonのアソシエイトとして、適格販売により収入を得ます。
             </Typography>
           </section>
         )}
