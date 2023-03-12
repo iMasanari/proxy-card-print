@@ -42,6 +42,10 @@ const Item = ({ card }: { card: Blob }) => {
         const url = new URL('https://www.amazon.co.jp/s')
         url.searchParams.set('k', name)
 
+        if (import.meta.env.VITE_AMAZON_ASSOCIATE_ID) {
+          url.searchParams.set('tag', import.meta.env.VITE_AMAZON_ASSOCIATE_ID)
+        }
+
         return { name, url: url.toString() }
       }))
 
@@ -74,7 +78,7 @@ export default ({ cards }: Props) => {
         )}
       </List>
       <Typography variant="body2" fontSize="0.7em" p={1} gutterBottom>
-        ※追加した画像をもとに、上記リンクを生成しています。カード識別はこの端末上で行われるので、追加した画像がサーバー等に送信されることはありません。なお、この機能は一部のカードゲームのカードのみに対応しています。（現在は、ONEPIECEカードとポケモンのスタンダードレギュレーションのカードのみ）
+        ※追加した画像をもとに、上記リンクを生成しています。カード識別はこの端末上で行われるので、追加した画像がサーバー等に送信されることはありません。なお、この機能は一部のカードゲームのカードのみに対応しています。（現在は、ポケモンのスタンダードレギュレーションのカードとONEPIECEカード、デュエルマスターズのみ対応）
       </Typography>
     </div>
   )
