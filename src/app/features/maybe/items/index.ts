@@ -9,7 +9,7 @@ const ps = typeof window === 'object'
 export const getItem = async (option: Option) => {
   const cardHash = await ps.postMessage<string, Option>(option)
 
-  const res = await fetch(`${import.meta.env.VITE_HASH_API_URL}v1/${cardHash.slice(0, 2)}.json`, {
+  const res = await fetch(`${import.meta.env.VITE_HASH_API_URL}v1/${cardHash.slice(0, 2).toLowerCase()}.json`, {
     mode: 'cors',
   })
 
