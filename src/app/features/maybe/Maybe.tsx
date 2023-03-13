@@ -46,7 +46,7 @@ const Item = ({ card }: { card: Blob }) => {
           url.searchParams.set('tag', import.meta.env.VITE_AMAZON_ASSOCIATE_ID)
         }
 
-        return { name, url: url.toString() }
+        return { name, url: encodeURI(url.toString()) }
       }))
 
       URL.revokeObjectURL(src)
