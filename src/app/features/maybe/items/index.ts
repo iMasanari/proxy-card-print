@@ -2,6 +2,11 @@ import PromiseWorker from 'promise-worker'
 import { Option } from './worker'
 import AffiliateWorker from './worker?worker'
 
+interface CardData {
+  category: string
+  name: string
+}
+
 const ps = typeof window === 'object'
   ? new PromiseWorker(new AffiliateWorker())
   : null!
@@ -15,6 +20,6 @@ export const getItem = async (option: Option) => {
 
   const json = await res.json()
 
-  return json[cardHash].map((v: any) => v.name) as string[]
+  return json[cardHash] as CardData[]
 }
 

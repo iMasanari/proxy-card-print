@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SettingsCard } from '../cards/cardsReducer'
 import { getItem } from './items'
 
@@ -9,11 +9,18 @@ interface Props {
 
 interface CardData {
   name: string
+  category: string | undefined
   url: string
 }
 
+const categoryRecord: Record<string, string | undefined> = {
+  duelmasters: 'デュエル・マスターズ',
+  onepiece: 'ONE PIECE カードゲーム',
+  pokemon: 'ポケモンカード',
+}
+
 const Item = ({ card }: { card: Blob }) => {
-  const [cardData, setCardNames] = useState<CardData[]>([])
+  const [cardData, setCardData] = useState<CardData[]>([])
 
   useEffect(() => {
     (async () => {
@@ -36,17 +43,17 @@ const Item = ({ card }: { card: Blob }) => {
       const pixcelData = ctx.getImageData(0, 0, image.width, image.height)
 
       // TODO: エラーキャッチ
-      const cardNames = await getItem({ image: pixcelData }).catch((): string[] => [])
+      const cardNames = await getItem({ image: pixcelData }).catch(() => [])
 
-      setCardNames(cardNames.map(name => {
+      setCardData(cardNames.map(card => {
         const url = new URL('https://www.amazon.co.jp/s')
-        url.searchParams.set('k', name)
+        url.searchParams.set('k', `${card.name} ${categoryRecord[card.category] || ''}`)
 
         if (import.meta.env.VITE_AMAZON_ASSOCIATE_ID) {
           url.searchParams.set('tag', import.meta.env.VITE_AMAZON_ASSOCIATE_ID)
         }
 
-        return { name, url: url.toString() }
+        return { name: card.name, category: categoryRecord[card.category], url: url.toString() }
       }))
 
       URL.revokeObjectURL(src)
@@ -58,7 +65,15 @@ const Item = ({ card }: { card: Blob }) => {
       {cardData.map(v =>
         <ListItem key={v.name} disablePadding>
           <ListItemButton href={v.url} target="_blank" rel="noopener">
-            <ListItemText primary={v.name} secondary="Amazonで価格を見る" />
+            <ListItemText
+              primary={
+                <>
+                  {v.category ? <Typography variant="caption" display="block">{v.category}</Typography> : null}
+                  {v.name}
+                </>
+              }
+              secondary="Amazonで価格を見る"
+            />
           </ListItemButton>
         </ListItem>
       )}
@@ -78,7 +93,8 @@ export default ({ cards }: Props) => {
         )}
       </List>
       <Typography variant="body2" fontSize="0.7em" p={1} gutterBottom>
-        ※追加した画像をもとに、上記リンクを生成しています。カード識別はこの端末上で行われるので、追加した画像がサーバー等に送信されることはありません。なお、この機能は一部のカードゲームのカードのみに対応しています。（現在は、ポケモンのスタンダードレギュレーションのカードとONEPIECEカード、デュエルマスターズのみ対応）
+        ※追加した画像から上記リンクを生成しています。カード識別はこの端末上で行われ、追加した画像がサーバー等に送信されることはありません（カード識別後、そのカードの名称を取得するためにサーバーとの通信を行うことがあります）。<br />
+        対応カード: ポケカ（スタンダードレギュ）、ワンピ、デュエマ
       </Typography>
     </div>
   )
