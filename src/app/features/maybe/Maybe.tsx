@@ -85,15 +85,15 @@ const ItemLoader = ({ card, setCardDataList }: { card: SettingsCard, setCardData
       // TODO: エラーキャッチ
       const cardNames = await getItem({ image: pixcelData }).catch(() => [])
 
-      const cardDataList = cardNames.map(card => {
+      const cardDataList = cardNames.map(v => {
         const url = new URL('https://www.amazon.co.jp/s')
-        url.searchParams.set('k', `${card.name} ${categoryRecord[card.category] || ''}`)
+        url.searchParams.set('k', `${v.name} ${categoryRecord[v.category] || ''}`)
 
         if (import.meta.env.VITE_AMAZON_ASSOCIATE_ID) {
           url.searchParams.set('tag', import.meta.env.VITE_AMAZON_ASSOCIATE_ID)
         }
 
-        return { name: card.name, category: categoryRecord[card.category], url: url.toString() }
+        return { name: v.name, category: categoryRecord[v.category], url: url.toString() }
       })
 
       setCardDataList(list => [...list, { id: card.id, list: cardDataList }])
@@ -106,7 +106,7 @@ const ItemLoader = ({ card, setCardDataList }: { card: SettingsCard, setCardData
     return () => {
       asyncDestructor.then(fn => fn())
     }
-  }, [card, setCardDataList])
+  }, [card.id, card.file, setCardDataList])
 
   return null
 }
@@ -143,29 +143,25 @@ export default ({ cards }: Props) => {
           </ListItem>
         )}
       </List>
-      {true && (
-        <>
-          <Typography variant="body2" fontWeight="bolder" sx={{ textAlign: 'center' }} gutterBottom>
-            関連商品
-          </Typography>
-          <ul css={listStyle}>
-            {itemList.map(asin =>
-              <li key={asin} css={itemStyle}>
-                <iframe
-                  loading="lazy"
-                  sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin"
-                  style={{ width: 120, height: 240 }}
-                  marginWidth={0}
-                  marginHeight={0}
-                  scrolling="no"
-                  frameBorder={0}
-                  src={`//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=${import.meta.env.VITE_AMAZON_ASSOCIATE_ID}&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=${asin}`}
-                />
-              </li>
-            )}
-          </ul>
-        </>
-      )}
+      <Typography variant="body2" fontWeight="bolder" sx={{ textAlign: 'center' }} gutterBottom>
+        関連商品
+      </Typography>
+      <ul css={listStyle}>
+        {itemList.map(asin =>
+          <li key={asin} css={itemStyle}>
+            <iframe
+              loading="lazy"
+              sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin"
+              style={{ width: 120, height: 240 }}
+              marginWidth={0}
+              marginHeight={0}
+              scrolling="no"
+              frameBorder={0}
+              src={`//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=${import.meta.env.VITE_AMAZON_ASSOCIATE_ID || ''}&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=${asin}`}
+            />
+          </li>
+        )}
+      </ul>
       <Typography variant="body2" fontSize="0.7em" p={1} gutterBottom>
         ※追加した画像から上記リンクを生成しています。カード識別はこの端末上で行われ、追加した画像がサーバー等に送信されることはありません（カード識別後、そのカードの名称を取得するためにサーバーとの通信を行うことがあります）。<br />
         対応カード: ポケカ（スタンダードレギュ）、ワンピ、デュエマ
