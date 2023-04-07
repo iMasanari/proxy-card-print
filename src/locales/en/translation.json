@@ -32,6 +32,7 @@
     "save": "Save"
   },
   "Header": {
+    "currentLanguage": "English",
     "language": "Select Language",
     "title": "Proxy Card Print"
   },

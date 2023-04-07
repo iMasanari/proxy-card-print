@@ -32,6 +32,7 @@
     "save": "保存"
   },
   "Header": {
+    "currentLanguage": "日本語",
     "language": "言語選択",
     "title": "プロキシカード印刷"
   },
