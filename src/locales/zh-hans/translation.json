@@ -61,9 +61,7 @@
     "paperSizeList": {
       "A3": "A3",
       "A4": "A4",
-      "A4(縦)": "A4(竖)",
-      "レターサイズ": "Letter Size",
-      "レターサイズ(縦)": "Letter Size (竖)"
+      "レターサイズ": "Letter Size"
     }
   },
   "URL": {
