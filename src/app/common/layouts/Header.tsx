@@ -67,7 +67,7 @@ const Header = () => {
           </MenuItem>
         </li>
         <li>
-          <MenuItem component="a" href="/zh-Hans/" lang="zh-Hans" hrefLang="zh-Hans" onClick={handleMenuClick}>
+          <MenuItem component="a" href="/zh-hans/" lang="zh-Hans" hrefLang="zh-Hans" onClick={handleMenuClick}>
             简体中文
           </MenuItem>
         </li>
