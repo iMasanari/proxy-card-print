@@ -7,6 +7,7 @@ export type CardSize = keyof typeof cardSizes | 'custom'
 
 export const pageSizes = {
   A4: [297, 210],
+  B4: [364, 257],
   A3: [420, 297],
   'レターサイズ': [279.4, 215.9],
 } as const
