@@ -32,6 +32,7 @@
     "save": "保存"
   },
   "Header": {
+    "currentLanguage": "简体中文",
     "language": "语言选择",
     "title": "代理卡印刷"
   },
@@ -60,9 +61,7 @@
     "paperSizeList": {
       "A3": "A3",
       "A4": "A4",
-      "A4(縦)": "A4(竖)",
-      "レターサイズ": "Letter Size",
-      "レターサイズ(縦)": "Letter Size (竖)"
+      "レターサイズ": "Letter Size"
     }
   },
   "URL": {

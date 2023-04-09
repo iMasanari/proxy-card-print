@@ -26,8 +26,10 @@ interface Props {
 }
 
 const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }: Props) => {
-  const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
-  const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
+  // FIXME: ../Preview.tsxと重複している
+  const colCount = Math.floor((pageWidth - (pageMargin + 1) * 2) / cardWidth)
+  const rowCount = Math.floor((pageHeight - (pageMargin + 1) * 2) / cardHeight)
+
   const marginX = (pageWidth - cardWidth * colCount) / 2
   const marginY = (pageHeight - cardHeight * rowCount) / 2
 

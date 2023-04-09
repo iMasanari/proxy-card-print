@@ -1,40 +1,32 @@
 import { css } from '@emotion/react'
 import TranslateIcon from '@mui/icons-material/Translate'
-import { AppBar, createTheme, InputAdornment, MenuItem, TextField, ThemeProvider, Toolbar, Typography } from '@mui/material'
-import { ChangeEvent, useId } from 'react'
+import { AppBar, Button, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import { useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const titleStyle = css`
   margin-right: auto;
 `
 
-const langSelectStyle = css`
-  & svg {
-    color: currentColor;
-  }
-`
-
-const langSelectTheme = createTheme({
-  palette: {
-    primary: {
-      main: '#fff',
-    },
-    text: {
-      primary: 'currentColor',
-      secondary: 'currentColor',
-    },
-  },
-})
-
 const Header = () => {
   const { t, i18n } = useTranslation()
-  const labelId = useId()
+  const menuId = useId()
+  const anchorRef = useRef<HTMLButtonElement>(null)
+  const [isOpen, setIsOpen] = useState(false)
 
-  const onSelectLang = (e: ChangeEvent<HTMLInputElement>) => {
-    const lang = e.target.value
-    const path = lang === 'ja' ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}${lang.toLowerCase()}/`
+  const handleMenuOpen = () => {
+    setIsOpen(true)
+  }
 
-    location.href = path
+  const handleMenuClose = () => {
+    setIsOpen(false)
+  }
+
+  const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.currentTarget.hreflang === i18n.language && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
+      e.preventDefault()
+      setIsOpen(false)
+    }
   }
 
   return (
@@ -43,30 +35,45 @@ const Header = () => {
         <Typography component="h1" variant="h6" css={titleStyle}>
           {t('Header.title', 'プロキシカード印刷')}
         </Typography>
-        <ThemeProvider theme={langSelectTheme}>
-          <TextField
-            id={labelId}
-            select
-            size="small"
-            value={i18n.language}
-            onChange={onSelectLang}
-            css={langSelectStyle}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" sx={{ color: 'currentColor' }}>
-                  <TranslateIcon />
-                </InputAdornment>
-              ),
-            }}
-            aria-label={t('Header.language', '言語選択')!}
-          >
-            <MenuItem value="ja" lang="ja">日本語</MenuItem>
-            <MenuItem value="en" lang="en">English</MenuItem>
-            <MenuItem value="zh-Hans" lang="zh-Hans">简体中文</MenuItem>
-          </TextField>
-        </ThemeProvider>
+        <Button
+          ref={anchorRef}
+          color="inherit"
+          variant="outlined"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          aria-expanded={isOpen ? 'true' : 'false'}
+          onClick={handleMenuOpen}
+          startIcon={<TranslateIcon />}
+          aria-label={t('Header.language', '言語選択')!}
+        >
+          {t('Header.currentLanguage', '日本語')}
+        </Button>
       </Toolbar>
+      <Menu
+        anchorEl={anchorRef.current}
+        id={menuId}
+        keepMounted
+        open={isOpen}
+        onClose={handleMenuClose}
+      >
+        <li>
+          <MenuItem component="a" href="/" lang="ja" hrefLang="ja" onClick={handleMenuClick}>
+            日本語
+          </MenuItem>
+        </li>
+        <li>
+          <MenuItem component="a" href="/en/" lang="en" hrefLang="en" onClick={handleMenuClick}>
+            English
+          </MenuItem>
+        </li>
+        <li>
+          <MenuItem component="a" href="/zh-Hans/" lang="zh-Hans" hrefLang="zh-Hans" onClick={handleMenuClick}>
+            简体中文
+          </MenuItem>
+        </li>
+      </Menu>
     </AppBar>
   )
 }
+
 export default Header

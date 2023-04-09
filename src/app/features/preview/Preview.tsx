@@ -65,28 +65,38 @@ const chunks = <T,>(array: T[], chunk: number) => {
 }
 
 const Preview = ({ className, data }: Props) => {
-  const { pageWidth, pageHeight, cards, cardWidth, cardHeight } = data
+  const { pageWidth: _pageWidth, pageHeight: _pageHeight, cards, cardWidth, cardHeight } = data
 
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
   const [pdf, setPdf] = useState<File | null>(null)
   const { t } = useTranslation()
 
-  const colCount = Math.floor((pageWidth - pageMargin * 2) / cardWidth)
-  const rowCount = Math.floor((pageHeight - pageMargin * 2) / cardHeight)
+  // FIXME: ./Page.tsxと重複している
+  const printableWidth = _pageWidth - (pageMargin + 1) * 2
+  const printableHeight = _pageHeight - (pageMargin + 1) * 2
+
+  const colCount1 = Math.floor(printableWidth / cardWidth)
+  const rowCount1 = Math.floor(printableHeight / cardHeight)
+  const colCount2 = Math.floor(printableHeight / cardWidth)
+  const rowCount2 = Math.floor(printableWidth / cardHeight)
+
+  const isLandscape = colCount1 * rowCount1 > colCount2 * rowCount2
+
+  const pageWidth = isLandscape ? _pageWidth : _pageHeight
+  const pageHeight = isLandscape ? _pageHeight : _pageWidth
+  const colCount = isLandscape ? colCount1 : colCount2
+  const rowCount = isLandscape ? rowCount1 : rowCount2
 
   const pages = useMemo(() => {
-    const list = cards.reduce((acc, v) => {
-      if (!v.count) return acc
+    const list = cards.flatMap((v) => {
+      if (!v.count) return []
 
-      return [
-        ...acc,
-        ...[...Array(v.count).keys()].map(i => ({
-          file: v.file,
-          id: `${i}-${v.id}`,
-        })),
-      ]
-    }, [] as { file: Blob, id: string }[])
+      return [...Array(v.count).keys()].map(i => ({
+        file: v.file,
+        id: `${v.id}-${i}`,
+      }))
+    })
 
     if (!list.length) {
       return [[]]
