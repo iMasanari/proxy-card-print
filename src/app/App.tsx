@@ -4,7 +4,6 @@ import { createTheme, CssBaseline, Theme as MuiTheme, ThemeProvider } from '@mui
 import { type i18n } from 'i18next'
 import { StrictMode } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import Meta from './features/meta/Meta'
 import Page from './Page'
 
 declare module '@emotion/react' {
@@ -42,7 +41,6 @@ const App = ({ i18n }: Props) => {
           <I18nextProvider i18n={i18n}>
             <CssBaseline />
             <Global styles={globalStyle} />
-            <Meta />
             <Page />
           </I18nextProvider>
         </ThemeProvider>

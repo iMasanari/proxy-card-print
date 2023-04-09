@@ -36,10 +36,6 @@
     "language": "Select Language",
     "title": "Proxy Card Print"
   },
-  "Meta": {
-    "manifestURL": "/manifest/en.webmanifest",
-    "title": "Proxy Card Print | Easy creation with a PC and smartphone!"
-  },
   "Preview": {
     "pdfName": "proxy-card-print",
     "printSlashDownload": "Print / Download"
