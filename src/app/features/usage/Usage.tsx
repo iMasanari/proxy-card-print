@@ -241,6 +241,13 @@ const Usage = () => {
             </Typography>
           </section>
         )}
+        <section css={sectionStyle}>
+          <Title>追加した画像について</Title>
+          <Typography gutterBottom>
+            このサイトでは、「カード追加」から追加した画像からカードを識別し、そのカード名のAmazon検索ページへのリンクを表示する機能があります。<br />
+            カード識別はユーザーの端末内で行われるので、ユーザーが追加した画像がサーバー等に送信されることはありません。ただし、カード識別後にそのカードの名称や関連商品を取得するためにサーバーとの通信を行うことがありますのでご了承ください。
+          </Typography>
+        </section>
       </Container>
     </div>
   )
