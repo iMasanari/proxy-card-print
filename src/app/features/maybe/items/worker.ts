@@ -1,17 +1,30 @@
+import { distance, dhashFromImageData, ImageDataLike } from 'isomorphic-image-hash'
 import registerPromiseWorker from 'promise-worker/register'
-import hashList from '../data/hash-list.json'
 import { toBin } from '../utils/baseConverter'
-import { distance, getHash } from '../utils/dhash'
-import { ImagePixelData } from '../utils/resize'
 
 export interface Option {
-  image: ImagePixelData
+  image: ImageDataLike
 }
 
-const hashDataList = hashList.map(hash => ({ hash, bin: toBin(hash) }))
+let getHashList = async () => {
+  const fn = async () => {
+    const res = await fetch(`${import.meta.env.VITE_HASH_API_URL}v2/hash-list.json`)
+    const json: string[] = await res.json()
+
+    return json.map(hash => ({ hash, bin: toBin(hash) }))
+  }
+
+  const promise = fn()
+
+  // TODO: リトライ処理を追加する
+  getHashList = () => promise
+
+  return await promise
+}
 
 registerPromiseWorker<Option, string>(async (option) => {
-  const hash = getHash(option.image)
+  const hash = dhashFromImageData(option.image)
+  const hashDataList = await getHashList()
 
   const result = hashDataList.reduce((acc, v) => {
     const compare = distance(v.bin, hash)
