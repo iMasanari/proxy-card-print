@@ -143,7 +143,7 @@ export default ({ cards }: Props) => {
           </ListItem>
         )}
       </List>
-      {import.meta.env.VITE_AMAZON_ASSOCIATE_ID != null && (
+      {import.meta.env.VITE_AMAZON_ASSOCIATE_ID && (
         <>
           <Typography variant="body2" fontWeight="bolder" sx={{ textAlign: 'center' }} gutterBottom>
             関連商品
