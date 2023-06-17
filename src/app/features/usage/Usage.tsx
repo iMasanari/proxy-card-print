@@ -155,7 +155,7 @@ const Usage = () => {
             <Typography variant="body2" my={1} mx={2}>
               {t('Usage.standardCardSizeContentsOther1', '他、スタンダードサイズ (63mm x 88mm) のカードゲーム:')}
               <br />
-              {t('Usage.standardCardSizeContentsOther2', 'ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、WIXOSSなど')}
+              {t('Usage.standardCardSizeContentsOther2', 'シャドウバース、ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、WIXOSSなど')}
             </Typography>
           </section>
           <section css={subSectionStyle}>
@@ -241,14 +241,16 @@ const Usage = () => {
             </Typography>
           </section>
         )}
-        <section css={sectionStyle}>
-          <Title>追加した画像について</Title>
-          <Typography gutterBottom>
-            このサイトでは、「カード追加」から追加した画像からカードを識別し、そのカード名のAmazon検索ページへのリンクを表示する機能があります。<br />
-            カード識別はユーザーの端末内で行われるので、ユーザーが追加した画像がサーバー等に送信されることはありません。ただし、カード識別後にそのカードの名称や関連商品を取得するためにサーバーとの通信を行うことがありますのでご了承ください。<br />
-            識別対応カード: ポケモンカード、ワンピースカード、デュエルマスターズ
-          </Typography>
-        </section>
+        {i18n.language === 'ja' && (
+          <section css={sectionStyle}>
+            <Title>追加した画像について</Title>
+            <Typography gutterBottom>
+              このサイトでは、「カード追加」から追加した画像からカードを識別し、そのカード名のAmazon検索ページへのリンクを表示する機能があります。<br />
+              カード識別はユーザーの端末内で行われるので、ユーザーが追加した画像がサーバー等に送信されることはありません。ただし、カード識別後にそのカードの名称や関連商品を取得するためにサーバーとの通信を行うことがありますのでご了承ください。<br />
+              識別対応カード: ポケモンカード、ワンピースカード、デュエルマスターズ
+            </Typography>
+          </section>
+        )}
       </Container>
     </div>
   )

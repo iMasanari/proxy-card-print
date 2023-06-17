@@ -30,6 +30,7 @@ export default defineConfig(({ mode, ssrBuild }) => {
         },
         output: {
           banner,
+          interop: ssrBuild ? 'auto' : undefined,
         },
       },
       assetsInlineLimit: 0,
