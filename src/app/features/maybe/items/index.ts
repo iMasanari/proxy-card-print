@@ -1,6 +1,6 @@
 import PromiseWorker from 'promise-worker'
-import { Option } from './worker'
-import AffiliateWorker from './worker?worker'
+import { Option } from './items.worker'
+import AffiliateWorker from './items.worker?worker'
 
 interface CardData {
   category: string
