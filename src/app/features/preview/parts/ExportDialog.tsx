@@ -91,7 +91,7 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
           </DialogContentText>
           <DialogContentText gutterBottom textAlign="justify">
             <Trans t={t} i18nKey="ExportDialog.forIPhoneDescription1">
-              「<SendToMobileIcon fontSize="inherit" /> エクスポート」ボタンから「&quot;ファイル&quot;に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。
+              「<SendToMobileIcon fontSize="inherit" />{' エクスポート」ボタンから「"ファイル"に保存」を選び、保存してください。保存後、各種印刷アプリ・サービスで印刷できます。'}
             </Trans>
             <br />
             <Trans t={t} i18nKey="ExportDialog.forIPhoneDescription2">

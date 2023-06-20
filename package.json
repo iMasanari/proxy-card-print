@@ -8,6 +8,7 @@
     "prebuild": "tsc",
     "build": "vite build",
     "postbuild": "vite build --ssr src/ssg.tsx --outDir generated && node generated/ssg",
+    "prei18next": "rm src/locales/ja/translation.json",
     "i18next": "i18next"
   },
   "keywords": [],
