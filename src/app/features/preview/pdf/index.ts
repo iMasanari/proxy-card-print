@@ -1,6 +1,6 @@
 import PromiseWorker from 'promise-worker'
-import { Option } from './worker'
-import PdfWorker from './worker?worker'
+import { Option } from './pdf.worker'
+import PdfWorker from './pdf.worker?worker'
 
 const ps = typeof window === 'object'
   ? new PromiseWorker(new PdfWorker())
