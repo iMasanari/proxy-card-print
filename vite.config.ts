@@ -72,6 +72,7 @@ export default defineConfig(({ mode, ssrBuild }) => {
         registerType: 'autoUpdate',
         manifest: false,
         minify: false,
+        workbox: { navigateFallback: '/404.html' },
       }),
     ],
   }
