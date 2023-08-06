@@ -20,6 +20,7 @@ interface CardDataList {
 }
 
 const categoryRecord: Record<string, string | undefined> = {
+  yugioh: '遊戯王',
   duelmasters: 'デュエル・マスターズ',
   onepiece: 'ONE PIECE カードゲーム',
   pokemon: 'ポケモンカード',
@@ -168,7 +169,7 @@ export default ({ cards }: Props) => {
       )}
       <Typography variant="body2" fontSize="0.7em" p={1} gutterBottom>
         ※追加した画像から上記リンクを生成しています。カード識別はこの端末上で行われ、追加した画像がサーバー等に送信されることはありません（カード識別後、そのカードの名称を取得するためにサーバーとの通信を行うことがあります）。<br />
-        識別対応カード: ポケカ、ワンピ、デュエマ
+        識別対応カード: 遊戯王、ポケカ、ワンピ、デュエマ
       </Typography>
     </div>
   )
