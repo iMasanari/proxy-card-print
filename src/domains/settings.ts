@@ -22,6 +22,7 @@ export interface CardType {
 }
 
 export interface PreviewData {
+  pageSize: PageSize
   pageWidth: number
   pageHeight: number
   cardWidth: number
