@@ -1,8 +1,5 @@
 import { css, Theme } from '@emotion/react'
-import AddPhotoAlternate from '@mui/icons-material/AddPhotoAlternate'
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-import ContentCut from '@mui/icons-material/ContentCut'
-import Print from '@mui/icons-material/Print'
+import { AddPhotoAlternate, CheckCircleOutline, ContentCut, Print } from '@mui/icons-material'
 import { Box, Card, Container, Grid, Link, Typography, TypographyProps } from '@mui/material'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -97,7 +94,7 @@ const Usage = () => {
             </Grid>
           </Grid>
           <SubTitle>
-            <CheckCircleOutlineIcon sx={{ verticalAlign: 'text-bottom', mr: 1 }} color="primary" />
+            <CheckCircleOutline sx={{ verticalAlign: 'text-bottom', mr: 1 }} color="primary" />
             {t('Usage.printingServicesTitle', 'コンビニ印刷、できます！')}
           </SubTitle>
           <Typography gutterBottom>
