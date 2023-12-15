@@ -24,9 +24,9 @@ export default {
   resolve: {
     alias: {
       '~/': `${__dirname}/src/`,
-      'canvg': './src/noop.ts',
-      'dompurify': './src/noop.ts',
-      'html2canvas': './src/noop.ts',
+      'canvg': `${__dirname}/src/noop.ts`,
+      'dompurify': `${__dirname}/src/noop.ts`,
+      'html2canvas': `${__dirname}/src/noop.ts`,
     },
   },
   esbuild: {
