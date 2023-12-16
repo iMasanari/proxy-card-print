@@ -115,8 +115,10 @@ const Preview = ({ className, data }: Props) => {
     setOpen(true)
     setPdf(null)
 
+    const pageSize = data.pageSize === 'レターサイズ' ? 'LTR' : data.pageSize
+
     const pdf = await createPdfFile({
-      name: t('Preview.pdfName', 'プロキシカード印刷'),
+      name: `${t('Preview.pdfName', 'プロキシカード印刷')}-${pageSize}`,
       svg: Array.from(container.getElementsByTagName('svg'), svg => svg.outerHTML),
       width: pageWidth,
       height: pageHeight,

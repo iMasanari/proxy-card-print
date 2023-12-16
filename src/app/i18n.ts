@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next'
 
 export const initI18n = (lang: string, translation: any) => {
   i18next.use(initReactI18next).init({
-    debug: import.meta.env.DEV && lang !== 'ja',
+    debug: !import.meta.env.SSR && import.meta.env.DEV && lang !== 'ja',
     resources: { [lang]: { translation } },
     lng: lang,
     returnEmptyString: false,

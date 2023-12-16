@@ -1,10 +1,7 @@
 import { css } from '@emotion/react'
-import CloseIcon from '@mui/icons-material/Close'
-import DownloadIcon from '@mui/icons-material/Download'
-import PrintIcon from '@mui/icons-material/Print'
-import SendToMobileIcon from '@mui/icons-material/SendToMobile'
+import { Close as CloseIcon, Download as DownloadIcon, Print as PrintIcon, SendToMobile as SendToMobileIcon } from '@mui/icons-material'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
-import React, { useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useBlobUrl } from '~/app/utils/blobUrlRef'
 

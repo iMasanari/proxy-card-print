@@ -8,7 +8,8 @@ const toInt = (str: string, defaultValue = NaN) =>
 
 export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsState) => {
   const settings = useMemo(() => {
-    const [pageWidth, pageHeight] = pageSizes[settingsForm.pageSize as PageSize] || pageSizes['A4']
+    const pageSize = pageSizes[settingsForm.pageSize as PageSize] ? settingsForm.pageSize as PageSize : 'A4'
+    const [pageWidth, pageHeight] = pageSizes[pageSize]
     const cardWidth = Math.min(Math.max(1, toInt(settingsForm.cardWidth, 0)), pageWidth)
     const cardHeight = Math.min(Math.max(1, toInt(settingsForm.cardHeight, 0)), pageHeight)
 
@@ -18,6 +19,7 @@ export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsStat
     }))
 
     return {
+      pageSize,
       pageWidth,
       pageHeight,
       cardWidth,

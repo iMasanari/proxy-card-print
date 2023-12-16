@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
+import { AddPhotoAlternate as AddPhotoAlternateIcon } from '@mui/icons-material'
 import { Button, Fab, Theme, useScrollTrigger, Zoom } from '@mui/material'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'

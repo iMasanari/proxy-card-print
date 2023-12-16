@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import TranslateIcon from '@mui/icons-material/Translate'
+import { Translate as TranslateIcon } from '@mui/icons-material'
 import { AppBar, Button, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
 import { useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
