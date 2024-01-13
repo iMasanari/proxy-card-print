@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   locales: ['ja', 'en', 'zh-Hans'],
   sort: true,
   createOldCatalogs: false,
