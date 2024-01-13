@@ -29,11 +29,12 @@ export const onRenderHtml: OnRenderHtmlAsync = async (pageContext) => {
   const chunks = extractCriticalToChunks(pageHtml)
   const styles = constructStyleTagsFromChunks(chunks)
 
-  const urlPathnameWithTrailingSlash = urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`
-
   const locale = documentProps?.locale ?? ''
   const title = documentProps?.title ?? ''
   const desc = documentProps?.description ?? ''
+
+  const urlPathnameWithTrailingSlash = urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`
+  const pageUrl = `${SITE_URL}${locale === 'ja' ? '' : `/${locale.toLowerCase()}`}${urlPathnameWithTrailingSlash}`
 
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="${locale}">
@@ -45,12 +46,12 @@ export const onRenderHtml: OnRenderHtmlAsync = async (pageContext) => {
         <meta property="og:title" content="${title}" />
         <meta property="og:type" content="website" />
         <meta property="og:description" content="${desc}" />
-        <meta property="og:url" content="${SITE_URL}${urlPathnameWithTrailingSlash}" />
+        <meta property="og:url" content="${pageUrl}" />
         <meta property="og:image" content="${SITE_URL}/images/icons/icon-512x512.png" />
         <meta name="twitter:card" content="summary" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="${SITE_URL}/images/icons/icon-512x512.png" />
-        <link rel="canonical" href="${SITE_URL}${urlPathnameWithTrailingSlash}" />
+        <link rel="canonical" href="${pageUrl}" />
         <link rel="alternate" hreflang="ja" href="${SITE_URL}/" />
         <link rel="alternate" hreflang="en" href="${SITE_URL}/en/" />
         <link rel="alternate" hreflang="zh-Hans" href="${SITE_URL}/zh-hans/" />
