@@ -1,4 +1,4 @@
-![gh-pages](https://github.com/iMasanari/proxy-card-print/workflows/gh-pages/badge.svg)
+[![gh-pages](https://github.com/iMasanari/proxy-card-print/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/iMasanari/proxy-card-print/actions/workflows/gh-pages.yml)
 
 # プロキシカード印刷
 
