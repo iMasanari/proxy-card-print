@@ -1,0 +1,3 @@
+# ビルド後に存在しないパスを除外する
+User-agent: *
+Disallow: /src/
