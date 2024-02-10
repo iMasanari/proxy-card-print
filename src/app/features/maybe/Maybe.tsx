@@ -65,7 +65,7 @@ const itemStyle = css`
 const ItemLoader = ({ card, setCardDataList }: { card: SettingsCard, setCardDataList: (fn: (v: CardDataList[]) => CardDataList[]) => void }) => {
   useEffect(() => {
     const asyncDestructor = (async () => {
-      const src = URL.createObjectURL(card.file)
+      const src = URL.createObjectURL(card.data.file)
       const image = new Image()
 
       await new Promise(resolve => {
@@ -107,7 +107,7 @@ const ItemLoader = ({ card, setCardDataList }: { card: SettingsCard, setCardData
     return () => {
       asyncDestructor.then(fn => fn())
     }
-  }, [card.id, card.file, setCardDataList])
+  }, [card.id, card.data.file, setCardDataList])
 
   return null
 }

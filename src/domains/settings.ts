@@ -1,3 +1,9 @@
+export interface CardImageData {
+  file: Blob
+  width: number
+  height: number
+}
+
 export const cardSizes = {
   'スモールサイズ': ['59', '86'],
   'スタンダードサイズ': ['63', '88'],
@@ -16,8 +22,7 @@ export type PageSize = keyof typeof pageSizes
 
 export interface CardType {
   id: number
-  file: Blob
-  orgFile: Blob
+  data: CardImageData
   count: number
 }
 

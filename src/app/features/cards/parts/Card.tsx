@@ -8,18 +8,25 @@ import { Crop } from '../types/crop'
 import EditDialog from './EditDialog'
 import NumberField from '~/app/common/atoms/NumberField'
 import { useBlobUrl } from '~/app/utils/blobUrlRef'
+import { CardImageData } from '~/domains/settings'
 
 interface Props {
   card: SettingsCard
   cardWidth: number
   cardHeight: number
   setCount: (count: string) => void
-  setFile: (file: Blob) => void
+  setCardData: (data: CardImageData) => void
   remove: () => void
 }
 
-const createInitCrop = (orgFile: Blob): Crop =>
-  ({ file: orgFile, orgFile, x: 0, y: 0, rotation: 0, zoom: 1 })
+const createInitCrop = (card: SettingsCard): Crop => ({
+  data: card.orgData,
+  orgData: card.orgData,
+  x: 0,
+  y: 0,
+  rotation: 0,
+  zoom: 1,
+})
 
 const cardStyle = (theme: Theme) => css`
   display: flex;
@@ -28,10 +35,10 @@ const cardStyle = (theme: Theme) => css`
 `
 
 const thumbStyle = css`
-  position: relative;
   flex: none;
-  width: 30px;
-  height: 43px;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
   background: #ddd no-repeat center;
   background-size: contain;
   cursor: pointer;
@@ -52,14 +59,14 @@ const cardActions = css`
   display: flex;
 `
 
-const Card = ({ card, cardWidth, cardHeight, setCount, setFile, remove }: Props) => {
+const Card = ({ card, cardWidth, cardHeight, setCount, setCardData, remove }: Props) => {
   const [isOpen, setOpen] = useState(false)
-  const [crop, setCrop] = useState<Crop>(() => createInitCrop(card.orgFile))
+  const [crop, setCrop] = useState<Crop>(() => createInitCrop(card))
   const thumbRef = useRef<HTMLDivElement>(null)
   const labelId = useId()
   const { t } = useTranslation()
 
-  useBlobUrl(card.file, src => {
+  useBlobUrl(card.data.file, src => {
     if (thumbRef.current) {
       thumbRef.current.style.backgroundImage = `url(${src})`
     }
@@ -69,11 +76,11 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setFile, remove }: Props)
     setOpen(false)
 
     if (!crop) {
-      setCrop(createInitCrop(card.orgFile))
-      setFile(card.orgFile)
+      setCrop(createInitCrop(card))
+      setCardData(card.orgData)
     } else {
       setCrop(crop)
-      setFile(crop.file)
+      setCardData(crop.data)
     }
   }
 

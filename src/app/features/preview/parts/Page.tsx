@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
-import React, { SVGProps, useRef } from 'react'
+import { SVGProps, useRef } from 'react'
 import { useBlobUrl } from '~/app/utils/blobUrlRef'
+import { CardImageData } from '~/domains/settings'
 
 const svgStyle = css`
   display:block;
@@ -17,7 +18,7 @@ const range = (length: number) =>
   Array.from({ length }, (_, i) => i)
 
 interface Props {
-  page: { file: Blob, id: string }[][]
+  page: { data: CardImageData, id: string }[][]
   cardWidth: number
   cardHeight: number
   pageWidth: number
@@ -76,17 +77,33 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
         )
       )}
       {page.map((row, y) =>
-        row.map((card, x) =>
-          <BlobImage
-            key={card.id}
-            file={card.file}
-            preserveAspectRatio="none"
-            width={toPx(cardWidth)}
-            height={toPx(cardHeight)}
-            x={toPx(marginX + cardWidth * x)}
-            y={toPx(marginY + cardHeight * y)}
-          />
-        )
+        row.map((card, x) => {
+          const top = marginY + cardHeight * y
+          const left = marginX + cardWidth * x
+
+          return (card.data.width > card.data.height) === (cardWidth > cardHeight) ? (
+            <BlobImage
+              key={card.id}
+              file={card.data.file}
+              preserveAspectRatio="none"
+              x={toPx(left)}
+              y={toPx(top)}
+              width={toPx(cardWidth)}
+              height={toPx(cardHeight)}
+            />
+          ) : (
+            <BlobImage
+              key={card.id}
+              file={card.data.file}
+              preserveAspectRatio="none"
+              x={toPx(left)}
+              y={toPx(top)}
+              width={toPx(cardHeight)}
+              height={toPx(cardWidth)}
+              transform={`rotate(90 ${toPx(left + cardWidth / 2)} ${toPx(top + cardWidth / 2)})`}
+            />
+          )
+        })
       )}
     </svg>
   )
