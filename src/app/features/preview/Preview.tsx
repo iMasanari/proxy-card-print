@@ -93,7 +93,7 @@ const Preview = ({ className, data }: Props) => {
       if (!v.count) return []
 
       return [...Array(v.count).keys()].map(i => ({
-        file: v.file,
+        data: v.data,
         id: `${v.id}-${i}`,
       }))
     })

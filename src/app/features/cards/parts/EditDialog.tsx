@@ -33,7 +33,7 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
   const [orgSrc, setOrgSrc] = useState<string>()
   const { t } = useTranslation()
 
-  useBlobUrl(crop.orgFile, src => {
+  useBlobUrl(crop.orgData.file, src => {
     setOrgSrc(src)
   })
 
@@ -47,12 +47,17 @@ const EditDialog = ({ open, cardWidth, cardHeight, crop, onClose }: Props) => {
       return
     }
 
-    const orgRef = createBlobURLRef(crop.orgFile)
+    const orgRef = createBlobURLRef(crop.orgData.file)
 
-    const file = await getCroppedImage(orgRef.value, croppedAreaPixels, rotation)
+    const data = {
+      file: await getCroppedImage(orgRef.value, croppedAreaPixels, rotation),
+      width: croppedAreaPixels.width,
+      height: croppedAreaPixels.height,
+    }
 
     orgRef.revoke()
-    onClose({ ...crop, ...point, file, rotation, zoom })
+
+    onClose({ ...crop, ...point, data, rotation, zoom })
   }
 
   const reset = () => {

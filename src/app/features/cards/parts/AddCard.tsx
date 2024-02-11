@@ -18,7 +18,7 @@ const favStyle = (theme: Theme) => css`
 
 interface Props {
   fullWidth?: boolean
-  add: (fileList: Blob[]) => void
+  add: (fileList: Blob[]) => Promise<void>
   showFab: boolean
 }
 
@@ -43,13 +43,12 @@ const AddCard = ({ add, fullWidth, showFab }: Props) => {
     }
   }
 
-  const onFileChanhge = ({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
-    const srcList = Array.from(currentTarget.files!)
-      .filter(file => file.type.startsWith('image/'))
-
-    add(srcList)
+  const onFileChanhge = async ({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(currentTarget.files!)
 
     currentTarget.value = ''
+
+    await add(files)
   }
 
   return (

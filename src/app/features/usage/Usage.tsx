@@ -152,7 +152,7 @@ const Usage = () => {
             <Typography variant="body2" my={1} mx={2}>
               {t('Usage.standardCardSizeContentsOther1', '他、スタンダードサイズ (63mm x 88mm) のカードゲーム:')}
               <br />
-              {t('Usage.standardCardSizeContentsOther2', 'ユニオンアリーナ、シャドウバース、ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、WIXOSSなど')}
+              {t('Usage.standardCardSizeContentsOther2', 'ユニオンアリーナ、シャドウバース、ヴァイスシュヴァルツ、ゼクス、マジックザギャザリング、プレシャスメモリーズ、WIXOSS、蟲神器など')}
             </Typography>
           </section>
           <section css={subSectionStyle}>

@@ -1,11 +1,13 @@
 import { css, Theme } from '@emotion/react'
-import { Dispatch, useEffect, useState } from 'react'
+import { Dispatch, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardFileAction } from './cardsReducer'
+import { addCardsAction, removeCardAction, SettingsCard, updateCardCountAction, updateCardDataAction } from './cardsReducer'
+import { createImage } from './crop/getCroppedImage'
 import AddCard from './parts/AddCard'
 import Card from './parts/Card'
 import DragOverlay from './parts/DragOverlay'
 import { useAction } from '~/app/common/hooks/state'
+import { createBlobURLRef } from '~/app/utils/blobUrlRef'
 
 const listStyle = css`
   list-style: none;
@@ -42,8 +44,26 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
 
   const addCards = useAction(addCardsAction, dispatch)
   const updateCardCount = useAction(updateCardCountAction, dispatch)
-  const updateCardFile = useAction(updateCardFileAction, dispatch)
+  const updateCardData = useAction(updateCardDataAction, dispatch)
   const removeCard = useAction(removeCardAction, dispatch)
+
+  const add = useCallback(async (files: Blob[]) => {
+    const images = files.filter(file => file.type.startsWith('image/'))
+
+    const cards = await Promise.all(
+      images.map(async (file) => {
+        const fileRef = createBlobURLRef(file)
+
+        const img = await createImage(fileRef.value)
+
+        fileRef.revoke()
+
+        return { file, width: img.width, height: img.height }
+      })
+    )
+
+    addCards(cards)
+  }, [addCards])
 
   useEffect(() => {
     const onDragOver = (e: DragEvent) => {
@@ -59,14 +79,11 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
       setDraging(false)
     }
 
-    const onDrop = (e: DragEvent) => {
+    const onDrop = async (e: DragEvent) => {
       e.preventDefault()
 
-      const fileList = Array.from(e.dataTransfer!.files)
-        .filter(file => file.type.startsWith('image/'))
-
-      addCards(fileList)
       setDraging(false)
+      await add(Array.from(e.dataTransfer!.files))
     }
 
     const body = document.body
@@ -81,7 +98,7 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
       body.removeEventListener('dragleave', onDragLeave)
       body.removeEventListener('drop', onDrop)
     }
-  }, [addCards])
+  }, [add])
 
   return (
     <div>
@@ -94,7 +111,7 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
                 cardWidth={cardWidth}
                 cardHeight={cardHeight}
                 setCount={count => updateCardCount(index, count)}
-                setFile={src => updateCardFile(index, src)}
+                setCardData={src => updateCardData(index, src)}
                 remove={() => removeCard(index)}
               />
             </li>
@@ -102,7 +119,7 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
         </ul>
       )}
       <div css={footerStyle}>
-        <AddCard add={addCards} fullWidth showFab={!cards.length} />
+        <AddCard add={add} fullWidth showFab={!cards.length} />
       </div>
       {isDraging && <DragOverlay />}
     </div>
