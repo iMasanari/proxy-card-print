@@ -31,11 +31,14 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
   })
 
   const printPdf = () => {
+    if (isMobile) {
+      alert('スマートフォンでWebから直接印刷する場合、正しく印刷できないことがあります。\n「保存」ボタンまたは「エクスポート」ボタンからダウンロードして印刷することをおすすめします。')
+    }
+
     try {
       iframeRef.current!.contentWindow!.print()
     } catch {
-      alert('印刷画面を開くことができませんでした。\nダウンロードして印刷してください。')
-      return
+      alert('印刷画面を開くことができませんでした。\n「保存」ボタンまたは「エクスポート」ボタンからダウンロードして印刷してください。')
     }
   }
 
@@ -58,8 +61,16 @@ const ExportDialog = ({ open, onClose, pdf }: Props) => {
     a.click()
   }
 
-  const exportPdf = () => {
-    navigator.share({ files: [pdf] })
+  const exportPdf = async () => {
+    try {
+      await navigator.share({ files: [pdf] })
+    } catch (e) {
+      const shareIsCancel = e instanceof DOMException && e.name === 'AbortError'
+
+      if (!shareIsCancel) {
+        alert('ERROR\n「共有」を開くことができませんでした。')
+      }
+    }
   }
 
   return (
