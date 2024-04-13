@@ -15,7 +15,7 @@ interface LocaleData {
 
 const defaultLocaleData = {
   title: 'プロキシカード印刷｜PCスマホで簡単作成、コンビニ印刷！',
-  description: 'カードゲームのプロキシ(コピーカード)を簡単に作成・印刷できるWebアプリ。遊戯王やデュエマ、ポケカ、MTGなどのプロキシカードを作成できます。',
+  description: 'カードゲームのプロキシ(コピーカード)を簡単に作成・印刷できるWebアプリ。遊戯王やデュエマ、ポケモンカード、MTGなどのプロキシカードを作成できます。',
   translation: undefined,
 }
 
