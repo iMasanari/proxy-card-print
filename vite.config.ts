@@ -29,9 +29,6 @@ export default {
       'html2canvas': `${__dirname}/src/noop.ts`,
     },
   },
-  esbuild: {
-    logOverride: { 'this-is-undefined-in-esm': 'silent' },
-  },
   worker: {
     format: 'es',
     rollupOptions: {
@@ -41,12 +38,8 @@ export default {
     },
   },
   ssr: {
-    // MUI needs to be pre-processed by Vite in production: https://github.com/brillout/vite-plugin-ssr/discussions/901
     noExternal: [
-      '@mui/base',
-      '@mui/icons-material',
-      '@mui/material',
-      '@mui/utils',
+      // fake esm packages
       'react-easy-crop',
       'tslib',
     ],
