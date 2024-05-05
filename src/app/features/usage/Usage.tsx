@@ -39,7 +39,7 @@ const Usage = () => {
             </Trans>
           </Title>
           <Typography gutterBottom>
-            {t('Usage.mainDescription', 'これはカードゲームのプロキシ (コピーカード) を簡単に印刷できるWebアプリです。PC・スマホの両方に対応しています。')}
+            {t('Usage.mainDescription', 'これはカードゲームのプロキシ (コピーカード) を簡単に印刷できるWebアプリです。PC・スマホの両方に対応しています。遊戯王やデュエマ、ポケモンカード等のプロキシを作成できます。')}
           </Typography>
         </section>
         <section css={sectionStyle}>
