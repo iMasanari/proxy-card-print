@@ -72,7 +72,7 @@ const Preview = ({ className, data }: Props) => {
   const [pdf, setPdf] = useState<File | null>(null)
   const { t } = useTranslation()
 
-  // FIXME: ./Page.tsxと重複している
+  // FIXME: ./parts/Page.tsx、./previewHooks.tsと重複している
   const printableWidth = _pageWidth - (pageMargin + 1) * 2
   const printableHeight = _pageHeight - (pageMargin + 1) * 2
 
