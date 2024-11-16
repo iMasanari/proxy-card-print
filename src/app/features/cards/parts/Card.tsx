@@ -90,7 +90,6 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setCardData, remove }: Pr
       <div css={inputStyle}>
         <NumberField
           id={labelId}
-          spinButton={false}
           min={0}
           placeholder="0"
           value={card.count}
@@ -103,7 +102,7 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setCardData, remove }: Pr
                 <IconButton
                   edge="start"
                   aria-label={t('Card.decrement', '減らす')!}
-                  onClick={() => setCount(`${Math.max(+card.count - 1, 0)}`)}
+                  onClick={() => setCount(`${Math.max(parseInt(card.count, 10) - 1, 0)}`)}
                 >
                   <Remove />
                 </IconButton>
@@ -117,7 +116,7 @@ const Card = ({ card, cardWidth, cardHeight, setCount, setCardData, remove }: Pr
                 <IconButton
                   edge="end"
                   aria-label={t('Card.increment', '増やす')!}
-                  onClick={() => setCount(`${+card.count + 1}`)}
+                  onClick={() => setCount(`${parseInt(card.count, 10) + 1}`)}
                 >
                   <Add />
                 </IconButton>

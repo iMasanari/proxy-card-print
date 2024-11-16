@@ -74,8 +74,8 @@ const Settings = ({ form, dispatch }: Props) => {
         <Grid container spacing={2} my={0}>
           <Grid item xs={6}>
             <NumberField
-              spinButton={false}
               label={t('Settings.cardWidth', 'カード幅 (mm)')}
+              required
               min={0}
               max={150}
               value={form.cardWidth}
@@ -85,14 +85,14 @@ const Settings = ({ form, dispatch }: Props) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardWidth', `${Math.max(+form.cardWidth - 1, 0)}`)} >
+                    <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('cardWidth', `${Math.max(parseInt(form.cardWidth) - 1, 0)}`)} >
                       <Remove />
                     </IconButton>
                   </InputAdornment>
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardWidth', `${+form.cardWidth + 1}`)}>
+                    <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('cardWidth', `${parseInt(form.cardWidth) + 1}`)}>
                       <Add />
                     </IconButton>
                   </InputAdornment>
@@ -102,8 +102,8 @@ const Settings = ({ form, dispatch }: Props) => {
           </Grid>
           <Grid item xs={6}>
             <NumberField
-              spinButton={false}
               label={t('Settings.cardHeight', 'カード縦 (mm)')}
+              required
               min={0}
               max={150}
               value={form.cardHeight}
@@ -116,7 +116,7 @@ const Settings = ({ form, dispatch }: Props) => {
                     <IconButton
                       edge="start"
                       aria-label={t('Settings.decrement', '減らす')!}
-                      onClick={() => updateSettings('cardHeight', `${Math.max(+form.cardHeight - 1, 0)}`)}
+                      onClick={() => updateSettings('cardHeight', `${Math.max(parseInt(form.cardHeight) - 1, 0)}`)}
                     >
                       <Remove />
                     </IconButton>
@@ -127,7 +127,7 @@ const Settings = ({ form, dispatch }: Props) => {
                     <IconButton
                       edge="end"
                       aria-label={t('Settings.increment', '増やす')!}
-                      onClick={() => updateSettings('cardHeight', `${+form.cardHeight + 1}`)}
+                      onClick={() => updateSettings('cardHeight', `${parseInt(form.cardHeight) + 1}`)}
                     >
                       <Add />
                     </IconButton>
