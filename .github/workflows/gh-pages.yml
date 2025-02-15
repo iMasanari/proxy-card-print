@@ -43,6 +43,8 @@ jobs:
           GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
           VITE_AMAZON_ASSOCIATE_ID: ${{ secrets.VITE_AMAZON_ASSOCIATE_ID }}
           VITE_HASH_API_URL: ${{ secrets.VITE_HASH_API_URL }}
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
