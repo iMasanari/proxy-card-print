@@ -13,7 +13,7 @@ export interface ArticlesPageProps {
 export const onBeforeRender: OnBeforeRenderAsync = async (): ReturnType<OnBeforeRenderAsync> => {
   const documentProps = {
     locale: 'ja',
-    title: 'プロキシカード印刷｜PCスマホで簡単作成、コンビニ印刷！',
+    title: '記事一覧｜プロキシカード印刷',
     description: '',
   }
 

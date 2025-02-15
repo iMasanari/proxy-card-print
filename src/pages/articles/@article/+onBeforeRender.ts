@@ -8,18 +8,18 @@ export interface ArticlePageProps {
 }
 
 export const onBeforeRender: OnBeforeRenderAsync = async (context): ReturnType<OnBeforeRenderAsync> => {
-  const documentProps = {
-    locale: 'ja',
-    title: 'プロキシカード印刷｜PCスマホで簡単作成、コンビニ印刷！',
-    description: '',
-  }
-
   // dev実行時のみ
   const draftKey = context.urlParsed.search.draftKey
 
   const post = await getPost(context.routeParams.article, draftKey)
 
   const pageProps = post satisfies ArticlePageProps as unknown as PageProps
+
+  const documentProps = {
+    locale: 'ja',
+    title: `${post.title}｜プロキシカード印刷`,
+    description: '',
+  }
 
   return {
     pageContext: {
