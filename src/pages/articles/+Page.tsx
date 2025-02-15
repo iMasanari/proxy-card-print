@@ -8,7 +8,7 @@ export const Page = ({ posts }: ArticlesPageProps) => {
   const [i18n] = useState(initI18n('ja', undefined))
 
   return (
-    <Layout i18n={i18n}>
+    <Layout i18n={i18n} isTopPage={false}>
       <Articles posts={posts} />
     </Layout>
   )

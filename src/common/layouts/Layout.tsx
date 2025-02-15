@@ -23,17 +23,18 @@ export const cache = createCache({ key: 'c', prepend: true })
 
 interface Props {
   i18n: i18n
+  isTopPage: boolean
   children: ReactNode
 }
 
-const Layout = ({ i18n, children }: Props) => {
+const Layout = ({ i18n, isTopPage, children }: Props) => {
   return (
     <StrictMode>
       <CacheProvider value={cache}>
         <ThemeProvider theme={theme}>
           <I18nextProvider i18n={i18n}>
             <CssBaseline />
-            <Header />
+            <Header isTopPage={isTopPage} />
             {children}
           </I18nextProvider>
         </ThemeProvider>
