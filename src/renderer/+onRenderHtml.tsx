@@ -2,7 +2,7 @@ import createEmotionServer from '@emotion/server/create-instance'
 import { renderToString } from 'react-dom/server'
 import { escapeInject, dangerouslySkipEscape } from 'vike/server'
 import type { OnRenderHtmlAsync } from 'vike/types'
-import { cache } from '~/app/App'
+import { cache } from '~/common/layouts/Layout'
 
 const SITE_URL = import.meta.env.SITE_URL ?? 'https://proxy-card.imasanari.dev'
 const GOOGLE_ANALYTICS_ID = import.meta.env.GOOGLE_ANALYTICS_ID
@@ -32,6 +32,7 @@ export const onRenderHtml: OnRenderHtmlAsync = async (pageContext) => {
   const locale = documentProps?.locale ?? ''
   const title = documentProps?.title ?? ''
   const desc = documentProps?.description ?? ''
+  const alternates = documentProps?.alternates ?? []
 
   const urlPathnameWithTrailingSlash = urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`
   const pageUrl = `${SITE_URL}${locale === 'ja' ? '' : `/${locale.toLowerCase()}`}${urlPathnameWithTrailingSlash}`
@@ -52,10 +53,7 @@ export const onRenderHtml: OnRenderHtmlAsync = async (pageContext) => {
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="${SITE_URL}/images/icons/icon-512x512.png" />
         <link rel="canonical" href="${pageUrl}" />
-        <link rel="alternate" hreflang="ja" href="${SITE_URL}/" />
-        <link rel="alternate" hreflang="en" href="${SITE_URL}/en/" />
-        <link rel="alternate" hreflang="zh-Hans" href="${SITE_URL}/zh-hans/" />
-        <link rel="alternate" hreflang="x-default" href="${SITE_URL}/" />
+        ${dangerouslySkipEscape(alternates.map(v => `<link rel="alternate" hreflang="${v.lang}" href="${new URL(v.slug, SITE_URL)}" />`).join(''))}
         <link rel="manifest" href="${manifests.get(locale) ?? ''}" />
         ${dangerouslySkipEscape(styles)}
         ${GOOGLE_ANALYTICS_ID ? dangerouslySkipEscape(`<script async src="https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}"></script>

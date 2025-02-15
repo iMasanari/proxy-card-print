@@ -93,6 +93,16 @@ const Usage = () => {
               </Card>
             </Grid>
           </Grid>
+          {i18n.language === 'ja' && (
+            <div css={css`margin-bottom: 32px;`}>
+              <Typography gutterBottom>
+                詳しい使い方は、下記を参照してください。
+              </Typography>
+              <Link href="/articles/98m0h4k0a7/">
+                コンビニ印刷でプロキシカードを作ってみよう！
+              </Link>
+            </div>
+          )}
           <SubTitle>
             <CheckCircleOutline sx={{ verticalAlign: 'text-bottom', mr: 1 }} color="primary" />
             {t('Usage.printingServicesTitle', 'コンビニ印刷、できます！')}

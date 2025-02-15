@@ -33,7 +33,7 @@ const Settings = ({ form, dispatch }: Props) => {
         >
           {Object.keys(pageSizes).map(v =>
             // t('Settings.paperSizeList.A4', 'A4')
-            // t('Settings.paperSizeList.B4', 'B4')
+            // t('Settings.paperSizeList.B4 (JIS)', 'B4 (JIS)')
             // t('Settings.paperSizeList.A3', 'A3')
             // t('Settings.paperSizeList.レターサイズ', 'レターサイズ')
             <option key={v} value={v}>
