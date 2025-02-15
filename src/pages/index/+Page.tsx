@@ -1,10 +1,15 @@
 import { useState } from 'react'
 import { PageProps } from './+onBeforeRender'
 import App from '~/app/App'
-import { initI18n } from '~/app/i18n'
+import { initI18n } from '~/common/i18n'
+import Layout from '~/common/layouts/Layout'
 
 export function Page({ locale, translation }: PageProps) {
   const [i18n] = useState(() => initI18n(locale, translation))
 
-  return <App i18n={i18n} />
+  return (
+    <Layout i18n={i18n}>
+      <App />
+    </Layout>
+  )
 }

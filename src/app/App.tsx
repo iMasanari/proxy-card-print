@@ -1,51 +1,115 @@
-import createCache from '@emotion/cache'
-import { CacheProvider, css, Global, Theme } from '@emotion/react'
-import { createTheme, CssBaseline, Theme as MuiTheme, ThemeProvider } from '@mui/material'
-import { type i18n } from 'i18next'
-import { StrictMode } from 'react'
-import { I18nextProvider } from 'react-i18next'
-import Page from './Page'
+import { css, Theme } from '@emotion/react'
+import { useReducer } from 'react'
+import { useTranslation } from 'react-i18next'
+import Cards from './features/cards/Cards'
+import cardsReducer, { CardsState } from './features/cards/cardsReducer'
+import Maybe from './features/maybe/Maybe'
+import Preview from './features/preview/Preview'
+import { usePreviewData } from './features/preview/previewHooks'
+import Settings from './features/settings/Settings'
+import settingsReducer, { SettingsState } from './features/settings/settingsReducer'
+import Usage from './features/usage/Usage'
 
-declare module '@emotion/react' {
-  interface Theme extends MuiTheme {
-  }
-}
-
-const theme = createTheme({
-  typography: {
-    button: {
-      textTransform: 'none',
-    },
-  },
-})
-
-const globalStyle = (theme: Theme) => css`
-  body {
-    ${theme.breakpoints.up('sm')} {
-      overflow: hidden;
-    }
+const appStyle = (theme: Theme) => css`
+  ${theme.breakpoints.up('sm')} {
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
   }
 `
 
-export const cache = createCache({ key: 'c', prepend: true })
+const contentsStyle = (theme: Theme) => css`
+  ${theme.breakpoints.up('sm')} {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+`
 
-interface Props {
-  i18n: i18n
+const conditionsStyle = (theme: Theme) => css`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ${theme.spacing(1)};
+  align-content: start;
+  padding-top: ${theme.spacing(1)};
+  ${theme.breakpoints.up('sm')} {
+    overflow: auto;
+    position: relative;
+    width: 300px;
+  }
+`
+
+const resultStyle = (theme: Theme) => css`
+  ${theme.breakpoints.up('sm')} {
+    flex: 1;
+    overflow-y: auto;
+  }
+  ${theme.breakpoints.up('md')} {
+    display: flex;
+  }
+`
+
+const maybeStyle = (theme: Theme) => css`
+  padding-top: ${theme.spacing(1)};
+  ${theme.breakpoints.up('md')} {
+    width: 300px;
+    overflow-y: auto;
+  }
+`
+
+const previewStyle = (theme: Theme) => css`
+  margin-top: ${theme.spacing(1)};
+  ${theme.breakpoints.up('sm')} {
+    flex: 1;
+  }
+`
+
+const intiSettings: SettingsState = {
+  pageSize: 'A4',
+  cardSize: 'スモールサイズ',
+  cardWidth: '59',
+  cardHeight: '86',
 }
 
-const App = ({ i18n }: Props) => {
+const initCards: CardsState = []
+
+const App = () => {
+  const [settingsForm, settingsDispatch] = useReducer(settingsReducer, intiSettings)
+  const [cardsForm, cardsDispatch] = useReducer(cardsReducer, initCards)
+  const { i18n } = useTranslation()
+
+  const data = usePreviewData(settingsForm, cardsForm)
+
   return (
-    <StrictMode>
-      <CacheProvider value={cache}>
-        <ThemeProvider theme={theme}>
-          <I18nextProvider i18n={i18n}>
-            <CssBaseline />
-            <Global styles={globalStyle} />
-            <Page />
-          </I18nextProvider>
-        </ThemeProvider>
-      </CacheProvider>
-    </StrictMode>
+    <div css={appStyle}>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: '@media(min-width:600px)body{overflow:hidden;}',
+        }}
+      />
+      <div css={contentsStyle}>
+        <div css={conditionsStyle}>
+          <Settings form={settingsForm} dispatch={settingsDispatch} />
+          <Cards
+            cards={cardsForm}
+            cardWidth={data.cardWidth}
+            cardHeight={data.cardHeight}
+            dispatch={cardsDispatch}
+          />
+        </div>
+        <div css={resultStyle}>
+          {!data.cards.length ? <Usage /> : (
+            <Preview css={previewStyle} data={data} />
+          )}
+          {i18n.language === 'ja' && data.cards.length > 0 && (
+            <div css={maybeStyle}>
+              <Maybe cards={cardsForm} />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 

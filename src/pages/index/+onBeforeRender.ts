@@ -32,6 +32,13 @@ const localeDataRecord: Map<string, LocaleData> = new Map([
   }],
 ])
 
+const alternates = [
+  { lang: 'ja', slug: '/' },
+  { lang: 'en', slug: '/en/' },
+  { lang: 'zh-Hans', slug: '/zh-hans/' },
+  { lang: 'x-default', slug: '/' },
+]
+
 export const onBeforeRender: OnBeforeRenderAsync = async ({ locale }): ReturnType<OnBeforeRenderAsync> => {
   const { title, description, translation } = localeDataRecord.get(locale) ?? defaultLocaleData
 
@@ -44,6 +51,7 @@ export const onBeforeRender: OnBeforeRenderAsync = async ({ locale }): ReturnTyp
     locale,
     title,
     description,
+    alternates,
   }
 
   return {

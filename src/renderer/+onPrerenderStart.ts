@@ -5,11 +5,15 @@ const localeDefault = 'ja'
 
 export const onPrerenderStart: OnPrerenderStartAsync = async (prerenderContext): ReturnType<OnPrerenderStartAsync> => {
   const pageContexts = prerenderContext.pageContexts.flatMap((pageContext) => {
+    if (pageContext.urlOriginal.startsWith('/articles')) {
+      return [{ ...pageContext, locale: localeDefault }]
+    }
+
     return locales.map((locale) => {
-      // Localize URL
       let { urlOriginal } = pageContext
-      if (locale !== localeDefault) {
-        urlOriginal = `/${locale.toLowerCase()}${urlOriginal}`
+      // Localize URL
+      if (urlOriginal == '/' && locale !== localeDefault) {
+        urlOriginal = `/${locale.toLowerCase()}/`
       }
 
       return { ...pageContext, urlOriginal, locale }
