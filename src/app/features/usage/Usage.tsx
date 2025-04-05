@@ -132,6 +132,22 @@ const Usage = () => {
             </>
           )}
         </section>
+        {i18n.language === 'ja' && (
+          <section>
+            <Title>
+              宣伝
+            </Title>
+            <Typography gutterBottom>
+              モンスターハンターWildsのスキルシミュレーターを開発しました。<br />
+              こちらもよろしくお願いいたします。
+            </Typography>
+            <Typography gutterBottom>
+              <Link href="https://mhwilds-simulator.imasanari.dev" target="_blank" rel="noopener">
+                https://mhwilds-simulator.imasanari.dev
+              </Link>
+            </Typography>
+          </section>
+        )}
         <section css={sectionStyle}>
           <Title>
             {t('Usage.aboutCardSizeTitle', 'カードサイズについて')}
