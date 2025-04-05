@@ -12,18 +12,17 @@ import Usage from './features/usage/Usage'
 
 const appStyle = (theme: Theme) => css`
   ${theme.breakpoints.up('sm')} {
-    height: 100vh;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-  }
-`
-
-const contentsStyle = (theme: Theme) => css`
-  ${theme.breakpoints.up('sm')} {
     display: flex;
     flex: 1;
     overflow: hidden;
+  }
+  ${theme.breakpoints.up('sm')} {
+    #app:has(&) {
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
   }
 `
 
@@ -88,26 +87,24 @@ const App = () => {
           __html: '@media(min-width:600px)body{overflow:hidden;}',
         }}
       />
-      <div css={contentsStyle}>
-        <div css={conditionsStyle}>
-          <Settings form={settingsForm} dispatch={settingsDispatch} />
-          <Cards
-            cards={cardsForm}
-            cardWidth={data.cardWidth}
-            cardHeight={data.cardHeight}
-            dispatch={cardsDispatch}
-          />
-        </div>
-        <div css={resultStyle}>
-          {!data.cards.length ? <Usage /> : (
-            <Preview css={previewStyle} data={data} />
-          )}
-          {i18n.language === 'ja' && data.cards.length > 0 && (
-            <div css={maybeStyle}>
-              <Maybe cards={cardsForm} />
-            </div>
-          )}
-        </div>
+      <div css={conditionsStyle}>
+        <Settings form={settingsForm} dispatch={settingsDispatch} />
+        <Cards
+          cards={cardsForm}
+          cardWidth={data.cardWidth}
+          cardHeight={data.cardHeight}
+          dispatch={cardsDispatch}
+        />
+      </div>
+      <div css={resultStyle}>
+        {!data.cards.length ? <Usage /> : (
+          <Preview css={previewStyle} data={data} />
+        )}
+        {i18n.language === 'ja' && data.cards.length > 0 && (
+          <div css={maybeStyle}>
+            <Maybe cards={cardsForm} />
+          </div>
+        )}
       </div>
     </div>
   )
