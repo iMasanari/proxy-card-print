@@ -31,6 +31,28 @@ const footerStyle = (theme: Theme) => css`
   background-color: #fff;
 `
 
+const toJpeg = (img: HTMLImageElement) => {
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')!
+
+  canvas.width = img.width
+  canvas.height = img.height
+
+  ctx.fillStyle = '#fff'
+  ctx.fillRect(0, 0, img.width, img.height)
+  ctx.drawImage(img, 0, 0)
+
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (blob) {
+        resolve(blob)
+      } else {
+        reject()
+      }
+    }, 'image/jpeg')
+  })
+}
+
 interface Props {
   cards: SettingsCard[]
   cardWidth: number
@@ -58,7 +80,10 @@ const Cards = ({ cards, cardWidth, cardHeight, dispatch }: Props) => {
 
         fileRef.revoke()
 
-        return { file, width: img.width, height: img.height }
+        // pdfjs非対応の画像形式に対応するため、jpegに変換する
+        const jpeg = await toJpeg(img)
+
+        return { file: jpeg, width: img.width, height: img.height }
       })
     )
 
