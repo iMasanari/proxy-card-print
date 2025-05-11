@@ -106,6 +106,7 @@ const Preview = ({ className, data }: Props) => {
               pageWidth={data.pageWidth}
               pageHeight={data.pageHeight}
               pageMargin={data.pageMargin}
+              gap={data.gap}
               colCount={data.colCount}
               rowCount={data.rowCount}
               cardWidth={data.cardWidth}

@@ -52,6 +52,7 @@
     "cardSizeStandardDescription": "63mm x 88mm: MTG, Pokémon, etc.",
     "cardWidth": "Card Width (mm)",
     "decrement": "Decrement",
+    "gap": "Card Spacing (mm)",
     "increment": "Increment",
     "paperSize": "Paper Size",
     "paperSizeList": {

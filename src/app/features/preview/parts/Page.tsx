@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { SVGProps, useRef } from 'react'
+import { Fragment, SVGProps, useRef } from 'react'
 import { useBlobUrl } from '~/app/utils/blobUrlRef'
 import { CardImageData } from '~/domains/settings'
 
@@ -21,6 +21,7 @@ interface Props {
   pageWidth: number
   pageHeight: number
   pageMargin: number
+  gap: number
   colCount: number
   rowCount: number
   cards: { data: CardImageData, id: string }[][]
@@ -28,9 +29,9 @@ interface Props {
   cardHeight: number
 }
 
-const Page = ({ pageWidth, pageHeight, pageMargin, colCount, rowCount, cards, cardWidth, cardHeight }: Props) => {
-  const marginX = (pageWidth - cardWidth * colCount) / 2
-  const marginY = (pageHeight - cardHeight * rowCount) / 2
+const Page = ({ pageWidth, pageHeight, pageMargin, gap, colCount, rowCount, cards, cardWidth, cardHeight }: Props) => {
+  const marginX = (pageWidth - ((cardWidth + gap) * colCount - gap)) / 2
+  const marginY = (pageHeight - ((cardHeight + gap) * rowCount - gap)) / 2
 
   return (
     <svg
@@ -40,23 +41,43 @@ const Page = ({ pageWidth, pageHeight, pageMargin, colCount, rowCount, cards, ca
     >
       {!!cards.length && (
         <>
-          {range(cards[0].length + 1).map((x) =>
+          {range(cards[0].length).map((x) =>
             <line
               key={x}
-              x1={toPx(marginX + cardWidth * x)}
+              x1={toPx(marginX + (cardWidth + gap) * x)}
               y1={toPx(pageMargin)}
-              x2={toPx(marginX + cardWidth * x)}
+              x2={toPx(marginX + (cardWidth + gap) * x)}
               y2={toPx(pageHeight - pageMargin)}
               stroke="black"
             />
           )}
-          {range(cards.length + 1).map((y) =>
+          {(gap ? range(cards[0].length) : [cards[0].length - 1]).map((x) =>
+            <line
+              key={x}
+              x1={toPx(marginX + (cardWidth + gap) * x + cardWidth)}
+              y1={toPx(pageMargin)}
+              x2={toPx(marginX + (cardWidth + gap) * x + cardWidth)}
+              y2={toPx(pageHeight - pageMargin)}
+              stroke="black"
+            />
+          )}
+          {range(cards.length).map((y) =>
             <line
               key={y}
               x1={toPx(pageMargin)}
-              y1={toPx(marginY + cardHeight * y)}
+              y1={toPx(marginY + (cardHeight + gap) * y)}
               x2={toPx(pageWidth - pageMargin)}
-              y2={toPx(marginY + cardHeight * y)}
+              y2={toPx(marginY + (cardHeight + gap) * y)}
+              stroke="black"
+            />
+          )}
+          {(gap ? range(cards.length) : [cards.length - 1]).map((y) =>
+            <line
+              key={y}
+              x1={toPx(pageMargin)}
+              y1={toPx(marginY + (cardHeight + gap) * y + cardHeight)}
+              x2={toPx(pageWidth - pageMargin)}
+              y2={toPx(marginY + (cardHeight + gap) * y + cardHeight)}
               stroke="black"
             />
           )}
@@ -68,16 +89,16 @@ const Page = ({ pageWidth, pageHeight, pageMargin, colCount, rowCount, cards, ca
             key={card.id}
             width={toPx(cardWidth + 1 * 2)}
             height={toPx(cardHeight + 1 * 2)}
-            x={toPx(marginX - 1 + cardWidth * x)}
-            y={toPx(marginY - 1 + cardHeight * y)}
+            x={toPx(marginX - 1 + (cardWidth + gap) * x)}
+            y={toPx(marginY - 1 + (cardHeight + gap) * y)}
             fill="white"
           />
         )
       )}
       {cards.map((row, y) =>
         row.map((card, x) => {
-          const top = marginY + cardHeight * y
-          const left = marginX + cardWidth * x
+          const top = marginY + (cardHeight + gap) * y
+          const left = marginX + (cardWidth + gap) * x
 
           return (card.data.width > card.data.height) === (cardWidth > cardHeight) ? (
             <BlobImage

@@ -12,6 +12,7 @@ export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsStat
   const settings = useMemo(() => {
     const pageSize = pageSizes[settingsForm.pageSize as PageSize] ? settingsForm.pageSize as PageSize : 'A4'
     const [_pageWidth, _pageHeight] = pageSizes[pageSize]
+    const gap = toInt(settingsForm.gap, 0)
 
     const printableWidth = _pageWidth - (pageMargin + 1) * 2
     const printableHeight = _pageHeight - (pageMargin + 1) * 2
@@ -19,10 +20,10 @@ export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsStat
     const cardWidth = Math.min(Math.max(1, toInt(settingsForm.cardWidth, 0)), printableWidth)
     const cardHeight = Math.min(Math.max(1, toInt(settingsForm.cardHeight, 0)), printableHeight)
 
-    const colCount1 = Math.floor(printableWidth / cardWidth)
-    const rowCount1 = Math.floor(printableHeight / cardHeight)
-    const colCount2 = Math.floor(printableHeight / cardWidth)
-    const rowCount2 = Math.floor(printableWidth / cardHeight)
+    const colCount1 = Math.floor((printableWidth + gap) / (cardWidth + gap))
+    const rowCount1 = Math.floor((printableHeight + gap) / (cardHeight + gap))
+    const colCount2 = Math.floor((printableHeight + gap) / (cardWidth + gap))
+    const rowCount2 = Math.floor((printableWidth + gap) / (cardHeight + gap))
 
     const isLandscape = colCount1 * rowCount1 > colCount2 * rowCount2
 
@@ -43,6 +44,7 @@ export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsStat
       pageWidth,
       pageHeight,
       pageMargin,
+      gap,
       colCount,
       rowCount,
       cardWidth,

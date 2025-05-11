@@ -138,6 +138,33 @@ const Settings = ({ form, dispatch }: Props) => {
           </Grid>
         </Grid>
       )}
+      <NumberField
+        sx={{ mt: 2 }}
+        label={t('Settings.gap', 'カード間隔 (mm)')}
+        min={0}
+        max={10}
+        placeholder="0"
+        value={form.gap}
+        onChange={(e) => updateSettings('gap', e.target.value)}
+        size="small"
+        fullWidth
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('gap', `${Math.max(parseInt(form.gap || '0') - 1, 0)}`)} >
+                <Remove />
+              </IconButton>
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('gap', `${parseInt(form.gap || '0') + 1}`)}>
+                <Add />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
     </div>
   )
 }

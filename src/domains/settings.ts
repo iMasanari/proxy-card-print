@@ -32,6 +32,7 @@ export interface PreviewData {
   pageMargin: number
   colCount: number
   rowCount: number
+  gap: number
   cards: CardType[]
   cardWidth: number
   cardHeight: number
