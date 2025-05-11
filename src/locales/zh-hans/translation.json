@@ -54,6 +54,7 @@
     "decrement": "减少",
     "gap": "卡片间距 (mm)",
     "increment": "增加",
+    "pageMargin": "纸张边距 (mm)",
     "paperSize": "纸张尺寸",
     "paperSizeList": {
       "A3": "A3",

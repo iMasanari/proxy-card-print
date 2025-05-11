@@ -6,13 +6,12 @@ import { PageSize, pageSizes, type PreviewData } from '~/domains/settings'
 const toInt = (str: string, defaultValue = NaN) =>
   /^([1-9][0-9]*|0)$/.test(str) ? +str : defaultValue
 
-const pageMargin = 7
-
 export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsState): PreviewData => {
   const settings = useMemo(() => {
     const pageSize = pageSizes[settingsForm.pageSize as PageSize] ? settingsForm.pageSize as PageSize : 'A4'
     const [_pageWidth, _pageHeight] = pageSizes[pageSize]
     const gap = toInt(settingsForm.gap, 0)
+    const pageMargin = toInt(settingsForm.pageMargin, 0)
 
     const printableWidth = _pageWidth - (pageMargin + 1) * 2
     const printableHeight = _pageHeight - (pageMargin + 1) * 2

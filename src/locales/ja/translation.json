@@ -54,6 +54,7 @@
     "decrement": "減らす",
     "gap": "カード間隔 (mm)",
     "increment": "増やす",
+    "pageMargin": "用紙余白 (mm)",
     "paperSize": "用紙サイズ",
     "paperSizeList": {
       "A3": "A3",

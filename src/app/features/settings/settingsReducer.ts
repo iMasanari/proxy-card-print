@@ -6,6 +6,7 @@ export interface SettingsState {
   cardSize: CardSize
   cardWidth: `${number}`
   cardHeight: `${number}`
+  pageMargin: `${number}`
   gap: `${number}` | ''
 }
 

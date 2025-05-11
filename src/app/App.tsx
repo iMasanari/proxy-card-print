@@ -69,6 +69,7 @@ const intiSettings: SettingsState = {
   cardSize: 'スモールサイズ',
   cardWidth: '59',
   cardHeight: '86',
+  pageMargin: '7',
   gap: '',
 }
 

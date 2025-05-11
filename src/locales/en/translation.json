@@ -54,6 +54,7 @@
     "decrement": "Decrement",
     "gap": "Card Spacing (mm)",
     "increment": "Increment",
+    "pageMargin": "Paper margins (mm)",
     "paperSize": "Paper Size",
     "paperSizeList": {
       "A3": "A3",
