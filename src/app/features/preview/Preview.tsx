@@ -51,8 +51,6 @@ interface Props {
   data: PreviewData
 }
 
-const pageMargin = 7
-
 const chunks = <T,>(array: T[], chunk: number) => {
   const len = Math.ceil(array.length / chunk)
   const result: T[][] = Array(Math.ceil(array.length / chunk))
@@ -65,47 +63,13 @@ const chunks = <T,>(array: T[], chunk: number) => {
 }
 
 const Preview = ({ className, data }: Props) => {
-  const { pageWidth: _pageWidth, pageHeight: _pageHeight, cards, cardWidth, cardHeight } = data
-
   const containerRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
   const [pdf, setPdf] = useState<File | null>(null)
   const { t } = useTranslation()
 
-  // FIXME: ./parts/Page.tsx、./previewHooks.tsと重複している
-  const printableWidth = _pageWidth - (pageMargin + 1) * 2
-  const printableHeight = _pageHeight - (pageMargin + 1) * 2
-
-  const colCount1 = Math.floor(printableWidth / cardWidth)
-  const rowCount1 = Math.floor(printableHeight / cardHeight)
-  const colCount2 = Math.floor(printableHeight / cardWidth)
-  const rowCount2 = Math.floor(printableWidth / cardHeight)
-
-  const isLandscape = colCount1 * rowCount1 > colCount2 * rowCount2
-
-  const pageWidth = isLandscape ? _pageWidth : _pageHeight
-  const pageHeight = isLandscape ? _pageHeight : _pageWidth
-  const colCount = isLandscape ? colCount1 : colCount2
-  const rowCount = isLandscape ? rowCount1 : rowCount2
-
-  const pages = useMemo(() => {
-    const list = cards.flatMap((v) => {
-      if (!v.count) return []
-
-      return [...Array(v.count).keys()].map(i => ({
-        data: v.data,
-        id: `${v.id}-${i}`,
-      }))
-    })
-
-    if (!list.length) {
-      return [[]]
-    }
-
-    const rows = chunks(list, colCount)
-
-    return chunks(rows, rowCount)
-  }, [cards, colCount, rowCount])
+  const rows = chunks(data.cards, data.colCount)
+  const pages = rows.length ? chunks(rows, data.rowCount) : [[]]
 
   const openModal = async () => {
     const container = containerRef.current
@@ -120,8 +84,8 @@ const Preview = ({ className, data }: Props) => {
     const pdf = await createPdfFile({
       name: `${t('Preview.pdfName', 'プロキシカード印刷')}-${pageSize}`,
       svg: Array.from(container.getElementsByTagName('svg'), svg => svg.outerHTML),
-      width: pageWidth,
-      height: pageHeight,
+      width: data.pageWidth,
+      height: data.pageHeight,
     })
 
     if (!pdf) {
@@ -135,15 +99,17 @@ const Preview = ({ className, data }: Props) => {
   return (
     <div css={previewStyle} className={className}>
       <div css={containerStyle} ref={containerRef}>
-        {pages.map((page, index) =>
+        {pages.map((cards, index) =>
           <div key={index} css={pageStyle}>
             <Page
-              page={page}
-              pageWidth={pageWidth}
-              pageHeight={pageHeight}
-              cardWidth={cardWidth}
-              cardHeight={cardHeight}
-              pageMargin={pageMargin}
+              cards={cards}
+              pageWidth={data.pageWidth}
+              pageHeight={data.pageHeight}
+              pageMargin={data.pageMargin}
+              colCount={data.colCount}
+              rowCount={data.rowCount}
+              cardWidth={data.cardWidth}
+              cardHeight={data.cardHeight}
             />
           </div>
         )}

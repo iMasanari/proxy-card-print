@@ -18,19 +18,17 @@ const range = (length: number) =>
   Array.from({ length }, (_, i) => i)
 
 interface Props {
-  page: { data: CardImageData, id: string }[][]
-  cardWidth: number
-  cardHeight: number
   pageWidth: number
   pageHeight: number
   pageMargin: number
+  colCount: number
+  rowCount: number
+  cards: { data: CardImageData, id: string }[][]
+  cardWidth: number
+  cardHeight: number
 }
 
-const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }: Props) => {
-  // FIXME: ../Preview.tsx、../previewHooks.tsと重複している
-  const colCount = Math.floor((pageWidth - (pageMargin + 1) * 2) / cardWidth)
-  const rowCount = Math.floor((pageHeight - (pageMargin + 1) * 2) / cardHeight)
-
+const Page = ({ pageWidth, pageHeight, pageMargin, colCount, rowCount, cards, cardWidth, cardHeight }: Props) => {
   const marginX = (pageWidth - cardWidth * colCount) / 2
   const marginY = (pageHeight - cardHeight * rowCount) / 2
 
@@ -40,9 +38,9 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
       viewBox={`0 0 ${toPx(pageWidth)} ${toPx(pageHeight)}`}
       css={svgStyle}
     >
-      {!!page.length && (
+      {!!cards.length && (
         <>
-          {range(page[0].length + 1).map((x) =>
+          {range(cards[0].length + 1).map((x) =>
             <line
               key={x}
               x1={toPx(marginX + cardWidth * x)}
@@ -52,7 +50,7 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
               stroke="black"
             />
           )}
-          {range(page.length + 1).map((y) =>
+          {range(cards.length + 1).map((y) =>
             <line
               key={y}
               x1={toPx(pageMargin)}
@@ -64,7 +62,7 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
           )}
         </>
       )}
-      {page.map((row, y) =>
+      {cards.map((row, y) =>
         row.map((card, x) =>
           <rect
             key={card.id}
@@ -76,7 +74,7 @@ const Page = ({ page, cardWidth, cardHeight, pageWidth, pageHeight, pageMargin }
           />
         )
       )}
-      {page.map((row, y) =>
+      {cards.map((row, y) =>
         row.map((card, x) => {
           const top = marginY + cardHeight * y
           const left = marginX + cardWidth * x
