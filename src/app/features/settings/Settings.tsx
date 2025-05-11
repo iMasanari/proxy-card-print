@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react'
-import { Add, Remove } from '@mui/icons-material'
-import { FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, Select } from '@mui/material'
+import { Add, ExpandMore, Remove } from '@mui/icons-material'
+import { Accordion, AccordionDetails, AccordionSummary, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, Select, Typography } from '@mui/material'
 import { Dispatch } from 'react'
 import { useTranslation } from 'react-i18next'
 import NumberField from '~/app/common/atoms/NumberField'
@@ -138,63 +138,88 @@ const Settings = ({ form, dispatch }: Props) => {
           </Grid>
         </Grid>
       )}
-      <Grid container spacing={2} my={0}>
-        <Grid item xs={6}>
-          <NumberField
-            label={t('Settings.pageMargin', '用紙余白 (mm)')}
-            min={0}
-            max={100}
-            value={form.pageMargin}
-            onChange={(e) => updateSettings('pageMargin', e.target.value)}
-            size="small"
-            fullWidth
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('pageMargin', `${Math.max(parseInt(form.pageMargin || '0') - 1, 0)}`)} >
-                    <Remove />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('pageMargin', `${parseInt(form.pageMargin || '0') + 1}`)}>
-                    <Add />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <NumberField
-            label={t('Settings.gap', 'カード間隔 (mm)')}
-            min={0}
-            max={10}
-            placeholder="0"
-            value={form.gap}
-            onChange={(e) => updateSettings('gap', e.target.value)}
-            size="small"
-            fullWidth
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton edge="start" aria-label="減らす" onClick={() => updateSettings('gap', `${Math.max(parseInt(form.gap || '0') - 1, 0)}`)} >
-                    <Remove />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" aria-label="増やす" onClick={() => updateSettings('gap', `${parseInt(form.gap || '0') + 1}`)}>
-                    <Add />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-      </Grid>
+      <div css={theme => css`margin-top: ${theme.spacing(1)};`}>
+        <Accordion variant="outlined">
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography component="span">{t('Settings.detailSetting', '詳細設定')}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2} my={0}>
+              <Grid item xs={6}>
+                <NumberField
+                  label={t('Settings.pageMargin', '用紙余白 (mm)')}
+                  min={0}
+                  max={100}
+                  value={form.pageMargin}
+                  onChange={(e) => updateSettings('pageMargin', e.target.value)}
+                  size="small"
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <IconButton
+                          edge="start"
+                          aria-label={t('Settings.decrement', '減らす')!}
+                          onClick={() => updateSettings('pageMargin', `${Math.max(parseInt(form.pageMargin || '0') - 1, 0)}`)}
+                        >
+                          <Remove />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                          aria-label={t('Settings.increment', '増やす')!}
+                          onClick={() => updateSettings('pageMargin', `${parseInt(form.pageMargin || '0') + 1}`)}
+                        >
+                          <Add />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <NumberField
+                  label={t('Settings.gap', 'カード間隔 (mm)')}
+                  min={0}
+                  max={10}
+                  placeholder="0"
+                  value={form.gap}
+                  onChange={(e) => updateSettings('gap', e.target.value)}
+                  size="small"
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <IconButton
+                          edge="start"
+                          aria-label={t('Settings.decrement', '減らす')!}
+                          onClick={() => updateSettings('gap', `${Math.max(parseInt(form.gap || '0') - 1, 0)}`)}
+                        >
+                          <Remove />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                          aria-label={t('Settings.increment', '増やす')!}
+                          onClick={() => updateSettings('gap', `${parseInt(form.gap || '0') + 1}`)}
+                        >
+                          <Add />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </div>
     </div>
   )
 }
