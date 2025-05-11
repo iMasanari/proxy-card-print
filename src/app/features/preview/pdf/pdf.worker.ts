@@ -28,7 +28,7 @@ export interface Option {
 }
 
 registerPromiseWorker<Option, string>(async (option) => {
-  const nodes = option.svg.map(svg => parser.parseFromString(svg, 'image/svg+xml').firstChild as Element)
+  const nodes = option.svg.map(svg => parser.parseFromString(svg, 'image/svg+xml').firstChild as unknown as Element)
 
   const orientation = option.width < option.height ? 'p' : 'l'
   const pdf = new jsPDF(orientation, 'mm', [option.width, option.height])
