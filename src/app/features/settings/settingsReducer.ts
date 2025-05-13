@@ -4,8 +4,10 @@ import { CardSize, cardSizes } from '~/domains/settings'
 export interface SettingsState {
   pageSize: string
   cardSize: CardSize
-  cardWidth: string
-  cardHeight: string
+  cardWidth: `${number}`
+  cardHeight: `${number}`
+  pageMargin: `${number}`
+  gap: `${number}` | ''
 }
 
 const { createAction, reducer: settingsReducer } = ActionReducer<SettingsState>()

@@ -69,6 +69,8 @@ const intiSettings: SettingsState = {
   cardSize: 'スモールサイズ',
   cardWidth: '59',
   cardHeight: '86',
+  pageMargin: '7',
+  gap: '',
 }
 
 const initCards: CardsState = []
@@ -97,14 +99,18 @@ const App = () => {
         />
       </div>
       <div css={resultStyle}>
-        {!data.cards.length ? <Usage /> : (
-          <Preview css={previewStyle} data={data} />
-        )}
-        {i18n.language === 'ja' && data.cards.length > 0 && (
-          <div css={maybeStyle}>
-            <Maybe cards={cardsForm} />
-          </div>
-        )}
+        {!cardsForm.length
+          ? <Usage />
+          : (
+            <>
+              <Preview css={previewStyle} data={data} />
+              {i18n.language === 'ja' && (
+                <div css={maybeStyle}>
+                  <Maybe cards={cardsForm} />
+                </div>
+              )}
+            </>
+          )}
       </div>
     </div>
   )

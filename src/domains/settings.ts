@@ -21,16 +21,19 @@ export const pageSizes = {
 export type PageSize = keyof typeof pageSizes
 
 export interface CardType {
-  id: number
+  id: string
   data: CardImageData
-  count: number
 }
 
 export interface PreviewData {
   pageSize: PageSize
   pageWidth: number
   pageHeight: number
+  pageMargin: number
+  colCount: number
+  rowCount: number
+  gap: number
+  cards: CardType[]
   cardWidth: number
   cardHeight: number
-  cards: CardType[]
 }
