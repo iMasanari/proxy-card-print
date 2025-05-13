@@ -148,8 +148,9 @@ const Settings = ({ form, dispatch }: Props) => {
               <Grid item xs={6}>
                 <NumberField
                   label={t('Settings.pageMargin', '用紙余白 (mm)')}
+                  required
                   min={0}
-                  max={100}
+                  max={50}
                   value={form.pageMargin}
                   onChange={(e) => updateSettings('pageMargin', e.target.value)}
                   size="small"

@@ -11,7 +11,7 @@ export const usePreviewData = (settingsForm: SettingsState, cardsForm: CardsStat
     const pageSize = pageSizes[settingsForm.pageSize as PageSize] ? settingsForm.pageSize as PageSize : 'A4'
     const [_pageWidth, _pageHeight] = pageSizes[pageSize]
     const gap = toInt(settingsForm.gap, 0)
-    const pageMargin = toInt(settingsForm.pageMargin, 0)
+    const pageMargin = Math.min(toInt(settingsForm.pageMargin, 0), 50)
 
     const printableWidth = _pageWidth - (pageMargin + 1) * 2
     const printableHeight = _pageHeight - (pageMargin + 1) * 2
